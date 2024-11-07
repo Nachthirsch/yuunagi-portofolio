@@ -5,6 +5,9 @@ import LoadingScreen from "./components/loading";
 
 import Portfolio from "./components/pages/portofolio";
 import Nav from "./components/nav";
+import Gallery from "./components/pages/gallery";
+import WritesPage from "./components/pages/writes";
+
 
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -23,10 +26,12 @@ function App() {
   return (
     <Router>
       <LoadingScreen isLoading={isLoading} />
-      <div className="select-none">
+      <div className="select-none scrollbar-hide h-screen overflow-auto">
         <Nav />
         <Routes>
           <Route path="/" element={<Portfolio />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/writes" element={<WritesPage />} />
         </Routes>
       </div>
     </Router>
