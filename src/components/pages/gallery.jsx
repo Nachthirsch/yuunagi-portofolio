@@ -1,8 +1,9 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Camera } from "lucide-react";
 import { useHorizontalScroll } from "../../hooks/useHorizontalScroll"; // Custom hook yang akan kita buat
 import { cn } from "../../lib/utils"; // Utility function untuk conditional className
+import { getCookie, setCookie } from "../../lib/cookieUtils";
 
 // Import images
 import img1 from "../../assets/gallery/img1.jpg";
@@ -12,6 +13,34 @@ import img4 from "../../assets/gallery/img4.jpg";
 import img5 from "../../assets/gallery/img5.jpg";
 import img6 from "../../assets/gallery/img6.jpg";
 import img7 from "../../assets/gallery/img7.jpg";
+
+const ImageComponent = ({ photo }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  return (
+    <div className="relative h-full w-full overflow-hidden rounded-2xl">
+      {/* Low quality placeholder */}
+      <img
+        src={`${photo.url}?w=50`} // Small placeholder
+        className={`absolute inset-0 w-full h-full object-cover blur-lg transition-opacity duration-300 ${
+          isLoaded ? 'opacity-0' : 'opacity-100'
+        }`}
+        alt={photo.title}
+      />
+      
+      {/* High quality image */}
+      <img
+        src={photo.url}
+        alt={photo.title}
+        className={`h-full w-full object-cover transition-opacity duration-700 
+          group-hover:scale-105 brightness-90 ${
+            isLoaded ? 'opacity-100' : 'opacity-0'
+          }`}
+        onLoad={() => setIsLoaded(true)}
+      />
+    </div>
+  );
+};
 
 const Gallery = () => {
   const baseHeight = 400; // Tinggi dasar untuk kalkulasi rasio
@@ -85,6 +114,28 @@ const Gallery = () => {
   const scrollRef = useRef(null);
   useHorizontalScroll(scrollRef);
 
+  useEffect(() => {
+    // Check if images are already cached
+    const cachedImages = getCookie('galleryImages');
+    
+    if (!cachedImages) {
+      // If not cached, preload images and set cookie
+      const imagePromises = photos.map(photo => {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = photo.url;
+          img.onload = resolve;
+          img.onerror = reject;
+        });
+      });
+
+      Promise.all(imagePromises).then(() => {
+        // Set cookie to mark images as cached for 7 days
+        setCookie('galleryImages', 'cached', 7);
+      });
+    }
+  }, []);
+
   return (
     <section className="bg-neutral-900 min-h-screen font-Hanken relative">
       {/* Enhanced Header */}
@@ -128,39 +179,32 @@ const Gallery = () => {
               )}
               style={{ aspectRatio: photo.ratio }}
             >
-              <div className="relative h-full w-full overflow-hidden rounded-2xl">
-                <img
-                  src={photo.url}
-                  alt={photo.title}
-                  className="h-full w-full object-cover transition-transform duration-700 
-                    group-hover:scale-105 brightness-90"
-                />
-                
-                {/* Enhanced Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
-                  opacity-0 group-hover:opacity-100 transition-all duration-500">
-                  <div className="absolute inset-0 flex flex-col justify-end p-6">
-                    <motion.div
-                      initial={{ y: 20, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.5, delay: 0.1 }}
-                    >
-                      <span className="text-neutral-400 text-xs tracking-wider uppercase mb-2 inline-block">
-                        {photo.category}
-                      </span>
-                      <h3 className="text-white font-medium text-xl mb-2 leading-tight">
-                        {photo.title}
-                      </h3>
-                      <p className="text-neutral-300 text-sm leading-relaxed opacity-80">
-                        {photo.description}
-                      </p>
-                    </motion.div>
-                  </div>
+              <ImageComponent photo={photo} />
+              
+              {/* Enhanced Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent 
+                opacity-0 group-hover:opacity-100 transition-all duration-500">
+                <div className="absolute inset-0 flex flex-col justify-end p-6">
+                  <motion.div
+                    initial={{ y: 20, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    <span className="text-neutral-400 text-xs tracking-wider uppercase mb-2 inline-block">
+                      {photo.category}
+                    </span>
+                    <h3 className="text-white font-medium text-xl mb-2 leading-tight">
+                      {photo.title}
+                    </h3>
+                    <p className="text-neutral-300 text-sm leading-relaxed opacity-80">
+                      {photo.description}
+                    </p>
+                  </motion.div>
                 </div>
-
-                {/* Subtle Border Overlay */}
-                <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none" />
               </div>
+
+              {/* Subtle Border Overlay */}
+              <div className="absolute inset-0 rounded-2xl border border-white/10 pointer-events-none" />
             </motion.div>
           ))}
         </div>
