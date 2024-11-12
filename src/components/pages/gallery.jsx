@@ -21,7 +21,7 @@ const ImageComponent = ({ photo }) => {
     <div className="relative h-full w-full overflow-hidden rounded-2xl">
       {/* Low quality placeholder */}
       <img
-        src={`${photo.url}?w=50`} // Small placeholder
+        src={`${photo.url}?w=50`}
         className={`absolute inset-0 w-full h-full object-cover blur-lg transition-opacity duration-300 ${
           isLoaded ? 'opacity-0' : 'opacity-100'
         }`}
@@ -32,8 +32,8 @@ const ImageComponent = ({ photo }) => {
       <img
         src={photo.url}
         alt={photo.title}
-        className={`h-full w-full object-cover transition-opacity duration-700 
-          group-hover:scale-105 brightness-90 ${
+        className={`h-full w-full object-cover transition-all duration-700 
+          group-hover:scale-110 group-hover:brightness-100 brightness-90 ${
             isLoaded ? 'opacity-100' : 'opacity-0'
           }`}
         onLoad={() => setIsLoaded(true)}
@@ -52,7 +52,7 @@ const Gallery = () => {
       title: "Train Bridge",
       description: "Black and white architectural study",
       ratio: "4/3",
-      width: "w-[533px]",
+      width: "w-[400px]",
       category: "Architecture"
     },
     {
@@ -61,7 +61,7 @@ const Gallery = () => {
       title: "Jakarta Metropolitan",
       description: "Urban landscape of Jakarta",
       ratio: "3/4",
-      width: "w-[300px]",
+      width: "w-[250px]",
       category: "Urban"
     },
     {
@@ -70,7 +70,7 @@ const Gallery = () => {
       title: "Nature Reflection",
       description: "Peaceful lake view with trees",
       ratio: "4/3",
-      width: "w-[533px]",
+      width: "w-[400px]",
       category: "Nature"
     },
     {
@@ -79,7 +79,7 @@ const Gallery = () => {
       title: "Daydream",
       description: "A moment of tranquility",
       ratio: "16/9",
-      width: "w-[711px]",
+      width: "w-[600px]",
       category: "Human Interest"
     },
     {
@@ -88,7 +88,7 @@ const Gallery = () => {
       title: "Sea Breeze",
       description: "A serene coastal view",
       ratio: "4/3",
-      width: "w-[533px]",
+      width: "w-[400px]",
       category: "Landscape"
     },
     {
@@ -97,7 +97,7 @@ const Gallery = () => {
       title: "A couple and Sea",
       description: "A peaceful moment at the beach",
       ratio: "4/3",
-      width: "w-[533px]",
+      width: "w-[400px]",
       category: "Human Interest"
     },
     {
@@ -106,7 +106,7 @@ const Gallery = () => {
       title: "Solitude",
       description: "A quiet moment of introspection on an empty canvas",
       ratio: "18/9",
-      width: "w-[800px]",
+      width: "w-[600px]",
       category: "Human Interest"
     }
   ];
@@ -158,9 +158,9 @@ const Gallery = () => {
       {/* Enhanced Gallery */}
       <div 
         ref={scrollRef}
-        className="flex overflow-x-scroll overflow-y-hidden h-screen items-center px-[20vw] scrollbar-hide"
+        className="flex overflow-x-scroll overflow-y-hidden h-screen items-center px-[15vw] scrollbar-hide"
       >
-        <div className="flex gap-8 items-center">
+        <div className="flex gap-6 items-center">
           {photos.map((photo, index) => (
             <motion.div
               key={photo.id}
@@ -173,9 +173,9 @@ const Gallery = () => {
               }}
               viewport={{ once: true, margin: "0px 0px -50% 0px" }}
               className={cn(
-                "relative group",
+                "relative group cursor-pointer",
                 photo.width,
-                "h-[400px] flex-shrink-0"
+                "h-[300px] flex-shrink-0"
               )}
               style={{ aspectRatio: photo.ratio }}
             >
