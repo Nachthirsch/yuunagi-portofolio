@@ -163,7 +163,7 @@ const Hero = () => {
             </motion.div>
 
             {/* Download Resume Button */}
-            <AnimatedButton text="Download Resume" downloadPath="https://drive.usercontent.google.com/u/2/uc?id=1ZT1BibmojS748IxkBCzY0slEN72bIjya&export=download" />
+            <AnimatedButton text="Download Resume" downloadPath="https://drive.google.com/file/d/1ZT1BibmojS748IxkBCzY0slEN72bIjya/view?usp=drive_link" />
 
             {/* Scroll Indicator */}
             <motion.div
