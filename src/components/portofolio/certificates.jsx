@@ -104,7 +104,7 @@ const certificates = [
     issuer: "Udemy",
     date: "Oct 2024",
     icon: HiCode,
-    credential: "https://www.credly.com/badges/c1b8558f-9439-41af-8802-211d248924f9/linked_in_profile",
+    credential: "https://www.linkedin.com/in/handra-putratama-tanjung/details/certifications/1729663108791/single-media-viewer/?profileId=ACoAADfROqcBdgHN9POm8lFkj1bxhQBA6PbhaSE",
   },
   {
     title: "Pelatihan Pengolahan Pemuktakhiran Data Geospasial dan Muatan",

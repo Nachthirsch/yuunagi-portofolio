@@ -1,5 +1,5 @@
 import { HiCode } from "react-icons/hi";
-import { SiAdobephotoshop, SiAdobelightroom, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress } from "react-icons/si";
+import { SiAdobephotoshop, SiAdobelightroom, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress, SiFigma } from "react-icons/si";
 import { motion } from "framer-motion";
 
 const TechStack = () => {
@@ -26,6 +26,10 @@ const TechStack = () => {
               <div className="flex items-center gap-3">
                 <SiAdobelightroom className="text-xl text-neutral-500" />
                 <span className="text-neutral-300">Adobe Lightroom</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <SiFigma className="text-xl text-neutral-500" />
+                <span className="text-neutral-300">Figma</span>
               </div>
             </div>
           </motion.div>

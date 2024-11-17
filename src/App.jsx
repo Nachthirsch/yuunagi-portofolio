@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoadingScreen from "./components/loading";
 
-import Portfolio from "./components/pages/portofolio";
 import Nav from "./components/nav";
-import Gallery from "./components/pages/gallery";
-import WritesPage from "./components/pages/writes";
+import Portfolio from "./components/pages/v1/portofolio";
+import Gallery from "./components/pages/v1/gallery";
+import WritesPage from "./components/pages/v1/writes";
+import PortfolioV2 from "./components/pages/v2/PortfolioV2";
+import WritesV2 from "./components/pages/v2/WritesV2";
 
 
 // import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -32,6 +34,8 @@ function App() {
           <Route path="/" element={<Portfolio />} />
           <Route path="/gallery" element={<Gallery />} />
           <Route path="/writes" element={<WritesPage />} />
+          <Route path="/v2" element={<PortfolioV2 />} />
+          <Route path="/v2/writes" element={<WritesV2 />} />
         </Routes>
       </div>
     </Router>

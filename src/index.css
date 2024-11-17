@@ -36,3 +36,13 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+
+.check {
+  fill: none;
+  stroke: #FFFFFF;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 0;
+  stroke-dashoffset: 0;
+}
