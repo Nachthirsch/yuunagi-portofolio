@@ -54,7 +54,7 @@ const Header = () => {
               .
               <br className="hidden sm:block" />
               <span className="block mt-2 sm:mt-0 sm:inline">
-                I&apos;m a Final Year Student at <span className="text-white font-medium">Universitas Bina Sarana Informatika</span> majoring in Information Technology, having an interest in Web Development, photography, music and art.
+                I&apos;m a final-year Student majoring in Information Technology, having an interest in Web Development, photography, music and art.
               </span>
             </p>
           </div>

@@ -111,9 +111,9 @@ const Hero = () => {
                 className="max-w-2xl"
               >
                 <p className="text-neutral-600 text-lg sm:text-xl leading-relaxed">
-                  A Final Year Student at{" "}
+                  A Final Year-Student majoring in{" "}
                   <span className="font-medium text-neutral-800">
-                    Universitas Bina Sarana Informatika
+                    Information Technology
                   </span>
                   , passionate about crafting digital experiences through web development, photography, and creative arts.
                 </p>
