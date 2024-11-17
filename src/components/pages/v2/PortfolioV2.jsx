@@ -4,7 +4,7 @@ import Experience from "./portfolio/Experience";
 import ImageSec from "./portfolio/ImageSec";
 import Gallery from "./portfolio/Gallery";
 import Certificates from "./portfolio/Certificates";
-import Activities from "./portfolio/activities";
+import Activities from "./portfolio/Activities";
 import Projects from "./portfolio/Projects";
 import TechStack from "./portfolio/TechStack";
 import Footer from "./portfolio/Footer";
