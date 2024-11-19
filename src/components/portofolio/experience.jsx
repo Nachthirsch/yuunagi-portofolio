@@ -22,10 +22,10 @@ const Experience = () => {
       description: ["ST2023 Spatial Framework and Wilkerstat (Wilayah Kerja Statistik) Load Update", "Processed and analyzed 1000+ building points and 300+ SLS maps using QGIS to assess land cover for 200+ areas.", "Leveraged Python programming for task automation, enhancing efficiency and accuracy."],
     },
     {
-      title: "Full Stack Developer",
+      title: "Frontend Developer",
       company: "PT Bee Telematic Solutions",
       date: "Sep 2024 - Present",
-      description: ["Developing a company portfolio website showcasing completed projects using technologies like Express.js, React, Tailwind CSS, and PostgreSQL.", "Ensuring responsive design and optimal user experience across devices and browsers.", "Implementing animations and interactivity to enhance engagement on the website."],
+      description: ["Developing a company portfolio website showcasing completed projects using technologies like React, Tailwind CSS, and any other technologies that I'm learning.", "Ensuring responsive design and optimal user experience across devices and browsers.", "Implementing animations and interactivity to enhance engagement on the website."],
     },
   ];
 

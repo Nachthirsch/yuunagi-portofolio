@@ -29,12 +29,12 @@ const Experience = () => {
       skills: ['QGIS', 'Python', 'Data Analysis', 'Spatial Analysis', 'Automation']
     },
     {
-      title: "Full Stack Developer",
+      title: "Frontend Developer",
       company: "PT Bee Telematic Solutions",
       date: "Sep 2024 - Present",
       type: "Internship",
-      description: ["Developing a company portfolio website showcasing completed projects using technologies like Express.js, React, Tailwind CSS, and PostgreSQL.", "Ensuring responsive design and optimal user experience across devices and browsers.", "Implementing animations and interactivity to enhance engagement on the website."],
-      skills: ['React', 'Express.js', 'PostgreSQL', 'Tailwind CSS', 'UI/UX', 'Responsive Design']
+      description: ["Developing a company portfolio website showcasing completed projects using technologies like React, Tailwind CSS, and any other technologies that I'm learning.", "Ensuring responsive design and optimal user experience across devices and browsers.", "Implementing animations and interactivity to enhance engagement on the website."],
+      skills: ['React', 'Tailwind CSS', 'UI/UX', 'Responsive Design']
     },
   ];
 
