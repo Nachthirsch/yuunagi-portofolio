@@ -3,6 +3,7 @@ import { Code2, Github, MonitorSmartphone, ExternalLink } from "lucide-react";
 import weather from "../portfolio/weather-app.jpg";
 import ngutang from "../portfolio/ngutang-yuk.jpg";
 
+
 // Header component yang konsisten untuk semua section
 const SectionHeader = ({ subtitle, title, highlightedWord }) => {
     return (
@@ -83,7 +84,9 @@ const ProjectCard = ({ project }) => {
               Source
             </motion.a>
             <motion.a
-              href="#"
+              href={project.website}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center gap-2 px-4 py-2 bg-blue-500 
                        text-white rounded-lg text-sm font-medium"
             >
@@ -112,6 +115,25 @@ const ProjectCard = ({ project }) => {
         github: "https://github.com/Nachthirsch/Ngutang-Yuk",
         status: "In Development",
       },
+      {
+        title: "Portofolio Website",
+        description: "A simple portofolio website to showcase my projects and skills.",
+        date: "Sep 2024",
+        tech: ["React", "TailwindCSS", "Framer Motion"],
+        github: "https://github.com/Nachthirsch/yuunagi-portfolio",
+        website: "https://handraputratama.xyz",
+        status: "Completed",
+      },
+  
+      {
+        title: "Movie App",
+        description: "A simple movie application to search for movies and TV shows.",
+        date: "Sep 2024",
+        tech: ["React", "TailwindCSS", "OMDB API"],
+        github: "https://github.com/Nachthirsch/movie-app",
+        website: "https://assignmentmovieappmsib.netlify.app/",
+        status: "Completed",
+      }
     ];
   
     return (
