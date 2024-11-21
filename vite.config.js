@@ -23,8 +23,18 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: undefined,
-      },
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'framer-motion'],
+          utils: ['./src/lib/utils.js', './src/lib/cookieUtils.js']
+        }
+      }
     },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
   },
 });

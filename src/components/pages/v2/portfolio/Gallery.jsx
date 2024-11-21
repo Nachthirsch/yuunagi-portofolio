@@ -101,6 +101,10 @@ const Gallery = () => {
               src={image}
               alt={`Gallery image ${index + 1}`}
               className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+              loading="lazy"
+              decoding="async"
+              width="800"
+              height="600"
             />
           </motion.div>
         ))}
