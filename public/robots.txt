@@ -5,7 +5,6 @@ Disallow: /private/
 
 # Sitemap
 Sitemap: https://yuunagi.netlify.app/firstsitemap.xml
-Sitemap: https://handraputratama.xyz/firstsitemap.xml
 
 # Crawl-delay
 Crawl-delay: 10

@@ -9,12 +9,18 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'framer-motion']
+          vendor: ['react', 'react-dom', 'framer-motion'],
+          utils: ['./src/lib/utils.js', './src/lib/cookieUtils.js']
         }
       }
     },
-    minify: 'esbuild',
-    target: 'es2015'
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
   },
   resolve: {
     alias: {
