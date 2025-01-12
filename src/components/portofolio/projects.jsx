@@ -4,6 +4,7 @@ import weather from "../../assets/weather-app.jpg";
 import ngutang from "../../assets/ngutang-yuk.jpg";
 import portofolio from "../../assets/portofolio-app.jpg";
 import movie from "../../assets/movie-app.jpg";
+import news from "../../assets/news-app.png";
 
 const ProjectSection = () => {
   const projects = [
@@ -39,7 +40,7 @@ const ProjectSection = () => {
       website: "https://handraputratama.xyz",
       type: "Web App",
       image: portofolio,
-      status: "In Development",
+      status: "Completed",
     },
 
     {
@@ -51,10 +52,19 @@ const ProjectSection = () => {
       website: "https://assignmentmovieappmsib.netlify.app/",
       type: "Web App",
       image: movie,
-      status: "In Development",
-    }
-
-
+      status: "Completed",
+    },
+    {
+      title: "News App",
+      description: "A simple news application to search for news articles.",
+      date: "Nov 2024",
+      tech: ["React", "TailwindCSS", "NY Times API", "Redux Toolkit"],
+      github: "https://github.com/Nachthirsch/Capstone-Project_News-App",
+      website: "https://capstone-project-news-app-alpha.vercel.app",
+      type: "Web App",
+      image: news,
+      status: "Completed",
+    },
   ];
 
   return (
@@ -72,20 +82,10 @@ const ProjectSection = () => {
         {/* Projects Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {projects.map((project, index) => (
-            <motion.div 
-              key={index} 
-              initial={{ opacity: 0, y: 20 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.5, delay: index * 0.1 }} 
-              className="group relative bg-neutral-800/20 rounded-xl overflow-hidden border border-neutral-700/30 hover:border-neutral-600/50 transition-colors h-full flex flex-col"
-            >
+            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} className="group relative bg-neutral-800/20 rounded-xl overflow-hidden border border-neutral-700/30 hover:border-neutral-600/50 transition-colors h-full flex flex-col">
               {/* Project Image */}
               <div className="relative h-48 overflow-hidden">
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale" 
-                />
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale" />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 to-transparent" />
               </div>
 
@@ -97,28 +97,19 @@ const ProjectSection = () => {
                     <MonitorSmartphone size={12} />
                     {project.type}
                   </span>
-                  <span className="px-4 py-1 bg-neutral-800/80 text-yellow-400 text-xs rounded-full border border-yellow-500/30">
-                    {project.status}
-                  </span>
+                  <span className="px-4 py-1 bg-neutral-800/80 text-yellow-400 text-xs rounded-full border border-yellow-500/30">{project.status}</span>
                 </div>
 
                 {/* Title & Description */}
                 <div className="flex-1">
-                  <h3 className="text-xl font-semibold text-neutral-200 mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-neutral-400 mb-4 line-clamp-3 group-hover:line-clamp-none transition-all">
-                    {project.description}
-                  </p>
+                  <h3 className="text-xl font-semibold text-neutral-200 mb-3">{project.title}</h3>
+                  <p className="text-sm text-neutral-400 mb-4 line-clamp-3 group-hover:line-clamp-none transition-all">{project.description}</p>
                 </div>
 
                 {/* Tech Stack */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tech.map((tech, i) => (
-                    <span 
-                      key={i} 
-                      className="px-2 py-1 bg-neutral-700/30 text-neutral-400 text-xs rounded"
-                    >
+                    <span key={i} className="px-2 py-1 bg-neutral-700/30 text-neutral-400 text-xs rounded">
                       {tech}
                     </span>
                   ))}

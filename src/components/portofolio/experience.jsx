@@ -24,7 +24,7 @@ const Experience = () => {
     {
       title: "Frontend Developer",
       company: "PT Bee Telematic Solutions",
-      date: "Sep 2024 - Present",
+      date: "Sep 2024 - Dec 2024",
       description: ["Developing a company portfolio website showcasing completed projects using technologies like React, Tailwind CSS, and any other technologies that I'm learning.", "Ensuring responsive design and optimal user experience across devices and browsers.", "Implementing animations and interactivity to enhance engagement on the website."],
     },
   ];
