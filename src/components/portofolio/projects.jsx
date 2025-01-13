@@ -5,6 +5,7 @@ import ngutang from "../../assets/ngutang-yuk.jpg";
 import portofolio from "../../assets/portofolio-app.jpg";
 import movie from "../../assets/movie-app.jpg";
 import news from "../../assets/news-app.png";
+import bee from "../../assets/bee.png";
 
 const ProjectSection = () => {
   const projects = [
@@ -63,6 +64,17 @@ const ProjectSection = () => {
       website: "https://capstone-project-news-app-alpha.vercel.app",
       type: "Web App",
       image: news,
+      status: "Completed",
+    },
+    {
+      title: "Bee Telematic Solutions Portofolio",
+      description: "A Company's Portofolio Website to showcase their projects and services.",
+      date: "Dec 2024",
+      tech: ["React", "TailwindCSS", "Framer Motion"],
+      github: null,
+      website: "https://beetelematicsolutions.netlify.app/",
+      type: "Web App",
+      image: bee,
       status: "Completed",
     },
   ];

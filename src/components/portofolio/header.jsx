@@ -53,9 +53,7 @@ const Header = () => {
               </motion.span>
               .
               <br className="hidden sm:block" />
-              <span className="block mt-2 sm:mt-0 sm:inline">
-                I&apos;m a final-year Student majoring in Information Technology, having an interest in Web Development, photography, music and art.
-              </span>
+              <span className="block mt-2 sm:mt-0 sm:inline">I&apos;m a final-year student majoring in Information Technology, having an interest in Web Development, Photography, Music and Art.</span>
             </p>
           </div>
           <div className="flex space-x-4 sm:space-x-6 mt-3">
