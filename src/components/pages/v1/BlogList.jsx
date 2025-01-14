@@ -1,12 +1,10 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Book } from "lucide-react";
+import { getAllBlogPosts } from "../../../utils/blogUtils";
 
 const BlogList = () => {
-  const blogPosts = [
-    { id: 1, title: "YORUSHIKA DAN PENULISAN LIRIKNYA", slug: "yorushika-dan-penulisan-liriknya" },
-    // Add more blog posts here as you create them
-  ];
+  const blogPosts = getAllBlogPosts();
 
   return (
     <section className="min-h-screen bg-neutral-900 pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken">
@@ -21,7 +19,7 @@ const BlogList = () => {
 
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="space-y-6">
           {blogPosts.map((post) => (
-            <Link key={post.id} to={`/writes/${post.slug}`} className="block">
+            <Link key={post.slug} to={`/writes/${post.slug}`} className="block">
               <div className="bg-neutral-800 p-6 rounded-lg hover:bg-neutral-700 transition-colors duration-300">
                 <h2 className="text-xl font-semibold text-neutral-200">{post.title}</h2>
               </div>
