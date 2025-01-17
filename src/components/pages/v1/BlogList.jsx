@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Book } from "lucide-react";
+import { Book, Calendar, User, Tag, Globe } from "lucide-react";
 import { getAllBlogPosts } from "../../../utils/blogUtils";
 
 const BlogList = () => {
@@ -17,12 +17,47 @@ const BlogList = () => {
           <motion.div className="h-1 bg-gradient-to-r from-neutral-400 to-transparent mt-4 rounded-full" initial={{ width: 0 }} animate={{ width: "8rem" }} transition={{ duration: 0.8, delay: 0.3 }} />
         </motion.div>
 
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="space-y-6">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="space-y-8">
           {blogPosts.map((post) => (
             <Link key={post.slug} to={`/writes/${post.slug}`} className="block">
-              <div className="bg-neutral-800 p-6 rounded-lg hover:bg-neutral-700 transition-colors duration-300">
-                <h2 className="text-xl font-semibold text-neutral-200">{post.title}</h2>
-              </div>
+              <motion.div className="bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" whileHover={{ scale: 1.02 }}>
+                {post.thumbnail && (
+                  <div className="relative h-48 sm:h-64 overflow-hidden">
+                    <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 to-transparent opacity-70"></div>
+                  </div>
+                )}
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-3">
+                    <h2 className="text-xl font-semibold text-neutral-200">{post.title}</h2>
+                    <div className="flex items-center gap-1 text-sm text-neutral-400">
+                      <Globe size={14} />
+                      <span>{post.languages.join(" / ")}</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-3 text-sm text-neutral-400">
+                    {post.date && (
+                      <span className="flex items-center gap-1">
+                        <Calendar size={14} />
+                        {post.date}
+                      </span>
+                    )}
+                    {post.author && (
+                      <span className="flex items-center gap-1">
+                        <User size={14} />
+                        {post.author}
+                      </span>
+                    )}
+                    {post.tags && post.tags.length > 0 && (
+                      <span className="flex items-center gap-1">
+                        <Tag size={14} />
+                        {post.tags.join(", ")}
+                      </span>
+                    )}
+                  </div>
+                  {post.excerpt && <p className="mt-3 text-neutral-300 line-clamp-2">{post.excerpt}</p>}
+                </div>
+              </motion.div>
             </Link>
           ))}
         </motion.div>
