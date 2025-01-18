@@ -355,11 +355,6 @@
           {
             "type": "section",
             "content": "Program ini memberikan pengalaman belajar yang sangat berharga bagi saya. Dari instruktur yang berkualitas hingga materi yang disampaikan dengan baik, semuanya memberikan kontribusi besar dalam peningkatan pengetahuan dan keterampilan saya dalam bidang ReactJS dan Frontend Development. Saya sangat merekomendasikan program ini bagi siapa pun yang ingin mendalami bidang tersebut. Terima kasih Hacktiv8 dan Kampus Merdeka atas kesempatan belajar yang luar biasa ini!"
-          },
-          {
-            "type": "achievement",
-            "title": "Skill Tercapai",
-            "skills": ["ReactJS Fundamental", "JavaScript ES6+", "Responsive Web Design", "State Management with Redux", "RESTful API Integration", "Component-Based Architecture", "React Hooks", "React Router", "Git Version Control", "Frontend Build Tools (Webpack, Babel)", "Testing with Jest and React Testing Library"]
           }
         ]
       }
