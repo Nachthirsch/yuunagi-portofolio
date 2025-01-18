@@ -192,7 +192,7 @@
             "type": "image",
             "image": {
               "src": "https://lh3.googleusercontent.com/ufS1qifPTVxSR1_xBz6F75iymu07Qdgplp0Qp3uJBWZuSrpgP6GWFkog-99E8bvH6o5xAmnzzNENskFZ=w1440-h600-p-l90-rj",
-              "altText": ""
+              "altText": "Plagiarism Album Banner"
             }
           },
           {
@@ -212,7 +212,7 @@
             "type": "image",
             "image": {
               "src": "https://m.media-amazon.com/images/M/MV5BOWU0MmQ2OTgtYTFlMi00MGNkLWEwZjYtYWI0ZTE1NjA5ZjQyXkEyXkFqcGc@._V1_.jpg",
-              "altText": "Foto n-buna, komposer di balik Yorushika"
+              "altText": "The Nighthawk Star by Ryuu Kato"
             }
           },
           {
@@ -236,11 +236,11 @@
             "images": [
               {
                 "src": "https://ogre.natalie.mu/media/news/music/2019/0201/yorushika_jkt201902.jpg?impolicy=lt&imwidth=1200&imdensity=1",
-                "altText": "Foto n-buna, komposer di balik Yorushika"
+                "altText": "Dakara Boku wa Ongaku wo Yameta Album Cover"
               },
               {
                 "src": "https://ogre.natalie.mu/media/news/music/2019/0817/yorushika_jkt201908.jpg?impolicy=lt&imwidth=1200&imdensity=1",
-                "altText": "Foto n-buna, komposer di balik Yorushika"
+                "altText": "Elma Album Cover"
               }
             ]
           },
