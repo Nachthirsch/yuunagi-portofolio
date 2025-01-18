@@ -43,7 +43,7 @@
             "type": "image",
             "image": {
               "src": "https://lh3.googleusercontent.com/ufS1qifPTVxSR1_xBz6F75iymu07Qdgplp0Qp3uJBWZuSrpgP6GWFkog-99E8bvH6o5xAmnzzNENskFZ=w1440-h600-p-l90-rj",
-              "altText": "Foto n-buna, komposer di balik Yorushika"
+              "altText": "Plagiarism Album Banner"
             }
           },
 
@@ -66,7 +66,7 @@
             "type": "image",
             "image": {
               "src": "https://m.media-amazon.com/images/M/MV5BOWU0MmQ2OTgtYTFlMi00MGNkLWEwZjYtYWI0ZTE1NjA5ZjQyXkEyXkFqcGc@._V1_.jpg",
-              "altText": "Foto n-buna, komposer di balik Yorushika"
+              "altText": "The Nighthawk Star by Ryuu Kato"
             }
           },
 
@@ -95,11 +95,11 @@
             "images": [
               {
                 "src": "https://ogre.natalie.mu/media/news/music/2019/0201/yorushika_jkt201902.jpg?impolicy=lt&imwidth=1200&imdensity=1",
-                "altText": "Foto n-buna, komposer di balik Yorushika"
+                "altText": "Dakara Boku wa Ongaku wo Yameta Album Cover"
               },
               {
                 "src": "https://ogre.natalie.mu/media/news/music/2019/0817/yorushika_jkt201908.jpg?impolicy=lt&imwidth=1200&imdensity=1",
-                "altText": "Foto n-buna, komposer di balik Yorushika"
+                "altText": "Elma Album Cover"
               }
             ]
           },
@@ -284,7 +284,7 @@
     }
   },
 
-  "Pengalaman Studi Independen bersama Hacktiv8": {
+  "Pengalaman-studi-independen-bersama-hacktiv8": {
     "translations": {
       "id": {
         "title": "Pengalaman Studi Independen bersama Hacktiv8",
@@ -301,43 +301,65 @@
           },
           {
             "type": "section",
-            "content": "Sebagai seorang yang tertarik dengan dunia pemrograman, saya memutuskan untuk mengikuti program studi independen bersama <strong class=\"font-bold\">Hacktiv8</strong> yang diselenggarakan oleh <strong class=\"font-bold\">Kampus Merdeka</strong>. Mengetahui bahwa lembaga ini memiliki reputasi yang baik dalam menghasilkan talenta digital yang kompeten, saya sangat berekspektasi tinggi dengan program ini. Dengan judul <strong class=\"font-bold\">\"ReactJS For Front End Website Developer\"</strong>, saya berharap dapat memperoleh pengalaman belajar yang mendalam dan praktis dalam bidang yang disebutkan."
+            "content": "Sebagai seorang yang tertarik dengan dunia pemrograman, saya memutuskan untuk mengikuti program studi independen bersama <strong class=\"font-bold\">Hacktiv8</strong> yang diselenggarakan oleh <strong class=\"font-bold\">Kampus Merdeka</strong>. Mengetahui bahwa lembaga ini memiliki reputasi yang baik dalam menghasilkan talenta digital yang kompeten, saya cukup berekspektasi tinggi dengan program ini. Dengan judul <strong class=\"font-bold\">\"ReactJS For Front End Website Developer\"</strong>, saya berharap dapat memperoleh pengalaman belajar yang mendalam dan praktis dalam bidang yang disebutkan."
           },
           {
             "type": "section",
-            "title": "Ekspetasi Awal vs Realita"
+            "title": "Ekspektasi Awal vs Realita"
           },
           {
             "type": "section",
-            "content": "Ekspetasi yang saya cukup jauh dari apa yang saya bayangkan sebelumnya, jauh disini berarti jauh lebih baik. Saya tidak berekspektasi bahwa program ini akan berjalan seintensif seperti yang saya bayangkan. Dari penjelasan instruktur yang padat dan berkualitas sampai dengan sesi mentoring yang disediakan. "
+            "content": "Ekspektasi yang saya cukup jauh dari apa yang saya bayangkan sebelumnya, jauh disini berarti jauh lebih baik. Saya tidak berekspektasi bahwa program ini akan berjalan seintensif seperti yang saya bayangkan. Dari penjelasan instruktur yang padat dan berkualitas sampai dengan sesi mentoring yang disediakan. "
           },
 
           {
             "type": "section",
-            "content": "Tidak hanya instruktur dan mentor saja yang melebihi ekspetasi saya, tapi pihak manajemen juga sangat responsif terhadap setiap kendala yang dialami oleh mentee/peserta ketika menjalani program ini."
+            "content": "Tidak hanya instruktur dan mentor saja yang melebihi ekspektasi saya, tapi pihak manajemen juga responsif terhadap setiap kendala yang dialami oleh mentee/peserta ketika menjalani program ini."
           },
 
           {
             "type": "section",
-            "title": "Penyampaian Materi"
+            "title": "Penyampaian Materi dan Mentoring"
           },
 
           {
             "type": "section",
-            "content": "Penyampaian materi yang diberikan oleh instruktur dalam kelas besar sangatlah padat. Instruktur tidak hanya terpaku pada materi yang ada di modul, namun mereka juga memberikan penjelasan dari sumber eksternal yang sangat membantu dalam memahami konsep yang lebih mendalam. Mereka selalu menegaskan, jika para peserta tidak mengerti, jangan takut untuk interupsi dan bertanya. Hal ini menunjukkan bahwa instruktur sangat peduli dengan kualitas belajar para peserta."
+            "content": "Penyampaian materi yang diberikan oleh instruktur dalam kelas besar luar biasa padat. Instruktur tidak hanya terpaku pada materi yang ada di modul, namun mereka juga memberikan penjelasan dari sumber eksternal yang membantu dalam memahami konsep yang lebih mendalam. Mereka selalu menegaskan, jika para peserta tidak mengerti, jangan takut untuk interupsi dan bertanya. Hal ini menunjukkan bahwa instruktur peduli dengan kualitas belajar para peserta."
           },
 
           {
             "type": "section",
-            "content": "Tidak hanya instruktur, mentor pada kelas yang saya duduki juga sangat membantu dalam membantu para peserta dalam memahami konsep yang lebih mendalam. Beliau selalu siap jika ada peserta yang butuh sesi mentoring. Selain itu, beliau juga memberikan saran yang sangat membantu dalam memperbaiki kode yang ditulis oleh peserta."
+            "content": "Mentor di kelas yang saya ikuti menunjukkan kompetensi tinggi dalam membantu peserta memahami konsep secara mendalam. Mereka selalu siap memberikan bimbingan kapan pun diperlukan. Bahkan, jika ada mentee yang belum sempat mengikuti sesi mentoring, mentor secara proaktif akan menghubungi mereka untuk menjadwalkan sesi agar tidak ada peserta yang tertinggal."
           },
+
           {
             "type": "section",
             "title": "Assignments dan Capstone Project"
           },
+
           {
             "type": "section",
-            "content": ""
+            "content": "Pemberian assignments dan capstone project juga sangat membantu dalam memperdalam pemahaman peserta. Setiap tugas yang diberikan tidak semerta merta sebuah tugas untuk formalitas saja, tetapi juga memiliki value yang signifikan dalam memperkuat pemahaman peserta terhadap materi yang telah disampaikan."
+          },
+
+          {
+            "type": "section",
+            "content": "Capstone Project yang disediakan memiliki kualitas yang sangat baik. Proyek ini dirancang untuk mencakup seluruh materi yang telah dipelajari selama program, sehingga peserta dapat mengaplikasikan semua konsep yang telah dikuasai. Melalui proyek ini, peserta tidak hanya dapat menguji pemahaman mereka, tetapi juga memperkokoh keterampilan yang telah diperoleh, menjadikannya pengalaman belajar yang praktis dan relevan."
+          },
+
+          {
+            "type": "section",
+            "title": "Kesimpulan"
+          },
+
+          {
+            "type": "section",
+            "content": "Program ini memberikan pengalaman belajar yang sangat berharga bagi saya. Dari instruktur yang berkualitas hingga materi yang disampaikan dengan baik, semuanya memberikan kontribusi besar dalam peningkatan pengetahuan dan keterampilan saya dalam bidang ReactJS dan Frontend Development. Saya sangat merekomendasikan program ini bagi siapa pun yang ingin mendalami bidang tersebut. Terima kasih Hacktiv8 dan Kampus Merdeka atas kesempatan belajar yang luar biasa ini!"
+          },
+          {
+            "type": "achievement",
+            "title": "Skill Tercapai",
+            "skills": ["ReactJS Fundamental", "JavaScript ES6+", "Responsive Web Design", "State Management with Redux", "RESTful API Integration", "Component-Based Architecture", "React Hooks", "React Router", "Git Version Control", "Frontend Build Tools (Webpack, Babel)", "Testing with Jest and React Testing Library"]
           }
         ]
       }

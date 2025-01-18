@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { Book, Calendar, User, Tag, Globe } from "lucide-react";
 import { getBlogPostBySlug } from "../../../utils/blogUtils";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 const WritesPage = () => {
   const { slug } = useParams();
@@ -27,6 +29,19 @@ const WritesPage = () => {
     if (tags.length <= limit) return tags.join(", ");
     return `${tags.slice(0, limit).join(", ")} +${tags.length - limit} more`;
   };
+
+  const scrollRef = useRef(null);
+  const controls = useAnimation();
+
+  useEffect(() => {
+    const scrollAnimation = async () => {
+      await controls.start({ x: "-100%", transition: { duration: 20, ease: "linear" } });
+      controls.start({ x: "0%", transition: { duration: 0 } });
+      scrollAnimation();
+    };
+
+    scrollAnimation();
+  }, [controls]);
 
   return (
     <section className="min-h-screen bg-neutral-900 pt-16 sm:pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken">
@@ -71,13 +86,19 @@ const WritesPage = () => {
           {post.sections.map((section, index) => {
             if (section.type === "image" || section.type === "images") {
               const images = section.type === "image" ? [section.image] : section.images;
+            } else if (section.type === "achievement") {
               return (
-                <div key={index} className={`my-6 sm:my-8 grid ${images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
-                  {images.map((image, imgIndex) => (
-                    <div key={imgIndex} className="flex justify-center">
-                      <img src={image.src} alt={image.altText} className="rounded-lg border border-neutral-700/30 shadow-md max-w-full h-auto" />
-                    </div>
-                  ))}
+                <div key={index} className="my-8 overflow-hidden">
+                  <h3 className="text-xl sm:text-2xl font-bold text-neutral-200 mb-4">{section.title}</h3>
+                  <div className="relative w-full overflow-hidden" style={{ height: "50px" }}>
+                    <motion.div ref={scrollRef} className="absolute whitespace-nowrap" animate={controls}>
+                      {section.skills.map((skill, skillIndex) => (
+                        <span key={skillIndex} className="inline-block px-4 py-2 m-1 bg-neutral-800 text-neutral-200 rounded-full text-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </motion.div>
+                  </div>
                 </div>
               );
             }
