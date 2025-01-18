@@ -1,13 +1,25 @@
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Book, Calendar, User, Tag, Globe } from "lucide-react";
+import { Book, Calendar, User, Tag, Globe, Eye } from "lucide-react";
 import { getBlogPostBySlug } from "../../../utils/blogUtils";
-import { useState } from "react";
+import { getPageViews } from "../../../utils/analyticsAPI";
+import { useState, useEffect } from "react";
 
 const WritesPage = () => {
   const { slug } = useParams();
   const blogPost = getBlogPostBySlug(slug);
   const [currentLang, setCurrentLang] = useState("id");
+  const [viewCount, setViewCount] = useState(0);
+
+  useEffect(() => {
+    const fetchViewCount = async () => {
+      const pagePath = `/writes/${slug}`; // Sesuaikan dengan path artikel Anda
+      const views = await getPageViews(pagePath);
+      setViewCount(views);
+    };
+
+    fetchViewCount();
+  }, [slug]);
 
   if (!blogPost) {
     return (
@@ -63,6 +75,10 @@ const WritesPage = () => {
             <span className="flex items-start gap-2">
               <Tag size={14} className="flex-shrink-0 mt-1" />
               <span>{displayTags(post.metadata.tags)}</span>
+            </span>
+            <span className="flex items-center gap-2">
+              <Eye size={14} className="flex-shrink-0" />
+              <span className="truncate">{viewCount} views</span>
             </span>
           </div>
         </motion.div>
