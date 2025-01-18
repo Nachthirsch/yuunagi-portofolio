@@ -2,7 +2,6 @@ import "tailwindcss/tailwind.css";
 import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import LoadingScreen from "./components/loading";
-import { initGA } from "./utils/analytics";
 
 import Nav from "./components/nav";
 import Portfolio from "./components/pages/v1/portofolio";
@@ -14,10 +13,6 @@ import WritesV2 from "./components/pages/v2/WritesV2";
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    initGA();
-  }, []);
 
   useEffect(() => {
     // Simulasi loading time
