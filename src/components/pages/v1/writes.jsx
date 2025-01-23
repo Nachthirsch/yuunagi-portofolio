@@ -137,17 +137,23 @@ const WritesPage = () => {
             post.sections.map((section, index) => {
               if (!section) return null;
 
-              if (section.type === "image" || section.type === "images") {
-                const images = section.type === "image" ? [section.image] : section.images || [];
+              // Handle image sections
+              if (section.type === "image") {
+                // Handle both old and new image formats
+                const images = section.images || (section.image ? [section.image] : []);
+
+                if (images.length === 0) return null;
+
                 return (
                   <div key={index} className="my-6 sm:my-8">
                     <div className={`grid ${images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
                       {images.map(
                         (image, imgIndex) =>
-                          image && (
+                          image &&
+                          image.src && (
                             <div key={imgIndex} className="flex flex-col items-center">
                               <img src={image.src} alt={image.altText || ""} className={`rounded-lg border ${themeStyles.border} shadow-md max-w-full h-auto`} />
-                              <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText || ""}</p>
+                              {image.altText && <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText}</p>}
                             </div>
                           )
                       )}
@@ -156,6 +162,7 @@ const WritesPage = () => {
                 );
               }
 
+              // Handle regular sections
               return (
                 <div key={index} className="mb-6 sm:mb-8">
                   {section.title && <h2 className={`text-xl sm:text-2xl font-bold ${themeStyles.text} mb-3 sm:mb-4`}>{section.title}</h2>}

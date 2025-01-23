@@ -23,8 +23,16 @@ const BlogList = () => {
               <motion.div className="bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" whileHover={{ scale: 1.02 }}>
                 {post.thumbnail && (
                   <div className="relative h-48 sm:h-64 overflow-hidden">
-                    <img src={post.thumbnail} alt={post.title} className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 to-transparent opacity-70"></div>
+                    <img
+                      src={post.thumbnail}
+                      alt={post.title}
+                      className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-300"
+                      onError={(e) => {
+                        e.target.onerror = null; // Prevent infinite loop
+                        e.target.src = "/placeholder.jpg"; // Set default placeholder image
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/50 to-transparent"></div>
                   </div>
                 )}
                 <div className="p-6">

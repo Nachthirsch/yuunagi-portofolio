@@ -17,7 +17,7 @@
         "sections": [
           {
             "type": "introduction",
-            "content": "Untuk para pendengar setia J-Pop, bila mendengar nama Yoasobi, maka mungkin nama Yorushika tidak asing di telinga kalian. Siapa yang tidak mengenal dua artist dengan nama bertemakan malam tersebut, kedua grup musik ini telah mencuri hati banyak pendengar dengan karya-karya mereka yang penuh dengan kekuatan emosional.</p><p>Meskipun sudah ada banyak artikel tentang Yorushika di luar blog ini, saya ingin mengambil kesempatan ini untuk mempromosikan karya seni (baca: Yorushika) yang luar biasa ini sekali lagi, mungkin sedikit lebih dalam untuk penulisan lagu mereka.</p>"
+            "content": "<p>Untuk para pendengar setia J-Pop, bila mendengar nama Yoasobi, maka mungkin nama Yorushika tidak asing di telinga kalian. Siapa yang tidak mengenal dua artist dengan nama bertemakan malam tersebut, kedua grup musik ini telah mencuri hati banyak pendengar dengan karya-karya mereka yang penuh dengan kekuatan emosional.\n\nMeskipun sudah ada banyak artikel tentang Yorushika di luar blog ini, saya ingin mengambil kesempatan ini untuk mempromosikan karya seni (baca: Yorushika) yang luar biasa ini sekali lagi, mungkin sedikit lebih dalam untuk penulisan lagu mereka.</p>"
           },
           {
             "type": "section",
@@ -34,22 +34,24 @@
           },
           {
             "type": "section",
-            "content": "<p><p>Mari kita bahas tentang n-buna terlebih dahulu, seorang komposer dan gitaris yang merupakan otak di balik Yorushika. Sebelumnya, n-buna adalah seorang produser vocaloid yang menjadi alasan utama terbentuknya Yorushika. Jika harus mendeskripsikan n-buna, mungkin kata \"Genius\" cukup mewakili. Alasan di balik deskripsi ini adalah karena aransemen kompleks yang dia buat dan rangkaian kata (baca: lirik) puitis yang dia tulis.</p></p>"
+            "content": "<p>Mari kita bahas tentang n-buna terlebih dahulu, seorang komposer dan gitaris yang merupakan otak di balik Yorushika. Sebelumnya, n-buna adalah seorang produser vocaloid yang menjadi alasan utama terbentuknya Yorushika. Jika harus mendeskripsikan n-buna, mungkin kata \"Genius\" cukup mewakili. Alasan di balik deskripsi ini adalah karena aransemen kompleks yang dia buat dan rangkaian kata (baca: lirik) puitis yang dia tulis.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>n-buna memegang konsep ide <strong class=\"font-bold\">\"Art for art's sake\"</strong> dalam pembuatan karyanya. Baginya, karya yang dibuatnya adalah untuk seni itu sendiri, tanpa mempedulikan ketenaran atau apresiasi dari orang lain.</p></p>"
+            "content": "<p>n-buna memegang konsep ide <strong class=\"font-bold\">\"Art for art's sake\"</strong> dalam pembuatan karyanya. Baginya, karya yang dibuatnya adalah untuk seni itu sendiri, tanpa mempedulikan ketenaran atau apresiasi dari orang lain.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>n-buna sudah mulai berkarya sejak masa remajanya, dengan karya pertamanya berjudul <strong class=\"font-bold\">\"Alice to Trust\"</strong> yang dirilis di platform Nico Nico Douga pada tanggal 2 Maret 2012. Keluarga n-buna juga memiliki latar belakang musikal yang kuat.</p></p>"
+            "content": "<p>n-buna sudah mulai berkarya sejak masa remajanya, dengan karya pertamanya berjudul <strong class=\"font-bold\">\"Alice to Trust\"</strong> yang dirilis di platform Nico Nico Douga pada tanggal 2 Maret 2012. Keluarga n-buna juga memiliki latar belakang musikal yang kuat.</p>"
           },
           {
             "type": "image",
-            "image": {
-              "src": "https://lh3.googleusercontent.com/ufS1qifPTVxSR1_xBz6F75iymu07Qdgplp0Qp3uJBWZuSrpgP6GWFkog-99E8bvH6o5xAmnzzNENskFZ=w1440-h600-p-l90-rj",
-              "altText": "Plagiarism Album Banner"
-            }
+            "images": [
+              {
+                "src": "https://lh3.googleusercontent.com/ufS1qifPTVxSR1_xBz6F75iymu07Qdgplp0Qp3uJBWZuSrpgP6GWFkog-99E8bvH6o5xAmnzzNENskFZ=w1440-h600-p-l90-rj",
+                "altText": "Plagiarism Album Banner"
+              }
+            ]
           },
           {
             "type": "section",
@@ -58,18 +60,20 @@
           },
           {
             "type": "section",
-            "content": "<p><p>Mari kita jelajahi bagaimana n-buna memanfaatkan karya sastra sebagai inspirasi dalam menciptakan lagu-lagu Yorushika. Pendekatan yang diambil n-buna terbilang unik jika dibandingkan dengan sejumlah band atau artis J-Pop lainnya. Dalam karyanya, n-buna seringkali mengadopsi elemen-elemen dari karya literatur sebagai konsep dasar dalam pembuatan lagu-lagu Yorushika.</p></p>"
+            "content": "<p>Mari kita jelajahi bagaimana n-buna memanfaatkan karya sastra sebagai inspirasi dalam menciptakan lagu-lagu Yorushika. Pendekatan yang diambil n-buna terbilang unik jika dibandingkan dengan sejumlah band atau artis J-Pop lainnya. Dalam karyanya, n-buna seringkali mengadopsi elemen-elemen dari karya literatur sebagai konsep dasar dalam pembuatan lagu-lagu Yorushika.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>Sebagai contoh, lagu <strong class=\"font-bold\">\"Fireworks Beneath My Shoes\"</strong> dari album <strong class=\"font-bold\">\"The Summer Grass is Getting in My Way\"</strong> menampilkan pengaruh dari karya sastra <strong class=\"font-bold\">\"The Nighthawk Star\"</strong>, sebuah cerita pendek yang ditulis oleh <strong class=\"font-bold\">Kenji Miyazawa</strong>. Masih banyak lagu-lagu Yorushika yang n-buna buat dengan referensi literatur seperti lagu sebelumnya.</p></p>"
+            "content": "<p>Sebagai contoh, lagu <strong class=\"font-bold\">\"Fireworks Beneath My Shoes\"</strong> dari album <strong class=\"font-bold\">\"The Summer Grass is Getting in My Way\"</strong> menampilkan pengaruh dari karya sastra <strong class=\"font-bold\">\"The Nighthawk Star\"</strong>, sebuah cerita pendek yang ditulis oleh <strong class=\"font-bold\">Kenji Miyazawa</strong>. Masih banyak lagu-lagu Yorushika yang n-buna buat dengan referensi literatur seperti lagu sebelumnya.</p>"
           },
           {
             "type": "image",
-            "image": {
-              "src": "https://m.media-amazon.com/images/M/MV5BOWU0MmQ2OTgtYTFlMi00MGNkLWEwZjYtYWI0ZTE1NjA5ZjQyXkEyXkFqcGc@._V1_.jpg",
-              "altText": "The Nighthawk Star by Ryuu Kato"
-            }
+            "images": [
+              {
+                "src": "https://m.media-amazon.com/images/M/MV5BOWU0MmQ2OTgtYTFlMi00MGNkLWEwZjYtYWI0ZTE1NjA5ZjQyXkEyXkFqcGc@._V1_.jpg",
+                "altText": "The Nighthawk Star Illustration by Ryuu Kato"
+              }
+            ]
           },
           {
             "type": "section",
@@ -78,19 +82,28 @@
           },
           {
             "type": "section",
-            "content": "<p><p>Jika kalian menggemari karya literatur dan genre J-Pop, saya akan sangat merekomendasikan kalian mendengarkan karya-karya mereka. Karakteristik lore dalam lagu-lagu Yorushika dapat dijelaskan secara singkat dengan tema \"Pertemuan dan Perpisahan\" atau \"Kematian dan Reinkarnasi\".</p></p>"
+            "content": "<p>Jika kalian menggemari karya literatur dan genre J-Pop, saya akan sangat merekomendasikan kalian mendengarkan karya-karya mereka. Karakteristik lore dalam lagu-lagu Yorushika dapat dijelaskan secara singkat dengan tema \"Pertemuan dan Perpisahan\" atau \"Kematian dan Reinkarnasi\".</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>n-buna sering kali mengaitkan karyanya dengan karyanya yang lain, menciptakan hubungan yang melankolis antara mereka. Hampir seluruh lagu Yorushika memiliki hubungan parallel, bahkan beberapa fans berteori bahwa lagu-lagu Yorushika yang sekarang terhubung dengan lagu-lagu vocaloid yang di buat n-buna dahulu sebelum terbentuknya Yorushika.</p></p>"
+            "content": "<p>n-buna sering kali mengaitkan karyanya dengan karyanya yang lain, menciptakan hubungan yang melankolis antara mereka. Hampir seluruh lagu Yorushika memiliki hubungan parallel, bahkan beberapa fans berteori bahwa lagu-lagu Yorushika yang sekarang terhubung dengan lagu-lagu vocaloid yang di buat n-buna dahulu sebelum terbentuknya Yorushika.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>Sebagai contoh, album mereka <strong class=\"font-bold\">Dakaboku</strong> dan <strong class=\"font-bold\">Elma</strong> memiliki keterhubungan yang sangat kental. Pada dasarnya, ceritanya adalah tentang Amy (tokoh utama Dakaboku) yang melakukan perjalanan ke Swedia, dan kemudian Elma melakukan perjalanan yang sama satu tahun kemudian.</p></p>"
+            "content": "<p>Sebagai contoh, album mereka <strong class=\"font-bold\">Dakaboku</strong> dan <strong class=\"font-bold\">Elma</strong> memiliki keterhubungan yang sangat kental. Pada dasarnya, ceritanya adalah tentang Amy (tokoh utama Dakaboku) yang melakukan perjalanan ke Swedia, dan kemudian Elma melakukan perjalanan yang sama satu tahun kemudian.</p>"
           },
           {
-            "type": "images",
-            "content": ""
+            "type": "image",
+            "images": [
+              {
+                "src": "https://i.ebayimg.com/00/s/MTUwMFgxNTAw/z/nlQAAOSwjmJkMFji/$_57.JPG?set_id=8800005007",
+                "altText": "Dakara boku wa ongaku wo yameta Album Cover"
+              },
+              {
+                "src": "https://cdn-images.dzcdn.net/images/cover/de1b5d18a3ac657b48489bc584977b63/0x1900-000000-80-0-0.jpg",
+                "altText": "Elma Album Cover"
+              }
+            ]
           },
           {
             "type": "section",
@@ -103,15 +116,15 @@
           },
           {
             "type": "section",
-            "content": "<p><p>Lirik-lirik lagu mereka tak hanya mengungkapkan keindahan kata-kata, tetapi juga menggambarkan realitas hidup yang bisa dirasakan oleh siapa pun. Hal ini memungkinkan para penggemar untuk merasa terhubung secara emosional dengan karya-karya mereka, menambahkan kedalaman makna pada setiap lagu yang mereka dengarkan.</p></p>"
+            "content": "<p>Lirik-lirik lagu mereka tak hanya mengungkapkan keindahan kata-kata, tetapi juga menggambarkan realitas hidup yang bisa dirasakan oleh siapa pun. Hal ini memungkinkan para penggemar untuk merasa terhubung secara emosional dengan karya-karya mereka, menambahkan kedalaman makna pada setiap lagu yang mereka dengarkan.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>Saya akan memberikan sebuah contoh dimana lirik mereka memiliki permainan kata yang cukup puitis bagi saya</p></p>"
+            "content": "<p>Saya akan memberikan sebuah contoh dimana lirik mereka memiliki permainan kata yang cukup puitis bagi saya</p>"
           },
           {
             "type": "section",
-            "content": "<p><div class=\"bg-neutral-800/30 p-6 rounded-lg border border-neutral-700/30\"><h2 class=\"text-2xl font-semibold text-neutral-200 mb-4\">\"Fireworks Beneath my Shoes\"</h4><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 1</h4><p class=\"text-neutral-400 italic\">Bunga mekar di bawah sepatuku</p> <p class=\"text-neutral-400 italic\">Bunga api yang besar bermekaran</p><p class=\"text-neutral-400 italic\">\"Aku akan meninggalkan seluruh perasaanku\", itulah pikirku</p><p class=\"text-neutral-400 italic font-bold  mb-8\">Musim panas yang seperti itu pun terlihat</p><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 2</h4> <p class=\"text-neutral-400 italic\">Bunga selalu berbunyi di bawahku</p><p class=\"text-neutral-400 italic\">Bunga api yang besar pun berbunyi</p> <p class=\"text-neutral-400 italic\">\"Suara saja bisa membuatku menangis\", itulah pikirku</p><p class=\"text-neutral-400 italic font-bold mb-8\">Musim panas yang seperti itu pun terdengar</p><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 3</h4> <p class=\"text-neutral-400 italic\">Bunga mekar di langit musim panas</p> <p class=\"text-neutral-400 italic\">Bunga api yang besar pun mekar</p><p class=\"text-neutral-400 italic\">\"Aku ingin terus menangis selamanya\", itulah pikirku</p><p class=\"text-neutral-400 italic font-bold\">Musim panas yang seperti itu pun menghilang</p></div></p>"
+            "content": "<p><div class=\"bg-neutral-800/30 p-6 rounded-lg border border-neutral-700/30\"><h2 class=\"text-2xl font-semibold text-neutral-200 mb-4\">\"Fireworks Beneath my Shoes\"</h4><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 1</h4><p class=\"text-neutral-400 italic\">Bunga mekar di bawah sepatuku\n\n <p class=\"text-neutral-400 italic\">Bunga api yang besar bermekaran\n\n<p class=\"text-neutral-400 italic\">\"Aku akan meninggalkan seluruh perasaanku\", itulah pikirku\n\n<p class=\"text-neutral-400 italic font-bold  mb-8\">Musim panas yang seperti itu pun terlihat\n\n<h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 2</h4> <p class=\"text-neutral-400 italic\">Bunga selalu berbunyi di bawahku\n\n<p class=\"text-neutral-400 italic\">Bunga api yang besar pun berbunyi\n\n <p class=\"text-neutral-400 italic\">\"Suara saja bisa membuatku menangis\", itulah pikirku\n\n<p class=\"text-neutral-400 italic font-bold mb-8\">Musim panas yang seperti itu pun terdengar\n\n<h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 3</h4> <p class=\"text-neutral-400 italic\">Bunga mekar di langit musim panas\n\n <p class=\"text-neutral-400 italic\">Bunga api yang besar pun mekar\n\n<p class=\"text-neutral-400 italic\">\"Aku ingin terus menangis selamanya\", itulah pikirku\n\n<p class=\"text-neutral-400 italic font-bold\">Musim panas yang seperti itu pun menghilang\n\n</div></p>"
           },
           {
             "type": "section",
@@ -119,10 +132,12 @@
           },
           {
             "type": "image",
-            "image": {
-              "src": "https://ogre.natalie.mu/media/news/music/2017/0421/yorushika_MV3.jpg?imwidth=750&imdensity=1",
-              "altText": "Kutsu no Hanabi Thumbnail"
-            }
+            "images": [
+              {
+                "src": "https://cdnx.natalie.mu/media/news/music/2017/0421/yorushika_MV1_fixw_730_hq.jpg",
+                "altText": "Kutsu no Hanabi Thumbnail"
+              }
+            ]
           },
           {
             "type": "section",
@@ -147,7 +162,7 @@
         "sections": [
           {
             "type": "introduction",
-            "content": "<p><p>For loyal J-Pop listeners, when hearing the name Yoasobi, the name Yorushika might not be unfamiliar to your ears. Who doesn't know these two artists with night-themed names? These two music groups have captured the hearts of many listeners with their works filled with emotional strength.</p><p>Although there have been several articles about Yorushika outside this blog, I want to take this opportunity to promote the extraordinary artistry (read: Yorushika) once again, perhaps diving a bit deeper into their songwriting.</p><p>You could say I am one of their loyal listeners. This post will only contain my appreciation for them and a little explanation of the lore in their works.</p></p>"
+            "content": "<p>For loyal J-Pop listeners, when hearing the name Yoasobi, the name Yorushika might not be unfamiliar to your ears. Who doesn't know these two artists with night-themed names? These two music groups have captured the hearts of many listeners with their works filled with emotional strength.\n\nAlthough there have been several articles about Yorushika outside this blog, I want to take this opportunity to promote the extraordinary artistry (read: Yorushika) once again, perhaps diving a bit deeper into their songwriting.\n\nYou could say I am one of their loyal listeners. This post will only contain my appreciation for them and a little explanation of the lore in their works.</p>"
           },
           {
             "type": "disclaimer",
@@ -160,22 +175,24 @@
           },
           {
             "type": "section",
-            "content": "<p><p>Let's talk about n-buna first, a composer and guitarist who is the mastermind behind Yorushika. Previously, n-buna was a Vocaloid producer, which became the primary reason for Yorushika's formation. If I had to describe n-buna, perhaps the word \"Genius\" would suffice. The reason behind this description is due to the complex arrangements he creates and the poetic strings of words (read: lyrics) he writes.</p></p>"
+            "content": "<p>Let's talk about n-buna first, a composer and guitarist who is the mastermind behind Yorushika. Previously, n-buna was a Vocaloid producer, which became the primary reason for Yorushika's formation. If I had to describe n-buna, perhaps the word \"Genius\" would suffice. The reason behind this description is due to the complex arrangements he creates and the poetic strings of words (read: lyrics) he writes.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>n-buna embraces the concept of <strong class=\"font-bold\">\"Art for art's sake\"</strong> in creating his works. For him, the works he creates are for the sake of art itself, without concerning himself with fame or appreciation from others.</p></p>"
+            "content": "<p>n-buna embraces the concept of <strong class=\"font-bold\">\"Art for art's sake\"</strong> in creating his works. For him, the works he creates are for the sake of art itself, without concerning himself with fame or appreciation from others.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>n-buna has been creating since his teenage years, with his first work titled <strong class=\"font-bold\">\"Alice to Trust\"</strong>, which was released on the Nico Nico Douga platform on March 2, 2012. n-buna's family also has a strong musical background.</p></p>"
+            "content": "<p>n-buna has been creating since his teenage years, with his first work titled <strong class=\"font-bold\">\"Alice to Trust\"</strong>, which was released on the Nico Nico Douga platform on March 2, 2012. n-buna's family also has a strong musical background.</p>"
           },
           {
             "type": "image",
-            "image": {
-              "src": "https://lh3.googleusercontent.com/ufS1qifPTVxSR1_xBz6F75iymu07Qdgplp0Qp3uJBWZuSrpgP6GWFkog-99E8bvH6o5xAmnzzNENskFZ=w1440-h600-p-l90-rj",
-              "altText": "Plagiarism Album Banner"
-            }
+            "images": [
+              {
+                "src": "https://lh3.googleusercontent.com/ufS1qifPTVxSR1_xBz6F75iymu07Qdgplp0Qp3uJBWZuSrpgP6GWFkog-99E8bvH6o5xAmnzzNENskFZ=w1440-h600-p-l90-rj",
+                "altText": "Plagiarism Album Banner"
+              }
+            ]
           },
           {
             "type": "section",
@@ -184,18 +201,20 @@
           },
           {
             "type": "section",
-            "content": "<p><p>Let's explore how n-buna utilizes literature as inspiration in creating Yorushika's songs. The approach n-buna takes is quite unique compared to several other J-Pop bands or artists. In his works, n-buna often adopts elements from literary works as the foundational concept for creating Yorushika's songs.</p></p>"
+            "content": "<p>Let's explore how n-buna utilizes literature as inspiration in creating Yorushika's songs. The approach n-buna takes is quite unique compared to several other J-Pop bands or artists. In his works, n-buna often adopts elements from literary works as the foundational concept for creating Yorushika's songs.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>For example, the song <strong class=\"font-bold\">\"Fireworks Beneath My Shoes\"</strong> from the album <strong class=\"font-bold\">\"The Summer Grass is Getting in My Way\"</strong> showcases influences from the literary work <strong class=\"font-bold\">\"The Nighthawk Star\"</strong>, a short story written by <strong class=\"font-bold\">Kenji Miyazawa</strong>. There are many other Yorushika songs that n-buna created with literary references like the aforementioned one.</p></p>"
+            "content": "<p>For example, the song <strong class=\"font-bold\">\"Fireworks Beneath My Shoes\"</strong> from the album <strong class=\"font-bold\">\"The Summer Grass is Getting in My Way\"</strong> showcases influences from the literary work <strong class=\"font-bold\">\"The Nighthawk Star\"</strong>, a short story written by <strong class=\"font-bold\">Kenji Miyazawa</strong>. There are many other Yorushika songs that n-buna created with literary references like the aforementioned one.</p>"
           },
           {
             "type": "image",
-            "image": {
-              "src": "https://m.media-amazon.com/images/M/MV5BOWU0MmQ2OTgtYTFlMi00MGNkLWEwZjYtYWI0ZTE1NjA5ZjQyXkEyXkFqcGc@._V1_.jpg",
-              "altText": "The Nighthawk Star by Ryuu Kato"
-            }
+            "images": [
+              {
+                "src": "https://m.media-amazon.com/images/M/MV5BOWU0MmQ2OTgtYTFlMi00MGNkLWEwZjYtYWI0ZTE1NjA5ZjQyXkEyXkFqcGc@._V1_.jpg",
+                "altText": "The Nighthawk Star Illustration by Ryuu Kato"
+              }
+            ]
           },
           {
             "type": "section",
@@ -204,19 +223,28 @@
           },
           {
             "type": "section",
-            "content": "<p><p>If you enjoy literary works and the J-Pop genre, I would highly recommend listening to their works. The lore characteristics in Yorushika's songs can be briefly described with themes of \"Encounters and Farewells\" or \"Death and Reincarnation.\"</p></p>"
+            "content": "<p>If you enjoy literary works and the J-Pop genre, I would highly recommend listening to their works. The lore characteristics in Yorushika's songs can be briefly described with themes of \"Encounters and Farewells\" or \"Death and Reincarnation.\"</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>n-buna often connects his works with one another, creating a melancholic relationship between them. Almost all of Yorushika's songs have parallel connections, and some fans even theorize that Yorushika's current songs are linked to the Vocaloid songs n-buna created before Yorushika was formed.</p></p>"
+            "content": "<p>n-buna often connects his works with one another, creating a melancholic relationship between them. Almost all of Yorushika's songs have parallel connections, and some fans even theorize that Yorushika's current songs are linked to the Vocaloid songs n-buna created before Yorushika was formed.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>For example, their albums <strong class=\"font-bold\">Dakaboku</strong> and <strong class=\"font-bold\">Elma</strong> are deeply interconnected. Essentially, the story is about Amy (the main character of Dakaboku) who travels to Sweden, and then Elma takes the same journey one year later.</p></p>"
+            "content": "<p>For example, their albums <strong class=\"font-bold\">Dakaboku</strong> and <strong class=\"font-bold\">Elma</strong> are deeply interconnected. Essentially, the story is about Amy (the main character of Dakaboku) who travels to Sweden, and then Elma takes the same journey one year later.</p>"
           },
           {
-            "type": "images",
-            "content": ""
+            "type": "image",
+            "images": [
+              {
+                "src": "https://i.ebayimg.com/00/s/MTUwMFgxNTAw/z/nlQAAOSwjmJkMFji/$_57.JPG?set_id=8800005007",
+                "altText": "Dakara boku wa ongaku wo yameta Album Cover"
+              },
+              {
+                "src": "https://cdn-images.dzcdn.net/images/cover/de1b5d18a3ac657b48489bc584977b63/0x1900-000000-80-0-0.jpg",
+                "altText": "Elma Album Cover"
+              }
+            ]
           },
           {
             "type": "section",
@@ -229,15 +257,15 @@
           },
           {
             "type": "section",
-            "content": "<p><p>The lyrics of their songs not only reveal the beauty of words but also depict the realities of life that anyone can relate to. This allows fans to feel emotionally connected to their works, adding depth to the meaning of every song they listen to.</p></p>"
+            "content": "<p>The lyrics of their songs not only reveal the beauty of words but also depict the realities of life that anyone can relate to. This allows fans to feel emotionally connected to their works, adding depth to the meaning of every song they listen to.</p>"
           },
           {
             "type": "section",
-            "content": "<p><p>I will provide an example where their lyrics have a poetic wordplay that resonates with me.</p></p>"
+            "content": "<p>I will provide an example where their lyrics have a poetic wordplay that resonates with me.</p>"
           },
           {
             "type": "section",
-            "content": "<p><div class=\"bg-neutral-800/30 p-6 rounded-lg border border-neutral-700/30\"><h2 class=\"text-2xl font-semibold text-neutral-200 mb-4\">\"Fireworks Beneath my Shoes\"</h4><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 1</h4><p class=\"text-neutral-400 italic\">Beneath my shoes, flowers bloomed</p> <p class=\"text-neutral-400 italic\">Giant flowers of fire bloomed</p><p class=\"text-neutral-400 italic\">\"I’ll leave behind everything that’s in my heart\", I think</p><p class=\"text-neutral-400 italic font-bold  mb-8\">That’s the kind of summer I could see.</p><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 2</h4> <p class=\"text-neutral-400 italic\">Flowers were always ringing out beneath me</p><p class=\"text-neutral-400 italic\">Giant flowers of fire were ringing out</p> <p class=\"text-neutral-400 italic\">\"The noise alone makes me cry\", I think</p><p class=\"text-neutral-400 italic font-bold mb-8\">That’s the kind of summer I heard</p><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 3</h4> <p class=\"text-neutral-400 italic\">In the summer sky, flowers bloomed</p> <p class=\"text-neutral-400 italic\">Giant flowers of fire bloomed</p><p class=\"text-neutral-400 italic\">\"I want to keep crying forever\", I think</p><p class=\"text-neutral-400 italic font-bold\">That’s the kind of summer that vanished</p></div></p>"
+            "content": "<p><div class=\"bg-neutral-800/30 p-6 rounded-lg border border-neutral-700/30\"><h2 class=\"text-2xl font-semibold text-neutral-200 mb-4\">\"Fireworks Beneath my Shoes\"</h4><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 1</h4><p class=\"text-neutral-400 italic\">Beneath my shoes, flowers bloomed\n\n <p class=\"text-neutral-400 italic\">Giant flowers of fire bloomed\n\n<p class=\"text-neutral-400 italic\">\"I’ll leave behind everything that’s in my heart\", I think\n\n<p class=\"text-neutral-400 italic font-bold  mb-8\">That’s the kind of summer I could see.\n\n<h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 2</h4> <p class=\"text-neutral-400 italic\">Flowers were always ringing out beneath me\n\n<p class=\"text-neutral-400 italic\">Giant flowers of fire were ringing out\n\n <p class=\"text-neutral-400 italic\">\"The noise alone makes me cry\", I think\n\n<p class=\"text-neutral-400 italic font-bold mb-8\">That’s the kind of summer I heard\n\n<h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 3</h4> <p class=\"text-neutral-400 italic\">In the summer sky, flowers bloomed\n\n <p class=\"text-neutral-400 italic\">Giant flowers of fire bloomed\n\n<p class=\"text-neutral-400 italic\">\"I want to keep crying forever\", I think\n\n<p class=\"text-neutral-400 italic font-bold\">That’s the kind of summer that vanished\n\n</div></p>"
           },
           {
             "type": "section",
@@ -245,10 +273,12 @@
           },
           {
             "type": "image",
-            "image": {
-              "src": "https://ogre.natalie.mu/media/news/music/2017/0421/yorushika_MV3.jpg?imwidth=750&imdensity=1",
-              "altText": "Kutsu no Hanabi Thumbnail"
-            }
+            "images": [
+              {
+                "src": "https://cdnx.natalie.mu/media/news/music/2017/0421/yorushika_MV1_fixw_730_hq.jpg",
+                "altText": "Kutsu no Hanabi Thumbnail"
+              }
+            ]
           },
           {
             "type": "section",
@@ -327,6 +357,20 @@
             "type": "section",
             "content": "<p>Program ini memberikan pengalaman belajar yang sangat berharga bagi saya. Dari instruktur yang berkualitas hingga materi yang disampaikan dengan baik, semuanya memberikan kontribusi besar dalam peningkatan pengetahuan dan keterampilan saya dalam bidang ReactJS dan Frontend Development. Saya sangat merekomendasikan program ini bagi siapa pun yang ingin mendalami bidang tersebut. Terima kasih Hacktiv8 dan Kampus Merdeka atas kesempatan belajar yang luar biasa ini!</p>",
             "title": "Kesimpulan"
+          },
+          {
+            "type": "image",
+            "image": {
+              "src": "https://media.licdn.com/dms/image/v2/D562DAQHePggYbWlqoA/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1737448452738?e=1738224000&v=beta&t=1hEP7OBmr_Al2Ta0oQe4SNjfuIukOjYpJZWo8j0DSZI",
+              "altText": "Seritifikat Mitra"
+            }
+          },
+          {
+            "type": "image",
+            "image": {
+              "src": "",
+              "altText": ""
+            }
           }
         ]
       }
