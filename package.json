@@ -34,6 +34,7 @@
     "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.4",
     "tailwind-scrollbar-hide": "^1.1.7",
+    "sharp": "^0.32.6",
     "tsparticles": "^3.5.0"
   },
   "devDependencies": {
