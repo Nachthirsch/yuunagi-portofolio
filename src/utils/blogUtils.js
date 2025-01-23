@@ -58,3 +58,43 @@ const getExcerpt = (translation, maxLength = 150) => {
   const plainText = introSection.content.replace(/<[^>]+>/g, "");
   return plainText.length > maxLength ? plainText.slice(0, maxLength) + "..." : plainText;
 };
+
+// Add these utility functions
+export const filterBlogPosts = (posts, filters) => {
+  const { searchQuery, selectedTags, selectedCategory, selectedLanguage } = filters;
+
+  return posts.filter((post) => {
+    // Search query matching
+    const searchMatch = !searchQuery || post.title.toLowerCase().includes(searchQuery.toLowerCase()) || post.excerpt.toLowerCase().includes(searchQuery.toLowerCase());
+
+    // Tags filtering
+    const tagsMatch = !selectedTags?.length || post.tags.some((tag) => selectedTags.includes(tag));
+
+    // Category filtering
+    const categoryMatch = !selectedCategory || post.metadata?.category === selectedCategory;
+
+    // Language filtering
+    const languageMatch = !selectedLanguage || post.languages.includes(selectedLanguage);
+
+    return searchMatch && tagsMatch && categoryMatch && languageMatch;
+  });
+};
+
+// Get unique categories and tags from all posts
+export const getFilterOptions = (posts) => {
+  const tags = new Set();
+  const categories = new Set();
+  const languages = new Set();
+
+  posts.forEach((post) => {
+    post.tags?.forEach((tag) => tags.add(tag));
+    post.metadata?.category && categories.add(post.metadata.category);
+    post.languages?.forEach((lang) => languages.add(lang));
+  });
+
+  return {
+    tags: Array.from(tags),
+    categories: Array.from(categories),
+    languages: Array.from(languages),
+  };
+};

@@ -386,7 +386,8 @@
         "sections": [
           {
             "type": "section",
-            "content": "<p>“Your voice is a melody, a sweet refrain,<br>A symphony of joy, a soothing refrain.<br>It fills the air with serenity and comfort,<br>A soothing song for me who listen it.</p>"
+            "content": "<p>“Your voice is a melody, a sweet refrain,<br>A symphony of joy, a soothing refrain.<br>It fills the air with serenity and comfort,<br>A soothing song for me who listen it.</p>",
+            "title": "A Song for my Soul"
           },
           {
             "type": "section",
@@ -395,6 +396,37 @@
           {
             "type": "section",
             "content": "<p>Your face is moon, a pleasant scenery,<br>Soothing my body as I gaze it,<br>Calming my mind amidst agitation.”</p>"
+          }
+        ]
+      }
+    }
+  },
+  "Cigarette-and-Voice": {
+    "translations": {
+      "en": {
+        "title": "Cigarette and Voice",
+        "metadata": {
+          "date": "2025-01-23",
+          "author": "yuunagi | Handra Putratama Tanjung",
+          "category": "Poetry",
+          "tags": [
+            "Poem",
+            "Poetry"
+          ]
+        },
+        "sections": [
+          {
+            "type": "section",
+            "content": "<p>“My cigarette, your voice,<br>the relax, the comfort.</p>",
+            "title": "Cigarette and Voice"
+          },
+          {
+            "type": "section",
+            "content": "<p>Thoughts and Restlessness,<br>Slowly fades away</p>"
+          },
+          {
+            "type": "section",
+            "content": "<p>So promise me,<br>That your voice won’t fade away<br>just as I will never leave my cigarette”</p>"
           }
         ]
       }

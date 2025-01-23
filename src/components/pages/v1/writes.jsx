@@ -1,8 +1,10 @@
+/* eslint-disable react/jsx-no-undef */
 import { useParams } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Book, Calendar, User, Tag, Globe, Sun, Moon } from "lucide-react";
 import { getBlogPostBySlug } from "../../../utils/blogUtils";
 import { useState, useEffect } from "react";
+import TableOfContents from "../../common/TableOfContents";
 
 const WritesPage = () => {
   const { slug } = useParams();
@@ -131,63 +133,74 @@ const WritesPage = () => {
             </span>
           </div>
         </motion.div>
-
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className={`prose ${isDark ? "prose-invert" : ""} max-w-none`}>
-          {post.sections &&
-            post.sections.map((section, index) => {
-              if (!section) return null;
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="flex flex-col lg:flex-row gap-8">
+              <aside className="lg:w-64">
+                <TableOfContents sections={post.sections} themeStyles={themeStyles} />
+              </aside>
 
-              // Handle image sections
-              if (section.type === "image") {
-                // Handle both old and new image formats
-                const images = section.images || (section.image ? [section.image] : []);
+              <div className="flex-grow">
+                {post.sections &&
+                  post.sections.map((section, index) => {
+                    if (!section) return null;
 
-                if (images.length === 0) return null;
+                    const sectionId = section.title ? section.title.toLowerCase().replace(/\s+/g, "-") : `section-${index}`;
 
-                return (
-                  <div key={index} className="my-6 sm:my-8">
-                    <div className={`grid ${images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
-                      {images.map(
-                        (image, imgIndex) =>
-                          image &&
-                          image.src && (
-                            <div key={imgIndex} className="flex flex-col items-center">
-                              <img src={image.src} alt={image.altText || ""} className={`rounded-lg border ${themeStyles.border} shadow-md max-w-full h-auto`} />
-                              {image.altText && <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText}</p>}
-                            </div>
-                          )
-                      )}
-                    </div>
-                  </div>
-                );
-              }
+                    // Handle image sections
+                    if (section.type === "image") {
+                      // Handle both old and new image formats
+                      const images = section.images || (section.image ? [section.image] : []);
 
-              // Handle regular sections
-              return (
-                <div key={index} className="mb-6 sm:mb-8">
-                  {section.title && <h2 className={`text-xl sm:text-2xl font-bold ${themeStyles.text} mb-3 sm:mb-4`}>{section.title}</h2>}
-                  <div className={`space-y-4 sm:space-y-6 ${themeStyles.content} text-base sm:text-lg leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
-                </div>
-              );
-            })}
+                      if (images.length === 0) return null;
 
-          {post.references && post.references.length > 0 && (
-            <div className={`mt-8 sm:mt-12 pt-6 sm:pt-8 border-t ${themeStyles.border}`}>
-              <h3 className={`text-lg sm:text-xl font-bold ${themeStyles.text} mb-3 sm:mb-4`}>References</h3>
-              <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
-                {post.references.map(
-                  (ref, index) =>
-                    ref && (
-                      <li key={index} className={themeStyles.subtext}>
-                        <a href={ref.url} target="_blank" rel="noopener noreferrer" className={`${themeStyles.hover} transition-colors`}>
-                          {ref.title || "Untitled Reference"}
-                        </a>
-                      </li>
-                    )
-                )}
-              </ul>
+                      return (
+                        <div key={index} className="my-6 sm:my-8">
+                          <div className={`grid ${images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
+                            {images.map(
+                              (image, imgIndex) =>
+                                image &&
+                                image.src && (
+                                  <div key={imgIndex} className="flex flex-col items-center">
+                                    <img src={image.src} alt={image.altText || ""} className={`rounded-lg border ${themeStyles.border} shadow-md max-w-full h-auto`} />
+                                    {image.altText && <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText}</p>}
+                                  </div>
+                                )
+                            )}
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    // Handle regular sections with added id
+                    return (
+                      <div key={index} id={sectionId} className="mb-6 sm:mb-8 scroll-mt-24">
+                        {section.title && <h2 className={`text-xl sm:text-2xl font-bold ${themeStyles.text} mb-3 sm:mb-4`}>{section.title}</h2>}
+                        <div className={`space-y-4 sm:space-y-6 ${themeStyles.content} text-base sm:text-lg leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                      </div>
+                    );
+                  })}
+              </div>
             </div>
-          )}
+
+            {post.references && post.references.length > 0 && (
+              <div className={`mt-8 sm:mt-12 pt-6 sm:pt-8 border-t ${themeStyles.border}`}>
+                <h3 className={`text-lg sm:text-xl font-bold ${themeStyles.text} mb-3 sm:mb-4`}>References</h3>
+                <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
+                  {post.references.map(
+                    (ref, index) =>
+                      ref && (
+                        <li key={index} className={themeStyles.subtext}>
+                          <a href={ref.url} target="_blank" rel="noopener noreferrer" className={`${themeStyles.hover} transition-colors`}>
+                            {ref.title || "Untitled Reference"}
+                          </a>
+                        </li>
+                      )
+                  )}
+                </ul>
+              </div>
+            )}
+          </div>
         </motion.div>
       </div>
     </section>
