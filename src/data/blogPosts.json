@@ -370,10 +370,10 @@
       }
     }
   },
-  "a-song-for-my-soul": {
+  "words": {
     "translations": {
       "en": {
-        "title": "A Song for my Soul",
+        "title": "words that i wrote",
         "metadata": {
           "date": "2025-01-24",
           "author": "yuunagi | Handra Putratama Tanjung",
@@ -396,37 +396,55 @@
           {
             "type": "section",
             "content": "<p>Your face is moon, a pleasant scenery,<br>Soothing my body as I gaze it,<br>Calming my mind amidst agitation.”</p>"
-          }
-        ]
-      }
-    }
-  },
-  "Cigarette-and-Voice": {
-    "translations": {
-      "en": {
-        "title": "Cigarette and Voice",
-        "metadata": {
-          "date": "2025-01-23",
-          "author": "yuunagi | Handra Putratama Tanjung",
-          "category": "Poetry",
-          "tags": [
-            "Poem",
-            "Poetry"
-          ]
-        },
-        "sections": [
+          },
           {
             "type": "section",
             "content": "<p>“My cigarette, your voice,<br>the relax, the comfort.</p>",
-            "title": "Cigarette and Voice"
+            "title": "Ciggarete and Voice"
           },
           {
             "type": "section",
-            "content": "<p>Thoughts and Restlessness,<br>Slowly fades away</p>"
+            "content": "<p>Thoughts and Restlessness,<br>Slowly fades away So promise me,</p>"
           },
           {
             "type": "section",
-            "content": "<p>So promise me,<br>That your voice won’t fade away<br>just as I will never leave my cigarette”</p>"
+            "content": "<p>That your voice won't fade away just as I will never leave my cigarette\"</p>"
+          },
+          {
+            "type": "section",
+            "content": "<p>\"In the gentle rain of dawn,<br>With a warm cup of coffee in hand,<br>My mind drifts away,<br>Deep into a world of thought.</p>",
+            "title": "Rain of Dawn"
+          },
+          {
+            "type": "section",
+            "content": "<p>Where laughter and sorrow mix,<br>And dreams run wild,<br>With a spark of light that lingers,<br>You remain a constant presence.</p>"
+          },
+          {
+            "type": "section",
+            "content": "<p>This poem is not about me,<br>Nor is it about you,<br>For when the moon refuses to shine,<br>It is for myself that I pen this poem\"</p>"
+          },
+          {
+            "type": "section",
+            "content": "<p>“Rest your voice on me,<br>I will swallow all your words.</p>",
+            "title": "unnamed"
+          },
+          {
+            "type": "section",
+            "content": "<p>You,<br>Who taught me to hope,<br>Aren’t leave me to face this rain alone,<br>are you?</p>"
+          },
+          {
+            "type": "section",
+            "content": "<p>You,<br>Who taught me to words,<br>Wouldn’t teach me to say Goodbye,<br>would you?”</p>"
+          },
+          {
+            "type": "section",
+            "content": "<p>i see you in <i>every poem</i> i read<br>i see you in <i>every word</i> i speak</p>",
+            "title": "unnamed #2"
+          },
+          {
+            "type": "section",
+            "content": "<p>You, the one who guide me in the darkness of the night, say I love you to<br>the moon!<br>You, who keep me warm in the cold of the rain, say I love you to the sun!<br>You, who keep my scenery beautiful, say I love you to the flower!<br>You, who cover me when I feel sad, say I love you to the rain!</p>",
+            "title": "The Time when the Moon shines"
           }
         ]
       }
