@@ -7,10 +7,12 @@ import ActivitiesTimeline from "../../portofolio/activities";
 import ProjectSection from "../../portofolio/projects";
 import TechStack from "../../portofolio/tech_stacks";
 import Footer from "../../portofolio/footer";
+import TableOfContents from "../../portofolio/TableOfContents";
 
 const Portfolio = () => {
   return (
     <div className="select-none">
+      <TableOfContents />
       <Header />
       <div id="experience">
         <Experience />

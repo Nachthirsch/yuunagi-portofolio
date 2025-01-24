@@ -1,5 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
 import { motion } from "framer-motion";
-import yorushika from "../../assets/yorushika.svg";
 import me from "../../assets/me_1.jpg";
 
 const ImageSec = () => (
@@ -25,42 +25,7 @@ const ImageSec = () => (
           <p className="text-base sm:text-lg text-neutral-400 mb-4 sm:mb-6 leading-relaxed">
             I love language exchange! I can hold daily conversations in <span className="text-white">English</span> , although I&apos;m still working on my grammar. I also know a little <span className="text-white">Japanese</span>, even if it&apos;s at a beginner level!
           </p>
-          <p className="text-base sm:text-lg text-neutral-400 mb-4 sm:mb-6 leading-relaxed">I love listen to music! I listen to a lot of different genres, but my favorite are Indie-rock, ambient, or indie folk!. Such artists as Novo Amor, Reruntuh, and Iron & Wine are some of my favorites.</p>
-          <p className="text-base sm:text-lg text-neutral-400 mb-4 sm:mb-6 leading-relaxed">
-            But! My top artist all the time is ヨルシカ！
-            <span className="inline-table ml-2">
-              <img src={yorushika} alt="Yorushika Icon" className="w-8.5 h-7 align-middle filter invert" />
-            </span>
-          </p>
-          <div className="max-w-3xl w-full space-y-8">
-            {/* Japanese Verse */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }} className="relative">
-              <div className="absolute -left-4 top-0 h-full w-1 bg-neutral-500/20" />
-              <blockquote className="text-xl sm:text-2xl font-Hina text-neutral-300 mb-6 leading-relaxed tracking-wider pl-6">
-                君に茜差す日々の歌を
-                <br />
-                美しい夜が知りたいのだ
-                <br />
-                花惑う夏を待つ僕に差す月明かり
-              </blockquote>
-            </motion.div>
-
-            {/* English Translation */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2, delay: 0.3 }} className="relative">
-              <div className="absolute -left-4 top-0 h-full w-1 bg-neutral-500/20" />
-              <blockquote className="text-lg sm:text-xl font-Hina text-neutral-400 leading-relaxed italic pl-6">
-                Through this song of those days with you
-                <br />
-                aglow in the red of the sunset
-                <br />
-                I want to know a beautiful night
-                <br />
-                Lost in flowers, waiting for the summer,
-                <br />
-                the moon leaves me glowing in its light
-              </blockquote>
-            </motion.div>
-          </div>
+          <p className="text-base sm:text-lg text-neutral-400 mb-4 sm:mb-6 leading-relaxed">I'm always exploring how I can use Al tools to make my projects smarter and more efficient. Whether it's automating boring tasks or improving user experiences, I'm eager to try new things and push boundaries. Creativity and tech-savviness keep me motivated and ready for the next challenge.</p>
         </motion.div>
 
         {/* Card Section */}
