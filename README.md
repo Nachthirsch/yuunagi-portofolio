@@ -25,7 +25,7 @@ A modern, responsive portfolio website built to showcase my professional work an
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/yuunagi-portofolio.git
+git clone https://github.com/Nachthirsch/yuunagi-portofolio.git
 ```
 
 2. Install dependencies:
