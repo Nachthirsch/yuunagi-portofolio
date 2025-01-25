@@ -43,7 +43,7 @@ const WritesPage = () => {
     setIsDark(!isDark);
   };
 
-  // Theme-based styles
+  // Updated theme styles with typewriter elements
   const themeStyles = {
     background: isDark ? "bg-neutral-900" : "bg-gray-50",
     text: isDark ? "text-neutral-200" : "text-gray-900",
@@ -52,6 +52,7 @@ const WritesPage = () => {
     select: isDark ? "bg-neutral-800 text-neutral-200" : "bg-white text-gray-900 border border-gray-200",
     content: isDark ? "text-neutral-300" : "text-gray-700",
     hover: isDark ? "hover:text-neutral-200" : "hover:text-gray-900",
+    paper: isDark ? "bg-neutral-800/50" : "bg-white",
   };
 
   const getMetaDescription = (post) => {
@@ -62,7 +63,7 @@ const WritesPage = () => {
 
   if (!blogPost) {
     return (
-      <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken`}>
+      <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16`}>
         <div className="max-w-4xl mx-auto">
           <h1 className={`text-3xl font-bold ${themeStyles.text}`}>Blog post not found</h1>
         </div>
@@ -100,120 +101,113 @@ const WritesPage = () => {
   return (
     <>
       <SEO title={post.title} description={getMetaDescription(post)} image={post.sections?.find((s) => s.type === "image")?.images?.[0]?.src} />
-      <section className={`min-h-screen ${themeStyles.background} pt-16 sm:pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken transition-colors duration-300`}>
-        <div className="max-w-4xl mx-auto relative">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-8 sm:mb-12">
+      <section className={`min-h-screen ${themeStyles.background} pt-16 sm:pt-24 pb-16 px-4 sm:px-8 md:px-16 font-mono transition-colors duration-300`}>
+        <div className={`max-w-4xl mx-auto relative ${themeStyles.paper} p-8 rounded-lg shadow-lg border ${themeStyles.border}`}>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-8 sm:mb-12 border-b pb-6 border-dashed">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-4 sm:gap-0">
               <div className="flex items-center gap-4">
-                <h1 className={`text-xl sm:text-2xl font-bold ${themeStyles.text} tracking-wider flex items-center gap-3`}>
+                <h1 className={`text-xl sm:text-2xl ${themeStyles.text} tracking-tight flex items-center gap-3 font-bold uppercase`}>
                   <Book className={themeStyles.subtext} size={24} />
                   {post.title}
                 </h1>
-                <button onClick={toggleTheme} className={`p-2 rounded-full ${themeStyles.subtext} hover:scale-110 transition-transform`} aria-label={`Switch to ${isDark ? "light" : "dark"} mode`}>
+                <button onClick={toggleTheme} className={`p-2 rounded-full ${themeStyles.subtext} hover:scale-110 transition-transform`}>
                   {isDark ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
               </div>
+
               {availableLanguages.length > 1 && (
-                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }} className="flex items-center gap-3">
-                  <Globe size={18} className={`${themeStyles.subtext} animate-pulse`} />
-                  <div className="relative">
-                    <select value={currentLang} onChange={handleLanguageChange} className="select select-bordered select-sm w-full max-w-[100px] capitalize">
-                      {availableLanguages.map((lang) => (
-                        <option key={lang} value={lang}>
-                          {lang === "id" ? "ID" : lang === "en" ? "EN" : lang.toUpperCase()}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <motion.div className="flex items-center gap-3 font-mono">
+                  <Globe size={18} className={themeStyles.subtext} />
+                  <select value={currentLang} onChange={handleLanguageChange} className={`${themeStyles.select} py-1 px-2 rounded font-mono text-sm`}>
+                    {availableLanguages.map((lang) => (
+                      <option key={lang} value={lang}>
+                        {lang === "id" ? "ID" : lang === "en" ? "EN" : lang.toUpperCase()}
+                      </option>
+                    ))}
+                  </select>
                 </motion.div>
               )}
             </div>
 
-            <motion.div className={`h-1 bg-gradient-to-r from-${isDark ? "neutral-400" : "gray-400"} to-transparent mt-4 rounded-full`} initial={{ width: 0 }} animate={{ width: "8rem" }} transition={{ duration: 0.8, delay: 0.3 }} />
-
-            <div className={`flex flex-col gap-2 mt-4 ${themeStyles.subtext} text-xs sm:text-sm`}>
+            <div className={`flex flex-col gap-3 mt-6 ${themeStyles.subtext} text-sm font-mono`}>
               <span className="flex items-center gap-2">
-                <Calendar size={14} className="flex-shrink-0" />
-                <span className="truncate">{post.metadata.date}</span>
+                <Calendar size={14} /> {post.metadata.date}
               </span>
               <span className="flex items-center gap-2">
-                <User size={14} className="flex-shrink-0" />
-                <span className="truncate">{post.metadata.author}</span>
+                <User size={14} /> {post.metadata.author}
               </span>
               <span className="flex items-start gap-2">
-                <Tag size={14} className="flex-shrink-0 mt-1" />
+                <Tag size={14} className="mt-1" />
                 <span>{displayTags(post.metadata.tags)}</span>
               </span>
             </div>
           </motion.div>
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className={`prose ${isDark ? "prose-invert" : ""} max-w-none`}>
-            <div className="flex flex-col md:flex-row gap-8">
-              <div className="flex flex-col lg:flex-row gap-8">
-                <aside className="lg:w-64">
-                  <TableOfContents sections={post.sections} themeStyles={themeStyles} />
-                </aside>
 
-                <div className="flex-grow">
-                  {post.sections &&
-                    post.sections.map((section, index) => {
-                      if (!section) return null;
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className={`prose ${isDark ? "prose-invert" : ""} max-w-none font-mono prose-headings:font-mono prose-p:font-mono`}>
+            <div className="flex flex-col lg:flex-row gap-8">
+              <aside className="lg:w-64 font-mono">
+                <TableOfContents sections={post.sections} themeStyles={themeStyles} />
+              </aside>
 
-                      const sectionId = section.title ? section.title.toLowerCase().replace(/\s+/g, "-") : `section-${index}`;
+              <div className="flex-grow">
+                {post.sections?.map((section, index) => {
+                  if (!section) return null;
 
-                      // Handle image sections
-                      if (section.type === "image") {
-                        // Handle both old and new image formats
-                        const images = section.images || (section.image ? [section.image] : []);
+                  const sectionId = section.title ? section.title.toLowerCase().replace(/\s+/g, "-") : `section-${index}`;
 
-                        if (images.length === 0) return null;
+                  // Handle image sections
+                  if (section.type === "image") {
+                    // Handle both old and new image formats
+                    const images = section.images || (section.image ? [section.image] : []);
 
-                        return (
-                          <div key={index} className="my-6 sm:my-8">
-                            <div className={`grid ${images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
-                              {images.map(
-                                (image, imgIndex) =>
-                                  image &&
-                                  image.src && (
-                                    <div key={imgIndex} className="flex flex-col items-center">
-                                      <img src={image.src} alt={image.altText || ""} className={`rounded-lg border ${themeStyles.border} shadow-md max-w-full h-auto`} />
-                                      {image.altText && <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText}</p>}
-                                    </div>
-                                  )
-                              )}
-                            </div>
-                          </div>
-                        );
-                      }
+                    if (images.length === 0) return null;
 
-                      // Handle regular sections with added id
-                      return (
-                        <div key={index} id={sectionId} className="mb-6 sm:mb-8 scroll-mt-24">
-                          {section.title && <h2 className={`text-xl sm:text-2xl font-bold ${themeStyles.text} mb-3 sm:mb-4`}>{section.title}</h2>}
-                          <div className={`space-y-4 sm:space-y-6 ${themeStyles.content} text-base sm:text-lg leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                    return (
+                      <div key={index} className="my-6 sm:my-8">
+                        <div className={`grid ${images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
+                          {images.map(
+                            (image, imgIndex) =>
+                              image &&
+                              image.src && (
+                                <div key={imgIndex} className="flex flex-col items-center">
+                                  <img src={image.src} alt={image.altText || ""} className={`rounded-lg border ${themeStyles.border} shadow-md max-w-full h-auto`} />
+                                  {image.altText && <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText}</p>}
+                                </div>
+                              )
+                          )}
                         </div>
-                      );
-                    })}
-                </div>
-              </div>
+                      </div>
+                    );
+                  }
 
-              {post.references && post.references.length > 0 && (
-                <div className={`mt-8 sm:mt-12 pt-6 sm:pt-8 border-t ${themeStyles.border}`}>
-                  <h3 className={`text-lg sm:text-xl font-bold ${themeStyles.text} mb-3 sm:mb-4`}>References</h3>
-                  <ul className="list-disc list-inside space-y-2 text-sm sm:text-base">
-                    {post.references.map(
-                      (ref, index) =>
-                        ref && (
-                          <li key={index} className={themeStyles.subtext}>
-                            <a href={ref.url} target="_blank" rel="noopener noreferrer" className={`${themeStyles.hover} transition-colors`}>
-                              {ref.title || "Untitled Reference"}
-                            </a>
-                          </li>
-                        )
-                    )}
-                  </ul>
-                </div>
-              )}
+                  // Handle regular sections with added id
+                  return (
+                    <div key={index} id={sectionId} className="mb-8 scroll-mt-24 font-mono">
+                      {section.title && <h2 className={`text-xl sm:text-2xl ${themeStyles.text} mb-4 font-bold uppercase tracking-wider`}>{section.title}</h2>}
+                      <div className={`space-y-6 ${themeStyles.content} text-base leading-relaxed tracking-wide font-mono`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                    </div>
+                  );
+                })}
+              </div>
             </div>
+
+            {post.references && post.references.length > 0 && (
+              <div className={`mt-12 pt-8 border-t border-dashed ${themeStyles.border}`}>
+                <h3 className={`text-xl ${themeStyles.text} mb-4 font-bold uppercase tracking-wider`}>References</h3>
+                <ul className="list-disc list-inside space-y-2 font-mono">
+                  {post.references.map(
+                    (ref, index) =>
+                      ref && (
+                        <li key={index} className={themeStyles.subtext}>
+                          <a href={ref.url} target="_blank" rel="noopener noreferrer" className={`${themeStyles.hover} transition-colors`}>
+                            {ref.title || "Untitled Reference"}
+                          </a>
+                        </li>
+                      )
+                  )}
+                </ul>
+              </div>
+            )}
           </motion.div>
         </div>
       </section>

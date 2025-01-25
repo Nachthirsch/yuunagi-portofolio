@@ -27,7 +27,7 @@ const BlogList = () => {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={window.location.href} />
       </Helmet>
-      <section className="min-h-screen bg-neutral-900 pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken">
+      <section className="min-h-screen bg-neutral-900 font-mono pt-24 pb-16 px-4 sm:px-8 md:px-16">
         <div className="max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-12">
             <h1 className="text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-3">
@@ -39,11 +39,11 @@ const BlogList = () => {
 
           <SearchFilters filters={filters} setFilters={setFilters} filterOptions={filterOptions} />
 
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="space-y-8">
+          <motion.div className="space-y-8">
             {filteredPosts.length > 0 ? (
               filteredPosts.map((post) => (
                 <Link key={post.slug} to={`/writes/${post.slug}`} className="block">
-                  <motion.div className="bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" whileHover={{ scale: 1.02 }}>
+                  <motion.div className="bg-neutral-800 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
                     {post.thumbnail && (
                       <div className="relative h-48 sm:h-64 overflow-hidden">
                         <img

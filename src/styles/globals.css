@@ -1,0 +1,12 @@
+/* Remove any custom font imports */
+
+/* Set default monospace font */
+* {
+  font-family: monospace !important;
+}
+
+.prose * {
+  font-family: monospace !important;
+}
+
+/* Remove any other font-family declarations */

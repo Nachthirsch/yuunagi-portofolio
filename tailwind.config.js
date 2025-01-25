@@ -14,6 +14,7 @@ module.exports = {
       fontFamily: {
         Hanken: ["Hanken Grotesk", "sans-serif"],
         Hina: ["Hina Mincho", "serif"],
+        "courier-prime": ["monospace"],
       },
       animation: {
         float: "float 6s ease-in-out infinite",
