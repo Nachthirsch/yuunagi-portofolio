@@ -130,7 +130,7 @@ const ProjectSection = () => {
       date: "Nov 2024",
       tech: ["React", "TailwindCSS", "NY Times API", "Redux Toolkit"],
       github: "https://github.com/Nachthirsch/Capstone-Project_News-App",
-      website: "capstone-project-news-app-alpha.vercel.app",
+      website: "https://capstone-project-news-app-alpha.vercel.app",
       status: "Completed",
     },
     {

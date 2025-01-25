@@ -11,11 +11,11 @@ const TableOfContents = () => {
   const sections = [
     { id: "hero", label: "Home", icon: Home },
     { id: "experience", label: "Experience", icon: Briefcase },
+    { id: "projects", label: "Projects", icon: Code },
+    { id: "certificates", label: "Certificates", icon: Award },
     { id: "story", label: "Story", icon: User },
     { id: "gallery-section", label: "Gallery", icon: Image },
-    { id: "certificates", label: "Certificates", icon: Award },
     { id: "activities", label: "Activities", icon: HiOutlineUserGroup },
-    { id: "projects", label: "Projects", icon: Code },
     { id: "tech-stack", label: "Tech Stack", icon: HiCode },
   ];
 

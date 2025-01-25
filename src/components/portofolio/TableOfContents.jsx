@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -10,10 +11,10 @@ const TableOfContents = () => {
 
   const sections = [
     { id: "experience", label: "Experience", icon: Briefcase },
-    { id: "imageSection", label: "About", icon: User },
-    { id: "certificates", label: "Certificates", icon: Award },
-    { id: "activities", label: "Activities", icon: HiOutlineUserGroup },
     { id: "projects", label: "Projects", icon: Code },
+    { id: "certificates", label: "Certificates", icon: Award },
+    { id: "imageSection", label: "About", icon: User },
+    { id: "activities", label: "Activities", icon: HiOutlineUserGroup },
     { id: "techStacks", label: "Stacks", icon: HiCode },
   ];
 

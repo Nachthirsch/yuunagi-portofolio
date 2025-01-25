@@ -17,17 +17,17 @@ const Portfolio = () => {
       <div id="experience">
         <Experience />
       </div>
-      <div id="imageSection">
-        <ImageSection />
+      <div id="projects">
+        <ProjectSection />
       </div>
       <div id="certificates">
         <CertificatesSection />
       </div>
+      <div id="imageSection">
+        <ImageSection />
+      </div>
       <div id="activities">
         <ActivitiesTimeline />
-      </div>
-      <div id="projects">
-        <ProjectSection />
       </div>
       <div id="techStacks">
         <TechStack />

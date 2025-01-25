@@ -29,20 +29,20 @@ const PortfolioV2 = () => {
           <section id="experience">
             <Experience />
           </section>
+          <section id="projects">
+            <Projects />
+          </section>
+          <section id="certificates">
+            <Certificates />
+          </section>
           <section id="story">
             <ImageSec />
           </section>
           <section id="gallery-section">
             <Gallery />
           </section>
-          <section id="certificates">
-            <Certificates />
-          </section>
           <section id="activities">
             <Activities />
-          </section>
-          <section id="projects">
-            <Projects />
           </section>
           <section id="tech-stack">
             <TechStack />
