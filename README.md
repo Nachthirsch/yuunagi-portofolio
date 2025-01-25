@@ -44,17 +44,6 @@ npm run dev
 yarn dev
 ```
 
-## 📁 Project Structure
-
-```
-yuunagi-portofolio/
-├── components/       # Reusable UI components
-├── pages/           # Next.js pages
-├── public/          # Static assets
-├── styles/          # Global styles
-└── utils/           # Utility functions
-```
-
 ## 🔧 Configuration
 
 The site can be configured by modifying the following files:
