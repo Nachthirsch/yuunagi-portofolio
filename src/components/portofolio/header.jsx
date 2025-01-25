@@ -1,105 +1,188 @@
-import backgroundImage from "../../assets/header_img.jpg";
+/* eslint-disable react/no-unknown-property */
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
 import { FaInstagram, FaGithub, FaLinkedin, FaSoundcloud } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
-import { useState, useEffect } from "react";
+import { useCallback } from "react";
+import Particles from "react-tsparticles";
+import { loadFull } from "tsparticles";
 
 const Header = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  useEffect(() => {
-    const iframe = document.querySelector("#soundcloud-player");
-    const widget = window.SC.Widget(iframe);
-
-    widget.bind(window.SC.Widget.Events.PLAY, () => {
-      setIsPlaying(true);
-    });
-
-    widget.bind(window.SC.Widget.Events.PAUSE, () => {
-      setIsPlaying(false);
-    });
+  const particlesInit = useCallback(async (engine) => {
+    await loadFull(engine);
   }, []);
 
-  const togglePlay = () => {
-    const iframe = document.querySelector("#soundcloud-player");
-    const widget = window.SC.Widget(iframe);
-    widget.toggle();
-  };
+  const particlesLoaded = useCallback(async () => {
+    console.log("Particles loaded successfully");
+  }, []);
 
   return (
-    <header className="relative h-[100vh] sm:h-[70vh] bg-cover bg-center" style={{ backgroundImage: `url(${backgroundImage})` }}>
-      <div className="absolute inset-0 bg-neutral-900 bg-opacity-85">
-        {/* Main content container with adjusted padding */}
-        <div className="h-full flex flex-col justify-center px-4 sm:px-8 md:px-16 mt-16 sm:mt-0">
-          <div className="my-3 sm:my-5 tracking-widest">
-            <TypeAnimation
-              sequence={["Hello there!", 1000, "How are you?", 1000, "Welcome to my world!"]}
-              wrapper="h1"
-              cursor={true}
-              style={{
-                fontSize: "clamp(1.25rem, 5vw, 2.25rem)",
-                color: "rgb(212 212 212)",
-              }}
-            />
-          </div>
-          <motion.div className="w-16 h-0.5 bg-neutral-300" initial={{ width: 0 }} animate={{ width: ["100%", "80%", "60%"] }} transition={{ duration: 10, ease: "easeInOut" }} />
-          <div className="max-w-3xl">
-            <p className="text-neutral-300 tracking-wider mt-4 mb-4 text-sm sm:text-base sm:tracking-wider">
-              I would love to introduce myself now! My name is{" "}
-              <motion.span className="relative inline-block">
-                <span className="text-white tracking-widest font-medium">Handra Putratama Tanjung</span>
-                <motion.span className="absolute bottom-0 left-0 w-full h-0.5 bg-neutral-300" initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 5, ease: "easeInOut" }} style={{ originX: 0 }} />
-              </motion.span>
-              .
-              <br className="hidden sm:block" />
-              <span className="block mt-2 sm:mt-0 sm:inline">I&apos;m a final-year student majoring in Information Technology, having an interest in Web Development, Photography, Music and Art.</span>
-            </p>
-          </div>
-          <div className="flex space-x-4 sm:space-x-6 mt-3">
-            <a href="mailto:handraputratama@gmail.com" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-red-600 transition-colors duration-300">
-              <AiOutlineMail size={20} className="sm:w-6 sm:h-6" />
-            </a>
-            <a href="https://www.instagram.com/nachthirsch/" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-pink-600 transition-colors duration-300">
-              <FaInstagram size={20} className="sm:w-6 sm:h-6" />
-            </a>
-            <a href="https://github.com/Nachthirsch" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-black transition-colors duration-300">
-              <FaGithub size={20} className="sm:w-6 sm:h-6" />
-            </a>
-            <a href="https://www.linkedin.com/in/handra-putratama-tanjung/" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-blue-600 transition-colors duration-300">
-              <FaLinkedin size={20} className="sm:w-6 sm:h-6" />
-            </a>
-            <a href="https://soundcloud.com/nachthirsch" target="_blank" rel="noopener noreferrer" className="text-neutral-300 hover:text-red-600 transition-colors duration-300">
-              <FaSoundcloud size={20} className="sm:w-6 sm:h-6" />
-            </a>
-          </div>
+    <header className="relative h-screen font-Hanken tracking-wider overflow-hidden">
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        loaded={particlesLoaded}
+        options={{
+          fullScreen: false,
+          background: {
+            color: {
+              value: "#171717",
+            },
+          },
+          fpsLimit: 120,
+          particles: {
+            color: {
+              value: "#ffffff",
+            },
+            links: {
+              color: "#ffffff",
+              distance: 150,
+              enable: true,
+              opacity: 0.5,
+              width: 1,
+            },
+            collisions: {
+              enable: true,
+            },
+            move: {
+              direction: "none",
+              enable: true,
+              outModes: {
+                default: "bounce",
+              },
+              random: false,
+              speed: 1,
+              straight: false,
+            },
+            number: {
+              density: {
+                enable: true,
+                area: 800,
+              },
+              value: 80,
+            },
+            opacity: {
+              value: 0.5,
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              value: { min: 1, max: 5 },
+            },
+          },
+          detectRetina: true,
+        }}
+        className="absolute inset-0"
+      />
 
-          {/* Audio Player */}
-          <div className="absolute bottom-4 right-4 pr-7 flex flex-col items-end">
-            <p className="text-neutral-400 text-sm mb-2 italic">Play my song while knowing more about me !</p>
-            <div className="bg-neutral-800/80 backdrop-blur-sm rounded-lg p-3 border border-neutral-700/30">
-              <div className="flex items-center gap-3">
-                <button onClick={togglePlay} className="p-2 rounded-full bg-neutral-700/50 hover:bg-neutral-600/50 border border-neutral-600/30 transition-all group">
-                  {isPlaying ? (
-                    <svg className="w-5 h-5 text-neutral-300 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-                    </svg>
-                  ) : (
-                    <svg className="w-5 h-5 text-neutral-300 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  )}
-                </button>
-                <div className="flex flex-col">
-                  <span className="text-sm text-neutral-300 font-medium">i see you in every word i speak</span>
-                  <span className="text-xs text-neutral-400">MoonLiar</span>
-                </div>
-              </div>
-              <iframe id="soundcloud-player" width="0" height="0" frameBorder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1666557249&color=%23868686&auto_play=false&hide_related=false&show_comments=false&show_user=false&show_reposts=false&show_teaser=false" className="hidden" />
-            </div>
-          </div>
-        </div>
+      <div className="relative h-full flex flex-col justify-center px-4 sm:px-8 md:px-16 z-10">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-4 sm:mb-6">
+          <TypeAnimation
+            sequence={["Hello there!", 1000, "How are you?", 1000, "Welcome to my world!"]}
+            wrapper="h1"
+            cursor={true}
+            style={{
+              fontSize: "clamp(1.25rem, 5vw, 2.25rem)",
+              color: "rgb(212 212 212)",
+              fontWeight: "600",
+            }}
+          />
+        </motion.div>
+
+        <motion.div className="w-16 h-0.5 bg-neutral-300" initial={{ width: 0 }} animate={{ width: "5rem" }} transition={{ duration: 1.5, ease: "easeOut" }} />
+
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="max-w-3xl mt-6">
+          <p className="text-neutral-100 tracking-wider text-base sm:text-lg sm:leading-8">
+            I would love to introduce myself now! My name is <span className="text-neutral-200 font-medium border-b border-neutral-400">Handra Putratama Tanjung</span>
+            .
+            <br className="hidden sm:block" />
+            <span className="block mt-2 sm:mt-0 sm:inline">I&apos;m a final-year student majoring in Information Technology, having an interest in Web Development, Photography, Music and Art.</span>
+          </p>
+        </motion.div>
+
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.6 }} className="flex space-x-8 mt-8 md:mt-12">
+          <a href="mailto:handraputratama@gmail.com" className="social-icon-wrapper group" aria-label="Email">
+            <AiOutlineMail className="social-icon text-red-400 group-hover:text-red-300" />
+            <span className="icon-tooltip">Email</span>
+          </a>
+
+          <a href="https://www.instagram.com/nachthirsch/" className="social-icon-wrapper group" aria-label="Instagram">
+            <FaInstagram className="social-icon text-pink-400 group-hover:text-pink-300" />
+            <span className="icon-tooltip">Instagram</span>
+          </a>
+
+          <a href="https://github.com/Nachthirsch" className="social-icon-wrapper group" aria-label="GitHub">
+            <FaGithub className="social-icon text-gray-300 group-hover:text-white" />
+            <span className="icon-tooltip">GitHub</span>
+          </a>
+
+          <a href="https://www.linkedin.com/in/handra-putratama-tanjung/" className="social-icon-wrapper group" aria-label="LinkedIn">
+            <FaLinkedin className="social-icon text-blue-400 group-hover:text-blue-300" />
+            <span className="icon-tooltip">LinkedIn</span>
+          </a>
+
+          <a href="https://soundcloud.com/nachthirsch" className="social-icon-wrapper group" aria-label="SoundCloud">
+            <FaSoundcloud className="social-icon text-orange-400 group-hover:text-orange-300" />
+            <span className="icon-tooltip">SoundCloud</span>
+          </a>
+        </motion.div>
+
+        <style jsx global>{`
+          .social-icon-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+          }
+
+          .social-icon-wrapper:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.2);
+          }
+
+          .social-icon {
+            width: 24px;
+            height: 24px;
+            transition: all 0.3s ease;
+          }
+
+          .icon-tooltip {
+            position: absolute;
+            bottom: -30px;
+            font-size: 12px;
+            background: rgba(233, 69, 96, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+          }
+
+          .social-icon-wrapper:hover .icon-tooltip {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        `}</style>
       </div>
+
+      <style jsx>{`
+        .social-icon {
+          @apply text-neutral-400 hover:text-neutral-200 transform 
+                 hover:scale-110 transition-all duration-300;
+        }
+        .play-button {
+          @apply p-2 rounded-full bg-neutral-700/50 hover:bg-neutral-600/50 
+                 border border-neutral-600/30 transition-all;
+        }
+      `}</style>
     </header>
   );
 };
