@@ -43,26 +43,3 @@ npm run dev
 # or
 yarn dev
 ```
-
-## 📁 Project Structure
-
-```
-yuunagi-portofolio/
-├── components/       # Reusable UI components
-├── pages/           # Next.js pages
-├── public/          # Static assets
-├── styles/          # Global styles
-└── utils/           # Utility functions
-```
-
-## 🔧 Configuration
-
-The site can be configured by modifying the following files:
-
-- `config/site.ts` - Site-wide configuration
-- `data/projects.ts` - Project showcase data
-- `data/skills.ts` - Skills and technologies data
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
