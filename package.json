@@ -34,8 +34,6 @@
     "react-tsparticles": "^2.12.2",
     "react-type-animation": "^3.2.0",
     "sharp": "^0.32.6",
-    "spotify-web-api-js": "^1.5.2",
-    "spotify-web-playback": "^1.4.0",
     "styled-components": "^6.1.13",
     "tailwind-merge": "^2.5.4",
     "tailwind-scrollbar-hide": "^1.1.7",
