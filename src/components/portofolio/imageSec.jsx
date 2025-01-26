@@ -88,7 +88,7 @@ const ImageSec = () => {
               A little bit more info about me!
             </motion.h1>
             <p className="text-base sm:text-lg text-neutral-100 font-medium mb-4 sm:mb-6 leading-relaxed">
-              I love language exchange! I can hold daily conversations in <span className="text-white">English</span> , although I&apos;m still working on my grammar. I also know a little <span className="text-white">Japanese</span>, even if it&apos;s at a beginner level!
+              I love language exchange! I can hold daily conversations in <span className="text-white">English</span>, although I&apos;m still working on my grammar. I also know a little <span className="text-white">Japanese</span>, even if it&apos;s at a beginner level!
             </p>
             <p className="text-base sm:text-lg text-neutral-100 mb-4 sm:mb-6 leading-relaxed">I'm always exploring how I can use Al tools to make my projects smarter and more efficient. Whether it's automating boring tasks or improving user experiences, I'm eager to try new things and push boundaries. Creativity and tech-savviness keep me motivated and ready for the next challenge.</p>
           </motion.div>
