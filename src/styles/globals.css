@@ -1,12 +1,12 @@
-/* Remove any custom font imports */
+@import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
 
-/* Set default monospace font */
-* {
-  font-family: monospace !important;
+/* Add this to ensure font loading */
+@layer base {
+  @font-face {
+    font-family: "Special Elite";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
+  }
 }
-
-.prose * {
-  font-family: monospace !important;
-}
-
-/* Remove any other font-family declarations */

@@ -25,7 +25,7 @@
           },
           {
             "type": "disclaimer",
-            "content": "<p><div class=\"bg-neutral-800/30 p-6 text-neutral-400 italic rounded-lg border border-neutral-700/30\">Saya tidak terlalu meng-eksplor banyak band/artist di luar sana dan saya sendiri tidak terlalu mendalami dunia musik.<br>Dalam artikel ini, saya mungkin menggunakan gaya penulisan yang sedikit hiperbola mengenai mereka. Mohon maaf jika ada kata-kata saya yang menyinggung perasaan para pembaca.</div></p>"
+            "content": "<p>Saya tidak terlalu meng-eksplor banyak band/artist di luar sana dan saya sendiri tidak terlalu mendalami dunia musik.<br>Dalam artikel ini, saya mungkin menggunakan gaya penulisan yang sedikit hiperbola mengenai mereka. Mohon maaf jika ada kata-kata saya yang menyinggung perasaan para pembaca.</p>"
           },
           {
             "type": "section",
@@ -123,8 +123,9 @@
             "content": "<p>Saya akan memberikan sebuah contoh dimana lirik mereka memiliki permainan kata yang cukup puitis bagi saya</p>"
           },
           {
-            "type": "section",
-            "content": "<p><div class=\"bg-neutral-800/30 p-6 rounded-lg border border-neutral-700/30\"><h2 class=\"text-2xl font-semibold text-neutral-200 mb-4\">\"Fireworks Beneath my Shoes\"</h4><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 1</h4><p class=\"text-neutral-400 italic\">Bunga mekar di bawah sepatuku<br><p class=\"text-neutral-400 italic\">Bunga api yang besar bermekaran<br><p class=\"text-neutral-400 italic\">\"Aku akan meninggalkan seluruh perasaanku\", itulah pikirku<br><p class=\"text-neutral-400 italic font-bold  mb-8\">Musim panas yang seperti itu pun terlihat<br><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 2</h4> <p class=\"text-neutral-400 italic\">Bunga selalu berbunyi di bawahku<br><p class=\"text-neutral-400 italic\">Bunga api yang besar pun berbunyi<br><p class=\"text-neutral-400 italic\">\"Suara saja bisa membuatku menangis\", itulah pikirku<br><p class=\"text-neutral-400 italic font-bold mb-8\">Musim panas yang seperti itu pun terdengar<br><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 3</h4> <p class=\"text-neutral-400 italic\">Bunga mekar di langit musim panas<br><p class=\"text-neutral-400 italic\">Bunga api yang besar pun mekar<br><p class=\"text-neutral-400 italic\">\"Aku ingin terus menangis selamanya\", itulah pikirku<br><p class=\"text-neutral-400 italic font-bold\">Musim panas yang seperti itu pun menghilang<br></div></p>"
+            "type": "disclaimer",
+            "content": "<p><b>#Chorus 1</b><br>---<br>Bunga mekar di bawah sepatuku<br>Bunga api yang besar bermekaran<br>\"Aku akan meninggalkan seluruh perasaanku\", itulah pikirku<br>Musim panas yang seperti itu pun terlihat<br>----------------------------------------------------------<br><b>#Chorus 2</b><br>---<br>Bunga selalu berbunyi di bawahku<br>Bunga api yang besar pun berbunyi<br>\"Suara saja bisa membuatku menangis\", itulah pikirku<br>Musim panas yang seperti itu pun terdengar<br>----------------------------------------------------------<br><b>#Chorus 3</b><br>---<br>Bunga mekar di langit musim panas<br>Bunga api yang besar pun mekar<br>\"Aku ingin terus menangis selamanya\", itulah pikirku<br>Musim panas yang seperti itu pun menghilang</p>",
+            "title": "\"Fireworks Beneath my Shoes\""
           },
           {
             "type": "section",

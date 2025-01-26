@@ -147,7 +147,7 @@ const WritesPage = () => {
           </motion.div>
 
           {/* Main Content */}
-          <motion.div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-sm sm:prose-base`}>
+          <motion.div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-sm sm:prose-base font-mono prose-headings:font-elite prose-p:font-elite`}>
             <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
               {/* Table of Contents - Now sticky on both mobile and desktop */}
               <aside className="lg:w-64">
@@ -194,7 +194,7 @@ const WritesPage = () => {
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
                       {section.title && <h2 className={`text-lg sm:text-2xl ${themeStyles.text} mb-3 font-bold uppercase tracking-wider`}>{section.title}</h2>}
-                      <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                      {section.type === "disclaimer" ? <div className={`${isDark ? "bg-neutral-800/30 border-neutral-700/30" : "bg-gray-100 border-gray-300"} p-4 rounded-lg border ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} /> : <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />}
                     </div>
                   );
                 })}

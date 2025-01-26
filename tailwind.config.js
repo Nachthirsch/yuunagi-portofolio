@@ -13,8 +13,11 @@ module.exports = {
     extend: {
       fontFamily: {
         Hanken: ["Hanken Grotesk", "sans-serif"],
-        Hina: ["Hina Mincho", "serif"],
+        Hina: ["Hina Mincho"],
         "courier-prime": ["monospace"],
+        Mono: ["monospace"],
+        typewriter: ["Special Elite"],
+        elite: ["Special Elite"],
       },
       animation: {
         float: "float 6s ease-in-out infinite",
