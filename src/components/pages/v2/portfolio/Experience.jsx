@@ -37,6 +37,17 @@ const Experience = () => {
     },
   ];
 
+  const education = [
+    {
+      title: "ReactJS for Front-end Website Developer",
+      company: "Hacktiv8 Indonesia",
+      date: "Sep 2024 – Dec 2024",
+      label: "Bootcamp",
+      description: ["Completed intensive front-end development bootcamp focusing on React.js", "Built multiple real-world projects using React, Redux, and modern JavaScript", "Implemented responsive design principles and component-based architecture", "Collaborated with peers on group projects using Git and Agile methodologies"],
+      skills: ["React.js", "Redux", "JavaScript", "Web Development", "Git", "Agile"],
+    },
+  ];
+
   return (
     <section className="py-32 px-7 sm:px-8 md:px-16 bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
       <div className="max-w-7xl mx-auto">
@@ -50,7 +61,7 @@ const Experience = () => {
         </motion.div>
 
         {/* Experience Cards */}
-        <div className="space-y-16 md:space-y-32">
+        <div className="space-y-16 md:space-y-32 mb-32">
           {experiences.map((exp, index) => (
             <motion.div key={index} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: index * 0.2 }} className="relative">
               {/* Large Year Display */}
@@ -127,6 +138,70 @@ const Experience = () => {
                   {/* Skills */}
                   <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3">
                     {exp.skills.map((skill, idx) => (
+                      <span
+                        key={idx}
+                        className="px-4 py-1.5 text-sm bg-white rounded-full shadow-sm
+                                 text-neutral-600 border border-neutral-200 hover:border-neutral-300
+                                 transition-colors duration-300"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </motion.div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Education Section */}
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="text-center mb-24">
+          <span className="text-sm uppercase tracking-[0.3em] text-neutral-500 mb-4 block">Learning Journey</span>
+          <h2 className="text-4xl md:text-5xl font-light text-neutral-800 mb-6">
+            Education & <span className="font-semibold">Training</span>
+          </h2>
+          <div className="w-24 h-[1px] mx-auto bg-gradient-to-r from-transparent via-neutral-300 to-transparent" />
+        </motion.div>
+
+        {/* Education Cards */}
+        <div className="space-y-16 md:space-y-32">
+          {education.map((edu, index) => (
+            <motion.div key={index} initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: index * 0.2 }} className="relative">
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_2px_2fr] gap-4 md:gap-8 items-start">
+                <div className="space-y-4">
+                  <div className="inline-block px-4 py-1.5 bg-white rounded-full shadow-sm border border-neutral-200 text-sm text-neutral-600">{edu.date}</div>
+                  <div className="flex items-start gap-3">
+                    <Building2 size={18} className="text-neutral-400 mt-1" />
+                    <div>
+                      <p className="font-medium text-neutral-800">{edu.company}</p>
+                      <div className="flex items-center gap-2 text-sm text-neutral-500 mt-1">
+                        <MapPin size={14} />
+                        <span>Indonesia</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="hidden md:block w-[2px] h-full bg-gradient-to-b from-neutral-200 via-neutral-200 to-transparent self-stretch" />
+
+                <div className="relative">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
+                    <h3 className="text-2xl font-medium text-neutral-800">{edu.title}</h3>
+                    <span className="inline-flex px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">{edu.label}</span>
+                  </div>
+
+                  <div className="space-y-4">
+                    {edu.description.map((item, idx) => (
+                      <motion.div key={idx} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 + idx * 0.1 }} className="flex items-start gap-2 md:gap-4 group">
+                        <ArrowRight size={16} className="flex-shrink-0 mt-1.5 text-neutral-300 group-hover:text-purple-500 transition-colors duration-300" />
+                        <p className="text-neutral-600 leading-relaxed text-sm md:text-base">{item}</p>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Skills */}
+                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3">
+                    {edu.skills.map((skill, idx) => (
                       <span
                         key={idx}
                         className="px-4 py-1.5 text-sm bg-white rounded-full shadow-sm
