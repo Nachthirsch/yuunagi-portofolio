@@ -120,5 +120,12 @@ const certificates = [
     icon: SiCanva,
     credential: "https://drive.google.com/file/d/1ddzVFaYc4hPPXh-W7tMdgLuiPKpNb6t7/view?usp=sharing",
   },
+  {
+    title: "ReactJS for Front-end Website Developer",
+    issuer: "Hacktiv8",
+    date: "Dec 2024",
+    icon: HiCode,
+    credential: "https://media.licdn.com/dms/image/v2/D562DAQHePggYbWlqoA/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1737448452738?e=1738818000&v=beta&t=t-ZuoMQbsO2fJd4svUjT08tnuoT-P36bUU0cy2-ncT0",
+  },
   // Tambahkan sertifikat lainnya di sini
 ];

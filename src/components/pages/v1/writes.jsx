@@ -11,6 +11,20 @@ import TableOfContents from "../../common/TableOfContents";
 import SEO from "../../common/SEO";
 import { Helmet } from "react-helmet-async";
 
+// Add this function before the WritesPage component
+const getExcerpt = (post, maxLength = 160) => {
+  // Find first content section
+  const introSection = post.sections?.find((section) => section?.type === "introduction" || section?.type === "section");
+
+  if (!introSection?.content) return "";
+
+  // Remove HTML tags and get plain text
+  const plainText = introSection.content.replace(/<[^>]+>/g, "");
+
+  // Trim to maxLength
+  return plainText.length > maxLength ? plainText.slice(0, maxLength) + "..." : plainText;
+};
+
 const WritesPage = () => {
   const { slug } = useParams();
   const blogPost = getBlogPostBySlug(slug);
@@ -264,17 +278,3 @@ const getStructuredData = (post) => ({
   image: post.thumbnail || "",
   url: window.location.href,
 });
-
-// Add this function before the WritesPage component
-const getExcerpt = (post, maxLength = 160) => {
-  // Find first content section
-  const introSection = post.sections?.find((section) => section?.type === "introduction" || section?.type === "section");
-
-  if (!introSection?.content) return "";
-
-  // Remove HTML tags and get plain text
-  const plainText = introSection.content.replace(/<[^>]+>/g, "");
-
-  // Trim to maxLength
-  return plainText.length > maxLength ? plainText.slice(0, maxLength) + "..." : plainText;
-};

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import { HiCode, HiOutlineCloudUpload, HiOutlineMap } from "react-icons/hi";
@@ -6,15 +7,8 @@ import { SiCanva } from "react-icons/si";
 
 const SectionHeader = ({ subtitle, title, highlightedWord }) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}
-      className="text-center mb-24"
-    >
-      <span className="text-sm uppercase tracking-[0.3em] text-neutral-500 mb-4 block">
-        {subtitle}
-      </span>
+    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="text-center mb-24">
+      <span className="text-sm uppercase tracking-[0.3em] text-neutral-500 mb-4 block">{subtitle}</span>
       <h2 className="text-5xl font-light text-neutral-800 mb-6">
         {title} <span className="font-semibold">{highlightedWord}</span>
       </h2>
@@ -24,29 +18,21 @@ const SectionHeader = ({ subtitle, title, highlightedWord }) => {
 };
 
 const CertificateCard = ({ cert, index }) => (
-  <motion.div
-    key={index}
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ delay: index * 0.1 }}
-    className="group"
-  >
-    <div className="relative bg-white rounded-lg p-6 
+  <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} className="group">
+    <div
+      className="relative bg-white rounded-lg p-6 
                     border border-neutral-100 hover:border-neutral-200
-                    transition-all duration-300 h-[260px] flex flex-col">
+                    transition-all duration-300 h-[260px] flex flex-col"
+    >
       {/* Category Tag */}
       <div className="flex items-center gap-2 mb-4">
         <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${cert.color}`} />
-        <span className="text-xs font-medium text-neutral-500">
-          {cert.category}
-        </span>
+        <span className="text-xs font-medium text-neutral-500">{cert.category}</span>
       </div>
 
       {/* Content */}
       <div className="flex-1">
-        <h3 className="text-lg font-medium text-neutral-800 mb-3 line-clamp-2">
-          {cert.title}
-        </h3>
+        <h3 className="text-lg font-medium text-neutral-800 mb-3 line-clamp-2">{cert.title}</h3>
         <p className="text-sm text-neutral-600 mb-1">{cert.issuer}</p>
         <p className="text-xs text-neutral-400">{cert.date}</p>
       </div>
@@ -143,16 +129,21 @@ const Certificates = () => {
       color: "from-pink-500 to-rose-500",
       credential: "https://drive.google.com/file/d/1ddzVFaYc4hPPXh-W7tMdgLuiPKpNb6t7/view?usp=sharing",
     },
+    {
+      title: "ReactJS for Front-end Website Developer",
+      issuer: "Hacktiv8",
+      date: "Dec 2024",
+      category: "Development",
+      color: "from-blue-500 to-cyan-500",
+      icon: HiCode,
+      credential: "https://media.licdn.com/dms/image/v2/D562DAQHePggYbWlqoA/profile-treasury-image-shrink_800_800/profile-treasury-image-shrink_800_800/0/1737448452738?e=1738818000&v=beta&t=t-ZuoMQbsO2fJd4svUjT08tnuoT-P36bUU0cy2-ncT0",
+    },
   ];
 
   return (
     <section className="py-24 px-4 sm:px-8 md:px-16 bg-white">
       <div className="max-w-6xl mx-auto">
-        <SectionHeader 
-          subtitle="Achievements"
-          title="Badges &"
-          highlightedWord="Certifications"
-        />
+        <SectionHeader subtitle="Achievements" title="Badges &" highlightedWord="Certifications" />
 
         {/* Certificates Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
