@@ -1,73 +1,191 @@
 /* eslint-disable react/no-unescaped-entities */
+/* eslint-disable react/no-unknown-property */
 import { motion } from "framer-motion";
-import { useCallback } from "react";
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
+import { useMemo, useRef, useEffect, useState } from "react";
+import * as THREE from "three";
+import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
 import me from "../../assets/me_1.jpg";
+import yorushikaSvg from "../../assets/yorushika.svg";
 
-const ImageSec = () => {
-  const particlesInit = useCallback(async (engine) => {
-    await loadFull(engine);
+const YorushikaLogo = () => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [previousMousePosition, setPreviousMousePosition] = useState({ x: 0, y: 0 });
+  const groupRef = useRef();
+  const materialRef = useRef();
+
+  useEffect(() => {
+    const handleMouseDown = (e) => {
+      setIsDragging(true);
+      setPreviousMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    const handleMouseMove = (e) => {
+      if (!isDragging || !groupRef.current) return;
+
+      const deltaMove = {
+        x: e.clientX - previousMousePosition.x,
+        y: e.clientY - previousMousePosition.y,
+      };
+
+      // Reduced rotation speed and added window size normalization
+      const rotationSpeed = 0.001; // Reduced from 0.01
+      const windowSizeFactor = Math.min(window.innerWidth, window.innerHeight) / 1000;
+      const dampening = 0.8;
+
+      groupRef.current.rotation.y += deltaMove.x * rotationSpeed * windowSizeFactor * dampening;
+      groupRef.current.rotation.x += deltaMove.y * rotationSpeed * windowSizeFactor * dampening;
+
+      setPreviousMousePosition({
+        x: e.clientX,
+        y: e.clientY,
+      });
+    };
+
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, [isDragging]);
+
+  useFrame((state) => {
+    if (materialRef.current) {
+      const hue = (state.clock.elapsedTime * 0.15) % 1;
+      materialRef.current.color.setHSL(hue, 0.7, 0.6);
+      materialRef.current.emissiveIntensity = Math.sin(state.clock.elapsedTime) * 0.4 + 0.8;
+    }
+  });
+  useEffect(() => {
+    const loader = new SVGLoader();
+    loader.load(yorushikaSvg, (data) => {
+      const paths = data.paths;
+      const group = groupRef.current;
+
+      paths.forEach((path) => {
+        const shapes = path.toShapes(true);
+        shapes.forEach((shape) => {
+          const geometry = new THREE.ExtrudeGeometry(shape, {
+            depth: 15, // Increased depth for better visibility
+            bevelEnabled: true,
+            bevelThickness: 2,
+            bevelSize: 1,
+            bevelSegments: 10,
+          });
+
+          // Create a single centered instance
+          const instanceMesh = new THREE.Mesh(geometry, materialRef.current);
+          const scale = 0.5; // Increased scale for better visibility
+          instanceMesh.scale.set(scale, -scale, scale);
+          instanceMesh.position.set(75, -50, 0); // Centered position
+          instanceMesh.rotation.z = Math.PI;
+          group.add(instanceMesh);
+        });
+      });
+    });
+
+    return () => {
+      groupRef.current?.children.forEach((child) => {
+        child.geometry.dispose();
+      });
+    };
   }, []);
 
+  useFrame((state) => {
+    if (materialRef.current) {
+      // Dynamic color shift based on time
+      const hue = (state.clock.elapsedTime * 0.1) % 1;
+      materialRef.current.color.setHSL(hue, 0.7, 0.6); // Increased saturation
+      materialRef.current.emissiveIntensity = Math.sin(state.clock.elapsedTime) * 0.4 + 0.8; // Increased emission range
+    }
+
+    if (groupRef.current) {
+      // Constant clock-like rotation
+      groupRef.current.rotation.z += 0.005;
+
+      // Fixed scale
+      const scale = 0.08;
+      groupRef.current.scale.set(scale, -scale, scale);
+    }
+  });
+
+  const material = useMemo(
+    () =>
+      new THREE.MeshPhysicalMaterial({
+        color: "#ffffff", // Bright base color
+        metalness: 0.8, // High metalness for shine
+        roughness: 0.2, // Low roughness for better reflections
+        emissive: "#ffffff", // Brighter blue emissive
+        emissiveIntensity: 1.5, // Increased emission
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 2,
+        envMapIntensity: 2,
+        clearcoat: 1,
+        clearcoatRoughness: 0.1,
+        reflectivity: 10,
+        iridescence: 10, // Increased iridescence
+        iridescenceIOR: 1.5,
+        sheen: 0.5,
+        sheenRoughness: 0.2,
+        sheenColor: new THREE.Color("#black"),
+      }),
+    []
+  );
+
+  useEffect(() => {
+    materialRef.current = material;
+  }, [material]);
+
+  return <group ref={groupRef} position={[0, 0, 0]} />;
+};
+
+const Scene = () => {
+  return (
+    <>
+      <color attach="background" args={["#171717"]} />
+      <fog attach="fog" args={["#171717", 15, 30]} />
+      <ambientLight intensity={0.8} />
+      <pointLight position={[10, 10, 10]} intensity={2} />
+      <pointLight position={[-10, -10, -10]} intensity={1.2} color="#ffffff" />
+      <spotLight position={[0, 5, 8]} intensity={2} angle={0.8} penumbra={1} distance={25} decay={2} />
+      <spotLight position={[0, -5, 6]} intensity={1.5} angle={0.7} penumbra={1} distance={20} decay={2} color="#ffffff" />
+      <YorushikaLogo />
+      <OrbitControls enableZoom={false} enablePan={false} autoRotate={false} maxPolarAngle={Math.PI} minPolarAngle={0} enableDamping dampingFactor={0.1} rotateSpeed={1} domElement={document.querySelector(".logo-control-area")} />
+    </>
+  );
+};
+
+const ImageSec = () => {
   return (
     <section className="relative py-8 sm:py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 overflow-hidden">
-      <Particles
-        id="tsparticles-image"
-        init={particlesInit}
-        options={{
-          fullScreen: false,
-          background: {
-            color: {
-              value: "transparent",
-            },
-          },
-          fpsLimit: 120,
-          particles: {
-            color: {
-              value: "#ffffff",
-            },
-            links: {
-              color: "#ffffff",
-              distance: 200,
-              enable: true,
-              opacity: 0.5,
-              width: 1,
-            },
-            collisions: {
-              enable: false,
-            },
-            move: {
-              direction: "none",
-              enable: true,
-              outModes: {
-                default: "bounce",
-              },
-              random: true,
-              speed: 0.5,
-              straight: false,
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 80,
-            },
-            opacity: {
-              value: 0.5,
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              value: { min: 1, max: 3 },
-            },
-          },
-          detectRetina: true,
-        }}
-        className="absolute inset-0"
-      />
+      {/* 3D Background Scene */}
+      <div className="absolute inset-0 logo-control-area">
+        <Canvas
+          dpr={[1, 2]}
+          camera={{ position: [0, 0, 15], fov: 50 }} // Adjusted for better view
+          gl={{
+            antialias: true,
+            alpha: false,
+            stencil: false,
+            depth: true,
+          }}
+        >
+          <Scene />
+        </Canvas>
+      </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
         <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 lg:gap-8">
@@ -124,7 +242,6 @@ const ImageSec = () => {
               <p className="text-sm sm:text-base text-neutral-400 pl-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 italic font-semibold">
                 To you who always turns toward the sun, like a <span className="text-amber-200">sunflower</span>—.
               </p>
-              /
             </motion.div>
           </div>
         </div>

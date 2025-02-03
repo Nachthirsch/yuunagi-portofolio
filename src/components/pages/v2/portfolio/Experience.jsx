@@ -49,8 +49,38 @@ const Experience = () => {
   ];
 
   return (
-    <section className="py-32 px-7 sm:px-8 md:px-16 bg-gradient-to-br from-neutral-50 via-white to-neutral-100">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-32 px-7 sm:px-8 md:px-16 bg-gradient-to-br from-neutral-50 via-white to-neutral-100 relative overflow-hidden">
+      {/* Decorative Elements */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{
+          opacity: [0.1, 0.2, 0.1],
+          scale: [1, 1.2, 1],
+          rotate: [0, 180, 360],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="absolute top-20 right-20 w-64 h-64 rounded-full bg-blue-200/20 blur-3xl"
+      />
+      <motion.div
+        initial={{ opacity: 0, scale: 0.5 }}
+        animate={{
+          opacity: [0.1, 0.15, 0.1],
+          scale: [1, 1.1, 1],
+          rotate: [360, 180, 0],
+        }}
+        transition={{
+          duration: 15,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+        className="absolute bottom-20 left-20 w-96 h-96 rounded-full bg-purple-200/20 blur-3xl"
+      />
+
+      <div className="max-w-7xl mx-auto relative">
         {/* Elegant Header */}
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="text-center mb-24">
           <span className="text-sm uppercase tracking-[0.3em] text-neutral-500 mb-4 block">Career Timeline</span>
@@ -81,16 +111,22 @@ const Experience = () => {
               </div>
 
               {/* Content Container */}
-              <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_2px_2fr] gap-4 md:gap-8 items-start">
+              <div className="relative z-10 grid grid-cols-1 md:grid-cols-[1fr_2px_2fr] gap-4 md:gap-8 items-start transform hover:-rotate-1 transition-transform duration-500">
                 {/* Left Column - Date & Company */}
-                <div className="space-y-4">
+                <motion.div
+                  className="space-y-4"
+                  whileHover={{
+                    x: [-5, 5, -5],
+                    transition: { duration: 2, repeat: Infinity },
+                  }}
+                >
                   <div
                     className="inline-block px-4 py-1.5 bg-white rounded-full shadow-sm
                                 border border-neutral-200 text-sm text-neutral-600"
                   >
                     {exp.date}
                   </div>
-                  <div className="flex items-start gap-3">
+                  <motion.div className="flex items-start gap-3" whileHover={{ scale: 1.05 }} transition={{ type: "spring", stiffness: 300 }}>
                     <Building2 size={18} className="text-neutral-400 mt-1" />
                     <div>
                       <p className="font-medium text-neutral-800">{exp.company}</p>
@@ -99,17 +135,27 @@ const Experience = () => {
                         <span>Bogor, Indonesia</span>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
 
                 {/* Vertical Divider */}
-                <div
+                <motion.div
                   className="hidden md:block w-[2px] h-full bg-gradient-to-b from-neutral-200 via-neutral-200 to-transparent
                               self-stretch"
+                  whileHover={{
+                    scaleY: [1, 1.1, 1],
+                    transition: { duration: 1, repeat: Infinity },
+                  }}
                 />
 
                 {/* Right Column - Main Content */}
-                <div className="relative">
+                <motion.div
+                  className="relative"
+                  whileHover={{
+                    y: [-2, 2, -2],
+                    transition: { duration: 3, repeat: Infinity },
+                  }}
+                >
                   {/* Title and Job Type */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-6">
                     <h3 className="text-2xl font-medium text-neutral-800">{exp.title}</h3>
@@ -140,15 +186,15 @@ const Experience = () => {
                     {exp.skills.map((skill, idx) => (
                       <span
                         key={idx}
-                        className="px-4 py-1.5 text-sm bg-white rounded-full shadow-sm
+                        className="px-4 py-1.5 text-sm bg-white/80 backdrop-blur-sm rounded-full shadow-sm
                                  text-neutral-600 border border-neutral-200 hover:border-neutral-300
-                                 transition-colors duration-300"
+                                 transition-all duration-300 hover:rotate-3 hover:scale-110"
                       >
                         {skill}
                       </span>
                     ))}
                   </motion.div>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           ))}
@@ -202,14 +248,19 @@ const Experience = () => {
                   {/* Skills */}
                   <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="mt-6 md:mt-8 flex flex-wrap gap-2 md:gap-3">
                     {edu.skills.map((skill, idx) => (
-                      <span
+                      <motion.span
                         key={idx}
-                        className="px-4 py-1.5 text-sm bg-white rounded-full shadow-sm
+                        className="px-4 py-1.5 text-sm bg-white/80 backdrop-blur-sm rounded-full shadow-sm
                                  text-neutral-600 border border-neutral-200 hover:border-neutral-300
-                                 transition-colors duration-300"
+                                 transition-all duration-300 hover:rotate-3 hover:scale-110"
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: 3,
+                          transition: { type: "spring", stiffness: 300 },
+                        }}
                       >
                         {skill}
-                      </span>
+                      </motion.span>
                     ))}
                   </motion.div>
                 </div>
