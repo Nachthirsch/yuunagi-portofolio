@@ -7,7 +7,7 @@ import { useMemo, useRef, useEffect, useState } from "react";
 import * as THREE from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
 import me from "../../assets/me_1.jpg";
-import yorushikaSvg from "../../assets/yorushika.svg";
+import yorushikaSvg from "../../../public/yorushika.svg";
 
 const YorushikaLogo = () => {
   const [isDragging, setIsDragging] = useState(false);
