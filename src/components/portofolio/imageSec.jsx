@@ -102,7 +102,7 @@ const YorushikaLogo = () => {
 
             // Create a single centered instance
             const instanceMesh = new THREE.Mesh(geometry, materialRef.current);
-            const scale = 0.5; // Increased scale for better visibility
+            const scale = 0.3; // Increased scale for better visibility
             instanceMesh.scale.set(scale, -scale, scale);
             instanceMesh.position.set(75, -50, 0); // Centered position
             instanceMesh.rotation.z = Math.PI;
