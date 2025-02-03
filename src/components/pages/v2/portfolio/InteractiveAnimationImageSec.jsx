@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
 /* eslint-disable react/no-unknown-property */
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
@@ -157,7 +160,41 @@ const Scene = () => {
   );
 };
 
-const InteractiveAnimation = () => {
+const InteractiveAnimation = ({ onError }) => {
+  useEffect(() => {
+    try {
+      // Your Three.js initialization code
+      const loader = new THREE.TextureLoader();
+
+      // Use public URL for assets in production
+      const assetUrl =
+        process.env.NODE_ENV === "production"
+          ? "../../../../../public/yorushika.svg" // Adjust path based on your public folder structure
+          : "../../../../../public/yorushika.svg";
+
+      loader.load(
+        assetUrl,
+        (texture) => {
+          console.log("Texture loaded successfully");
+          // Your animation setup code
+        },
+        undefined,
+        (error) => {
+          console.error("Error loading texture:", error);
+          onError?.();
+        }
+      );
+    } catch (error) {
+      console.error("Animation setup error:", error);
+      onError?.();
+    }
+
+    return () => {
+      // Cleanup code
+      // Dispose of geometries, materials, textures
+    };
+  }, [onError]);
+
   return (
     <div className="absolute inset-0 logo-control-area bg-white/10">
       <Canvas

@@ -3,8 +3,11 @@
 import { motion } from "framer-motion";
 import AnimatedButton from "./DownloadResume";
 import InteractiveAnimation from "./InteractiveAnimationImageSec";
+import { Suspense, useState } from "react";
 
 const ImageSec = () => {
+  const [animationError, setAnimationError] = useState(false);
+
   const scrollToGallery = () => {
     const gallerySection = document.getElementById("gallery-section");
     if (gallerySection) {
@@ -17,9 +20,9 @@ const ImageSec = () => {
 
   return (
     <section className="py-32 px-4 sm:px-8 md:px-16 relative overflow-hidden bg-transparent">
-      {/* 3D Background Scene - Adjusted z-index */}
+      {/* 3D Background Scene - With Error Handling */}
       <div className="absolute inset-0 z-0">
-        <InteractiveAnimation />
+        <Suspense fallback={<div className="flex items-center justify-center h-full text-neutral-900">Loading Animation...</div>}>{!animationError ? <InteractiveAnimation onError={() => setAnimationError(true)} /> : <div className="flex items-center justify-center h-full text-neutral-900">Failed to load animation</div>}</Suspense>
       </div>
 
       {/* Content Layer */}
