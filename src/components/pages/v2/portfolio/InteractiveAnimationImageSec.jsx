@@ -69,35 +69,60 @@ const YorushikaLogo = () => {
 
   useEffect(() => {
     const loader = new SVGLoader();
-    loader.load(yorushikaSvg, (data) => {
-      const paths = data.paths;
-      const group = groupRef.current;
 
-      paths.forEach((path) => {
-        const shapes = path.toShapes(true);
-        shapes.forEach((shape) => {
-          const geometry = new THREE.ExtrudeGeometry(shape, {
-            depth: 15,
-            bevelEnabled: true,
-            bevelThickness: 2,
-            bevelSize: 1,
-            bevelSegments: 10,
+    // Use same production path logic as imageSec
+    const svgUrl =
+      process.env.NODE_ENV === "production"
+        ? `/yorushika.svg` // From public folder
+        : yorushikaSvg;
+
+    console.log("Loading SVG from:", svgUrl); // Debug log
+
+    loader.load(
+      svgUrl,
+      (data) => {
+        console.log("SVG loaded successfully");
+        const paths = data.paths;
+        const group = groupRef.current;
+        if (!group) return;
+
+        paths.forEach((path) => {
+          const shapes = path.toShapes(true);
+          shapes.forEach((shape) => {
+            const geometry = new THREE.ExtrudeGeometry(shape, {
+              depth: 15,
+              bevelEnabled: true,
+              bevelThickness: 2,
+              bevelSize: 1,
+              bevelSegments: 10,
+            });
+
+            const instanceMesh = new THREE.Mesh(geometry, materialRef.current);
+            const scale = 0.3;
+            instanceMesh.scale.set(scale, -scale, scale);
+            instanceMesh.position.set(50, -40, 0);
+            instanceMesh.rotation.z = Math.PI;
+            group.add(instanceMesh);
           });
-
-          const instanceMesh = new THREE.Mesh(geometry, materialRef.current);
-          const scale = 0.3;
-          instanceMesh.scale.set(scale, -scale, scale);
-          instanceMesh.position.set(50, -40, 0);
-          instanceMesh.rotation.z = Math.PI;
-          group.add(instanceMesh);
         });
-      });
-    });
+      },
+      (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      },
+      (error) => {
+        console.error("Error loading SVG:", error);
+      }
+    );
 
     return () => {
-      groupRef.current?.children.forEach((child) => {
-        child.geometry.dispose();
-      });
+      if (groupRef.current) {
+        groupRef.current.children.forEach((child) => {
+          child.geometry.dispose();
+          if (child.material) {
+            child.material.dispose();
+          }
+        });
+      }
     };
   }, []);
 
@@ -161,39 +186,7 @@ const Scene = () => {
 };
 
 const InteractiveAnimation = ({ onError }) => {
-  useEffect(() => {
-    try {
-      // Your Three.js initialization code
-      const loader = new THREE.TextureLoader();
-
-      // Use public URL for assets in production
-      const assetUrl =
-        process.env.NODE_ENV === "production"
-          ? "../../../../../public/yorushika.svg" // Adjust path based on your public folder structure
-          : "../../../../../public/yorushika.svg";
-
-      loader.load(
-        assetUrl,
-        (texture) => {
-          console.log("Texture loaded successfully");
-          // Your animation setup code
-        },
-        undefined,
-        (error) => {
-          console.error("Error loading texture:", error);
-          onError?.();
-        }
-      );
-    } catch (error) {
-      console.error("Animation setup error:", error);
-      onError?.();
-    }
-
-    return () => {
-      // Cleanup code
-      // Dispose of geometries, materials, textures
-    };
-  }, [onError]);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div className="absolute inset-0 logo-control-area bg-white/10">
@@ -206,9 +199,16 @@ const InteractiveAnimation = ({ onError }) => {
           stencil: false,
           depth: true,
         }}
+        onCreated={() => setIsLoading(false)}
+        onError={onError}
       >
         <Scene />
       </Canvas>
+      {isLoading && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-black">Loading animation...</span>
+        </div>
+      )}
     </div>
   );
 };
