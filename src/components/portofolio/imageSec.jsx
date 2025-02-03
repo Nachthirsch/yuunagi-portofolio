@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/no-unknown-property */
 import { motion } from "framer-motion";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { useMemo, useRef, useEffect, useState } from "react";
+import { useMemo, useRef, useEffect, useState, Suspense } from "react";
 import * as THREE from "three";
 import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
 import me from "../../assets/me_1.jpg";
@@ -70,36 +72,61 @@ const YorushikaLogo = () => {
   });
   useEffect(() => {
     const loader = new SVGLoader();
-    loader.load(yorushikaSvg, (data) => {
-      const paths = data.paths;
-      const group = groupRef.current;
 
-      paths.forEach((path) => {
-        const shapes = path.toShapes(true);
-        shapes.forEach((shape) => {
-          const geometry = new THREE.ExtrudeGeometry(shape, {
-            depth: 15, // Increased depth for better visibility
-            bevelEnabled: true,
-            bevelThickness: 2,
-            bevelSize: 1,
-            bevelSegments: 10,
+    // Use public URL for SVG in production
+    const svgUrl =
+      process.env.NODE_ENV === "production"
+        ? `/yorushika.svg` // Make sure this matches your deployment URL structure
+        : yorushikaSvg;
+
+    console.log("Loading SVG from:", svgUrl); // Debug log
+
+    loader.load(
+      svgUrl,
+      (data) => {
+        console.log("SVG loaded successfully");
+        const paths = data.paths;
+        const group = groupRef.current;
+        if (!group) return;
+
+        paths.forEach((path) => {
+          const shapes = path.toShapes(true);
+          shapes.forEach((shape) => {
+            const geometry = new THREE.ExtrudeGeometry(shape, {
+              depth: 15, // Increased depth for better visibility
+              bevelEnabled: true,
+              bevelThickness: 2,
+              bevelSize: 1,
+              bevelSegments: 10,
+            });
+
+            // Create a single centered instance
+            const instanceMesh = new THREE.Mesh(geometry, materialRef.current);
+            const scale = 0.5; // Increased scale for better visibility
+            instanceMesh.scale.set(scale, -scale, scale);
+            instanceMesh.position.set(75, -50, 0); // Centered position
+            instanceMesh.rotation.z = Math.PI;
+            group.add(instanceMesh);
           });
-
-          // Create a single centered instance
-          const instanceMesh = new THREE.Mesh(geometry, materialRef.current);
-          const scale = 0.5; // Increased scale for better visibility
-          instanceMesh.scale.set(scale, -scale, scale);
-          instanceMesh.position.set(75, -50, 0); // Centered position
-          instanceMesh.rotation.z = Math.PI;
-          group.add(instanceMesh);
         });
-      });
-    });
+      },
+      (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      },
+      (error) => {
+        console.error("Error loading SVG:", error);
+      }
+    );
 
     return () => {
-      groupRef.current?.children.forEach((child) => {
-        child.geometry.dispose();
-      });
+      if (groupRef.current) {
+        groupRef.current.children.forEach((child) => {
+          child.geometry.dispose();
+          if (child.material) {
+            child.material.dispose();
+          }
+        });
+      }
     };
   }, []);
 
@@ -169,22 +196,36 @@ const Scene = () => {
 };
 
 const ImageSec = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+
   return (
     <section className="relative py-8 sm:py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 overflow-hidden">
       {/* 3D Background Scene */}
       <div className="absolute inset-0 logo-control-area">
-        <Canvas
-          dpr={[1, 2]}
-          camera={{ position: [0, 0, 15], fov: 50 }} // Adjusted for better view
-          gl={{
-            antialias: true,
-            alpha: false,
-            stencil: false,
-            depth: true,
-          }}
-        >
-          <Scene />
-        </Canvas>
+        <Suspense fallback={<div className="flex items-center justify-center h-full text-white">Loading 3D Scene...</div>}>
+          <Canvas
+            dpr={[1, 2]}
+            camera={{ position: [0, 0, 15], fov: 50 }} // Adjusted for better view
+            gl={{
+              antialias: true,
+              alpha: false,
+              stencil: false,
+              depth: true,
+            }}
+            onCreated={() => setIsLoading(false)}
+            onError={() => setHasError(true)}
+          >
+            {!hasError ? (
+              <Scene />
+            ) : (
+              <mesh>
+                <boxGeometry args={[1, 1, 1]} />
+                <meshStandardMaterial color="red" />
+              </mesh>
+            )}
+          </Canvas>
+        </Suspense>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
