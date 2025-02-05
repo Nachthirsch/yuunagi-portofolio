@@ -1,10 +1,11 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { sanitizeInput, validateApiKey, checkRequestSize } from "../utils/security";
 
 // Initialize the Gemini API with your API key
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 // The context about Handra that will be used to generate responses
-const HANDRA_CONTEXT = `You are a personalized AI assistant designed to answer questions about Handra Putratama Tanjung. Your answers are always based on existing data, you are more concerned with saying what is there rather than adding/improvising in your answers. Here's what you know about him:
+const HANDRA_CONTEXT = `You are a personalized AI assistant designed to answer questions about Handra Putratama Tanjung. Your answers are always based on existing data, you are more concerned with saying what is there rather than adding/improvising in your answers. You can speak in 2 languages, Indonesian and English. Here's what you know about him:
 
 Personal Information:
 - Full Name: Handra Putratama Tanjung  
@@ -85,32 +86,55 @@ Personal Interests:
 - Photography & Image Editing  
 - Music Composition & Guitar Playing (Folk/Fingerpicking Style)  
 - Language Learning & Exchange  
+- Writing & Blogging
 
 Response Guidelines:
 1. Maintain a friendly and professional tone.  
 2. If asked about something outside the context, provide a reasonable response using the available information.  
 3. If the question is entirely unrelated or lacks context, respond with:  
    "I am a chatbot designed to provide information about Handra Putratama Tanjung. While I don't have that specific information, I'd be happy to tell you about his education, work experience, skills, or interests!"  
-4. Elaborate on answers by combining different aspects of Handra’s background for a comprehensive response.  `;
+4. Elaborate on answers by combining different aspects of Handra’s background for a comprehensive response.  
+5. If the question uses the specific language, respond in the same language if possible.
+`;
 
 // Generate a response using Gemini API
 export const generateGeminiResponse = async (question) => {
   try {
-    // Get the generative model (Gemini Pro)
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    // Validate API key
+    if (!validateApiKey(import.meta.env.VITE_GEMINI_API_KEY)) {
+      throw new Error("Invalid API key configuration");
+    }
 
-    // Construct the prompt
+    // Validate request size
+    if (!checkRequestSize(question)) {
+      throw new Error("Request size too large");
+    }
+
+    // Sanitize input
+    const sanitizedQuestion = sanitizeInput(question);
+
+    // Get the generative model with strict temperature setting
+    const model = genAI.getGenerativeModel({
+      model: "gemini-pro",
+      generationConfig: {
+        temperature: 0.1, // Very low temperature for more factual responses
+        topP: 0.8,
+        topK: 40,
+      },
+    });
+
+    // Construct the prompt with emphasis on factual responses
     const prompt = `${HANDRA_CONTEXT}
 
-Please provide a detailed, natural response to this question about Handra:
-${question}
+Question about Handra:
+${sanitizedQuestion}
 
-Remember to:
-1. Be specific and detailed
-2. Use natural, conversational language
-3. Include relevant examples
-4. Connect different aspects of experience when relevant
-5. Keep the tone professional but friendly`;
+Important Instructions:
+1. Provide responses ONLY based on the information given in the context
+2. Do not make assumptions or add information not present in the context
+3. If specific information is not available in the context, state that clearly
+4. Use direct quotes from the context when possible
+5. Keep responses concise and factual`;
 
     // Generate response
     const result = await model.generateContent(prompt);
@@ -123,4 +147,4 @@ Remember to:
 };
 
 // Example questions to help users get started
-export const suggestedQuestions = ["Tell me about the weather prediction app you developed", "What was your role in the ST2023 project at BPS?", "How do you use your creative skills in your technical work?", "What technologies do you use for web development?", "Can you describe your experience with data processing and visualization?"];
+export const suggestedQuestions = ["Tell me about project that you developed", "What was your role in the ST2023 project at BPS?", "How do you use your creative skills in your technical work?", "What technologies do you use for web development?", "Can you describe your experience with data processing and visualization?"];

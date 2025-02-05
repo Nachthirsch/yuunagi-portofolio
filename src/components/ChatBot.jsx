@@ -1,19 +1,33 @@
-/* eslint-disable react/no-unescaped-entities */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, User, Send } from "lucide-react";
+import { MessageCircle, X, Send } from "lucide-react";
 import { generateGeminiResponse, suggestedQuestions } from "../config/gemini";
 import { checkRateLimit, sanitizeInput, validateContent } from "../utils/security";
+import { TypeAnimation } from "react-type-animation";
 
 const formatMessage = (content) => {
-  // Split content into paragraphs
   const paragraphs = content.split("\n");
-
   return paragraphs.map((paragraph, index) => {
-    // Skip empty paragraphs
     if (!paragraph.trim()) return null;
 
-    // Check if it's a list item
+    // Handle bold text with **
+    if (paragraph.includes("**")) {
+      const parts = paragraph.split("**");
+      return (
+        <p key={index} className="mb-2">
+          {parts.map((part, i) =>
+            i % 2 === 0 ? (
+              part
+            ) : (
+              <span key={i} className="font-bold">
+                {part}
+              </span>
+            )
+          )}
+        </p>
+      );
+    }
+
     if (paragraph.trim().startsWith("- ") || paragraph.trim().startsWith("• ")) {
       return (
         <li key={index} className="ml-4 mb-1">
@@ -21,17 +35,13 @@ const formatMessage = (content) => {
         </li>
       );
     }
-
-    // Check if it's a heading (ends with ':')
     if (paragraph.trim().endsWith(":")) {
       return (
-        <h4 key={index} className="font-medium text-gray-900 dark:text-white mt-2 mb-1">
+        <h4 key={index} className="font-medium text-neutral-300 mt-2 mb-1">
           {paragraph}
         </h4>
       );
     }
-
-    // Check if it's a numbered list item
     if (/^\d+\./.test(paragraph.trim())) {
       return (
         <li key={index} className="ml-4 mb-1">
@@ -39,14 +49,20 @@ const formatMessage = (content) => {
         </li>
       );
     }
-
-    // Regular paragraph
     return (
       <p key={index} className="mb-2">
         {paragraph}
       </p>
     );
   });
+};
+
+const WelcomeMessage = () => {
+  return (
+    <div className="space-y-3">
+      <TypeAnimation sequence={["Hello! I'm Handra's AI Assistant", 1000, "I can help you learn more about Handra's experience", 1000, "I can help you learn more about Handra's skills", 1000, "I can help you learn more about Handra's projects", 1000]} wrapper="p" speed={100} className="text-sm text-neutral-300" repeat={0} cursor={true} />
+    </div>
+  );
 };
 
 export default function ChatBot() {
@@ -59,25 +75,12 @@ export default function ChatBot() {
     setIsLoading(true);
     try {
       const response = await generateGeminiResponse(question);
-      setChatHistory([
-        ...chatHistory,
-        {
-          type: "user",
-          content: question,
-        },
-        {
-          type: "bot",
-          content: response,
-        },
-      ]);
+      setChatHistory([...chatHistory, { type: "user", content: question }, { type: "bot", content: response }]);
     } catch (error) {
       console.error("Error getting response:", error);
       setChatHistory([
         ...chatHistory,
-        {
-          type: "user",
-          content: question,
-        },
+        { type: "user", content: question },
         {
           type: "bot",
           content: "I apologize, but I'm having trouble generating a response right now. Please try again later.",
@@ -92,7 +95,6 @@ export default function ChatBot() {
     e.preventDefault();
     if (!userInput.trim() || isLoading) return;
 
-    // Security checks
     if (!checkRateLimit()) {
       setChatHistory((prev) => [
         ...prev,
@@ -105,7 +107,6 @@ export default function ChatBot() {
     }
 
     const sanitizedInput = sanitizeInput(userInput);
-
     if (!validateContent(sanitizedInput)) {
       setChatHistory((prev) => [
         ...prev,
@@ -120,12 +121,9 @@ export default function ChatBot() {
     try {
       setIsLoading(true);
       const response = await generateGeminiResponse(sanitizedInput);
-
-      // Validate response
       if (!validateContent(response)) {
         throw new Error("Invalid response content");
       }
-
       setChatHistory((prev) => [...prev, { type: "user", content: sanitizedInput }, { type: "bot", content: response }]);
     } catch (error) {
       console.error("Error:", error);
@@ -142,77 +140,87 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="fixed bottom-4 md:right-4 left-4 z-50">
+    <div className="fixed bottom-4 md:right-8 right-6 left-4 z-50">
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="mb-4 w-[280px] md:w-[320px] rounded-lg bg-black/10 backdrop-blur-xl border border-white/10 shadow-xl">
-            <div className="flex items-center justify-between border-b border-white/10 p-3">
-              <div className="flex items-center space-x-2">
-                <User className="h-4 w-4 text-neutral-300" />
-                <div>
-                  <h3 className="text-xs md:text-sm font-medium text-neutral-200">Handra's Assistant</h3>
+          <motion.div initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: 20 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="mb-4 w-[300px] md:w-[380px] rounded-3xl bg-neutral-900/70 shadow-2xl border border-neutral-700/30 backdrop-blur-xl">
+            <div className="flex items-center justify-between p-4 border-b border-neutral-700/30">
+              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex items-center space-x-3">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <h3 className="text-sm font-medium text-neutral-300">AI Assistant</h3>
+                <div className="flex items-center space-x-1">
+                  <h3 className="text-xs font-medium text-neutral-300 flex items-center gap-1">
+                    Powered by
+                    <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="Gemini AI" className="w-4 h-4 ml-1 object-contain" />
+                  </h3>
                 </div>
-              </div>
-              <button onClick={() => setIsOpen(false)} className="rounded p-1 text-neutral-400 hover:bg-white/5">
-                <X size={14} />
-              </button>
+              </motion.div>
+              <motion.button whileHover={{ rotate: 90 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} onClick={() => setIsOpen(false)} className="rounded-full p-2 text-neutral-400 hover:bg-neutral-800/50">
+                <X size={16} />
+              </motion.button>
             </div>
-
-            <div className="flex h-[350px] md:h-[400px] flex-col">
-              <div className="flex-1 overflow-y-auto p-3">
-                <div className="space-y-3">
+            <div className="flex h-[400px] md:h-[450px] flex-col">
+              <style jsx>{`
+                .hide-scrollbar {
+                  -ms-overflow-style: none; /* IE and Edge */
+                  scrollbar-width: none; /* Firefox */
+                }
+                .hide-scrollbar::-webkit-scrollbar {
+                  display: none; /* Chrome, Safari and Opera */
+                }
+              `}</style>
+              <div className="flex-1 overflow-y-scroll overflow-x-hidden p-4 hide-scrollbar">
+                <div className="space-y-4">
                   {chatHistory.length === 0 && (
-                    <div className="mb-3 rounded bg-slate-100 p-2 dark:bg-slate-800">
-                      <p className="text-xs text-slate-700 dark:text-slate-300">Hello! I&apos;m Handra&apos;s personal assistant. You can ask me anything about him.</p>
-                    </div>
+                    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-4 rounded-lg bg-neutral-800/20">
+                      <WelcomeMessage />
+                    </motion.div>
                   )}
-
                   {chatHistory.map((message, index) => (
-                    <div key={index} className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}>
-                      <div className={`prose prose-sm max-w-[85%] rounded-md px-3 py-2 text-xs ${message.type === "user" ? "bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300" : "bg-blue-500 text-white dark:prose-invert"}`}>{message.type === "user" ? message.content : <div className="[&>h4]:text-white [&>ul]:list-disc [&>ol]:list-decimal">{formatMessage(message.content)}</div>}</div>
-                    </div>
+                    <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}>
+                      <div className={`max-w-[85%] rounded-lg px-4 py-3 text-sm ${message.type === "user" ? "bg-neutral-600/20 text-white" : "bg-neutral-800/20 text-neutral-300"}`}>{message.type === "user" ? message.content : <div className="prose prose-sm prose-invert">{formatMessage(message.content)}</div>}</div>
+                    </motion.div>
                   ))}
-
                   {isLoading && (
-                    <div className="flex justify-start">
-                      <div className="max-w-[85%] rounded-md bg-blue-500 px-3 py-2">
-                        <div className="flex items-center space-x-1">
-                          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-white"></div>
-                          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-white" style={{ animationDelay: "0.2s" }}></div>
-                          <div className="h-1.5 w-1.5 animate-bounce rounded-full bg-white" style={{ animationDelay: "0.4s" }}></div>
-                        </div>
-                      </div>
-                    </div>
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex space-x-2 justify-start">
+                      {[1, 2, 3].map((i) => (
+                        <div
+                          key={i}
+                          className="w-2 h-2 rounded-full bg-blue-500"
+                          style={{
+                            animation: `bounce 0.8s ease-in-out ${i * 0.2}s infinite`,
+                          }}
+                        />
+                      ))}
+                    </motion.div>
                   )}
                 </div>
-
                 {chatHistory.length === 0 && (
-                  <div className="mt-3 space-y-2">
-                    <p className="text-xs text-slate-500 dark:text-slate-400">Try asking:</p>
+                  <div className="mt-4 space-y-2">
+                    <p className="text-xs font-medium text-neutral-400">Suggested questions:</p>
                     {suggestedQuestions.map((question, index) => (
-                      <button key={index} onClick={() => handleQuestionClick(question)} className="w-full rounded bg-slate-50 p-2 text-left text-xs text-slate-700 hover:bg-slate-100 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700">
+                      <button key={index} onClick={() => handleQuestionClick(question)} className="w-full rounded-lg bg-neutral-800/20 p-3 text-left text-sm text-neutral-300 hover:bg-neutral-700/50 transition-colors">
                         {question}
                       </button>
                     ))}
                   </div>
                 )}
               </div>
-
-              <form onSubmit={handleUserInput} className="border-t border-white/10 p-3">
+              <form onSubmit={handleUserInput} className="p-4 border-t border-neutral-700/30">
                 <div className="flex space-x-2">
-                  <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder="Ask about Handra..." disabled={isLoading} className="flex-1 rounded bg-white/5 border border-white/10 px-2 py-1.5 text-xs text-neutral-200 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-neutral-400 disabled:opacity-50" />
-                  <button type="submit" disabled={isLoading} className="flex items-center justify-center rounded bg-neutral-800 px-2 py-1.5 text-neutral-200 hover:bg-neutral-700 disabled:opacity-50">
-                    <Send size={12} />
-                  </button>
+                  <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder="Ask anything about Handra..." disabled={isLoading} className="flex-1 rounded-lg bg-neutral-800/20 px-4 py-2 text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-blue-500/50 disabled:opacity-50" />
+                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} type="submit" disabled={isLoading} className="flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50 transition-colors">
+                    <Send size={16} />
+                  </motion.button>
                 </div>
               </form>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsOpen(!isOpen)} className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full bg-black/20 backdrop-blur-xl border border-white/10 text-neutral-200 hover:bg-black/30 transition-all duration-300">
-        <MessageCircle size={16} className="md:w-5 md:h-5" />
+      <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)} className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-neutral-300 to-neutral-900 shadow-lg hover:shadow-xl transition-all duration-300">
+        <motion.div className="absolute -inset-1 rounded-full border border-black-400/50 opacity-0 group-hover:opacity-100" animate={{ scale: [1, 1.1, 1], opacity: [0, 1, 0] }} transition={{ duration: 2, repeat: Infinity }} />
+        <MessageCircle size={20} className="text-white" />
       </motion.button>
     </div>
   );
