@@ -140,7 +140,7 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="fixed bottom-4 md:right-8 right-6 left-4 z-50">
+    <div className="fixed bottom-4 md:right-8 right-6 left-4 z-20">
       <AnimatePresence>
         {isOpen && (
           <motion.div initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: 20 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="mb-4 w-[300px] md:w-[380px] rounded-3xl bg-neutral-900/70 shadow-2xl border border-neutral-700/30 backdrop-blur-xl">
