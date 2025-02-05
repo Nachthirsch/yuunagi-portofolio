@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 
 import Nav from "./components/nav";
+import ChatBot from "./components/ChatBot";
 import Portfolio from "./components/pages/v1/portofolio";
 import BlogList from "./components/pages/v1/BlogList";
 import WritesPage from "./components/pages/v1/writes";
@@ -20,6 +21,7 @@ function App() {
             <Route path="/writes/:slug" element={<WritesPage />} />
             <Route path="/v2" element={<PortfolioV2 />} />
           </Routes>
+          <ChatBot />
         </div>
       </Router>
     </HelmetProvider>
