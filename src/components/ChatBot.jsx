@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, User, Send } from "lucide-react";
 import { generateGeminiResponse, suggestedQuestions } from "../config/gemini";
+import { checkRateLimit, sanitizeInput, validateContent } from "../utils/security";
 
 const formatMessage = (content) => {
   // Split content into paragraphs
@@ -91,34 +92,48 @@ export default function ChatBot() {
     e.preventDefault();
     if (!userInput.trim() || isLoading) return;
 
-    const question = userInput;
-    setUserInput("");
-    setIsLoading(true);
-
-    try {
-      const response = await generateGeminiResponse(question);
-      setChatHistory([
-        ...chatHistory,
-        {
-          type: "user",
-          content: question,
-        },
+    // Security checks
+    if (!checkRateLimit()) {
+      setChatHistory((prev) => [
+        ...prev,
         {
           type: "bot",
-          content: response,
+          content: "Too many requests. Please wait a moment before trying again.",
         },
       ]);
-    } catch (error) {
-      console.error("Error getting response:", error);
-      setChatHistory([
-        ...chatHistory,
-        {
-          type: "user",
-          content: question,
-        },
+      return;
+    }
+
+    const sanitizedInput = sanitizeInput(userInput);
+
+    if (!validateContent(sanitizedInput)) {
+      setChatHistory((prev) => [
+        ...prev,
         {
           type: "bot",
-          content: "I apologize, but I'm having trouble generating a response right now. Please try again later.",
+          content: "Invalid input detected. Please try again with appropriate content.",
+        },
+      ]);
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const response = await generateGeminiResponse(sanitizedInput);
+
+      // Validate response
+      if (!validateContent(response)) {
+        throw new Error("Invalid response content");
+      }
+
+      setChatHistory((prev) => [...prev, { type: "user", content: sanitizedInput }, { type: "bot", content: response }]);
+    } catch (error) {
+      console.error("Error:", error);
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          type: "bot",
+          content: "An error occurred. Please try again later.",
         },
       ]);
     } finally {
