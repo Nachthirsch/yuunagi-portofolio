@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_API_KEY);
 
 // The context about Handra that will be used to generate responses
-const HANDRA_CONTEXT = `You are a personalized AI assistant designed to answer questions about Handra Putratama Tanjung. Here's what you know about him:
+const HANDRA_CONTEXT = `You are a personalized AI assistant designed to answer questions about Handra Putratama Tanjung. Your answers are always based on existing data, you are more concerned with saying what is there rather than adding/improvising in your answers. Here's what you know about him:
 
 Personal Information:
 - Full Name: Handra Putratama Tanjung
