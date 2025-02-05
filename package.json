@@ -19,6 +19,7 @@
     "animejs": "^3.2.2",
     "clsx": "^2.1.1",
     "daisyui": "^4.12.23",
+    "dompurify": "^3.2.4",
     "framer-motion": "^11.11.10",
     "googleapis": "^144.0.0",
     "install": "^0.13.0",
