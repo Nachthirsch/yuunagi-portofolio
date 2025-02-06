@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send } from "lucide-react";
 import { generateGeminiResponse, suggestedQuestions } from "../config/gemini";
@@ -60,7 +60,7 @@ const formatMessage = (content) => {
 const WelcomeMessage = () => {
   return (
     <div className="space-y-3">
-      <TypeAnimation sequence={["Hello! I'm Handra's AI Assistant", 1000, "I can help you learn more about Handra's experience", 1000, "I can help you learn more about Handra's skills", 1000, "I can help you learn more about Handra's projects", 1000]} wrapper="p" speed={100} className="text-sm text-neutral-300" repeat={0} cursor={true} />
+      <TypeAnimation sequence={["Hello! I'm Handra's AI Assistant, I can help you learn more about Handra!", 1000]} wrapper="p" speed={50} className="text-sm text-neutral-300" repeat={0} cursor={true} />
     </div>
   );
 };
@@ -70,6 +70,33 @@ export default function ChatBot() {
   const [userInput, setUserInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const chatRef = useRef(null);
+
+  // Add ESC key handler
+  useEffect(() => {
+    const handleEsc = (event) => {
+      if (event.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
+
+  // Add click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (chatRef.current && !chatRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleQuestionClick = async (question) => {
     setIsLoading(true);
@@ -103,6 +130,7 @@ export default function ChatBot() {
           content: "Too many requests. Please wait a moment before trying again.",
         },
       ]);
+      setUserInput(""); // Reset input field
       return;
     }
 
@@ -115,6 +143,7 @@ export default function ChatBot() {
           content: "Invalid input detected. Please try again with appropriate content.",
         },
       ]);
+      setUserInput(""); // Reset input field
       return;
     }
 
@@ -125,6 +154,7 @@ export default function ChatBot() {
         throw new Error("Invalid response content");
       }
       setChatHistory((prev) => [...prev, { type: "user", content: sanitizedInput }, { type: "bot", content: response }]);
+      setUserInput(""); // Reset input field after successful send
     } catch (error) {
       console.error("Error:", error);
       setChatHistory((prev) => [
@@ -139,11 +169,15 @@ export default function ChatBot() {
     }
   };
 
+  const handleToggleChat = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="fixed bottom-4 md:right-8 right-6 left-4 z-20">
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: 20 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="mb-4 w-[300px] md:w-[380px] rounded-3xl bg-neutral-900/70 shadow-2xl border border-neutral-700/30 backdrop-blur-xl">
+          <motion.div ref={chatRef} initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: 20 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="mb-4 w-[300px] md:w-[380px] rounded-3xl bg-neutral-900/70 shadow-2xl border border-neutral-700/30 backdrop-blur-xl">
             <div className="flex items-center justify-between p-4 border-b border-neutral-700/30">
               <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex items-center space-x-3">
                 <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
@@ -156,10 +190,10 @@ export default function ChatBot() {
                 </div>
               </motion.div>
               <motion.button whileHover={{ rotate: 90 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} onClick={() => setIsOpen(false)} className="rounded-full p-2 text-neutral-400 hover:bg-neutral-800/50">
-                <X size={16} />
+                <X size={14} />
               </motion.button>
             </div>
-            <div className="flex h-[400px] md:h-[450px] flex-col">
+            <div className="flex h-[340px] md:h-[382px] flex-col">
               <style jsx>{`
                 .hide-scrollbar {
                   -ms-overflow-style: none; /* IE and Edge */
@@ -169,7 +203,7 @@ export default function ChatBot() {
                   display: none; /* Chrome, Safari and Opera */
                 }
               `}</style>
-              <div className="flex-1 overflow-y-scroll overflow-x-hidden p-4 hide-scrollbar">
+              <div className="flex-1 h-20 overflow-y-scroll overflow-x-hidden p-4 hide-scrollbar">
                 <div className="space-y-4">
                   {chatHistory.length === 0 && (
                     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-4 rounded-lg bg-neutral-800/20">
@@ -178,7 +212,7 @@ export default function ChatBot() {
                   )}
                   {chatHistory.map((message, index) => (
                     <motion.div key={index} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}>
-                      <div className={`max-w-[85%] rounded-lg px-4 py-3 text-sm ${message.type === "user" ? "bg-neutral-600/20 text-white" : "bg-neutral-800/20 text-neutral-300"}`}>{message.type === "user" ? message.content : <div className="prose prose-sm prose-invert">{formatMessage(message.content)}</div>}</div>
+                      <div className={`max-w-[85%] rounded-lg px-4 py-3 text-sm ${message.type === "user" ? "bg-neutral-500/20 text-white" : "bg-neutral-800/20 text-neutral-300"}`}>{message.type === "user" ? message.content : <div className="prose prose-sm prose-invert">{formatMessage(message.content)}</div>}</div>
                     </motion.div>
                   ))}
                   {isLoading && (
@@ -218,7 +252,7 @@ export default function ChatBot() {
           </motion.div>
         )}
       </AnimatePresence>
-      <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={() => setIsOpen(!isOpen)} className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-neutral-300 to-neutral-900 shadow-lg hover:shadow-xl transition-all duration-300">
+      <motion.button whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} onClick={handleToggleChat} className="group relative flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-neutral-300 to-neutral-900 shadow-lg hover:shadow-xl transition-all duration-300">
         <motion.div className="absolute -inset-1 rounded-full border border-black-400/50 opacity-0 group-hover:opacity-100" animate={{ scale: [1, 1.1, 1], opacity: [0, 1, 0] }} transition={{ duration: 2, repeat: Infinity }} />
         <MessageCircle size={20} className="text-white" />
       </motion.button>
