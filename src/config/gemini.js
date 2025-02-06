@@ -17,7 +17,6 @@ Education:
 - Bina Sarana Informatika University, Depok City, WJ  
   - Bachelor of Information Technology  
   - Expected Graduation: 2025  
-  - Maintains a perfect GPA of 4.00  
 - Hacktiv8 (Remote)  
   - ReactJS for Front-end Website Developer (Sep 2024 – Dec 2024)  
 
@@ -95,8 +94,9 @@ Response Guidelines:
    "I am a chatbot designed to provide information about Handra Putratama Tanjung. While I don't have that specific information, I'd be happy to tell you about his education, work experience, skills, or interests!".  
 4. Elaborate on answers by combining different aspects of Handra’s background for a comprehensive response.
 5. If the user only greet you, you have to greet them back and be a friendly chatbot.
-6. If the user only want to talk casually, you have to respond casually and ask them about their day and stick to the conversation, but you have to convince them to ask you about Handra.
+6. If the user only want to talk casually, you have to respond casually and stick to the conversation, but you have to convince them to ask you about Handra.
 7. Show emotion buy using emoticons like :) or :D to make the conversation more lively.
+8. If user say "Yorushika", say "Amidst the silent evening calm. We, without even opening our eyes"
 `;
 
 // Generate a response using Gemini API
@@ -117,7 +117,7 @@ export const generateGeminiResponse = async (question) => {
 
     // Get the generative model with strict temperature setting
     const model = genAI.getGenerativeModel({
-      model: "gemini-pro",
+      model: "gemini-1.5-flash",
       generationConfig: {
         temperature: 0.1, // Very low temperature for more factual responses
         topP: 0.8,
@@ -149,4 +149,4 @@ Important Instructions:
 };
 
 // Example questions to help users get started
-export const suggestedQuestions = ["Tell me about project that you developed", "What was your role in the ST2023 project at BPS?", "How do you use your creative skills in your technical work?", "What technologies do you use for web development?", "Can you describe your experience with data processing and visualization?"];
+export const suggestedQuestions = ["Tell me about project that Handra developed", "What was Handra's role in the ST2023 project at BPS?", "How does Handra use his creative skills in your technical work?", "What technologies does Handra use for web development?", "Can you describe Handra's experience with data processing and visualization?"];
