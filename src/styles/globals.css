@@ -1,12 +1,20 @@
-@import url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
+/* Add to your existing globals.css */
+.social-icon-wrapper {
+  @apply relative flex items-center justify-center p-2 rounded-full transition-all duration-300 bg-white/5;
+}
 
-/* Add this to ensure font loading */
-@layer base {
-  @font-face {
-    font-family: "Special Elite";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("https://fonts.googleapis.com/css2?family=Special+Elite&display=swap");
-  }
+.social-icon-wrapper:hover {
+  @apply -translate-y-1 bg-white/10 shadow-[0_4px_12px_rgba(233,69,96,0.2)];
+}
+
+.social-icon {
+  @apply w-6 h-6 transition-all duration-300;
+}
+
+.icon-tooltip {
+  @apply absolute -bottom-8 text-xs bg-[rgba(233,69,96,0.9)] text-white px-2 py-1 rounded opacity-0 translate-y-2.5 transition-all duration-300 pointer-events-none;
+}
+
+.social-icon-wrapper:hover .icon-tooltip {
+  @apply opacity-100 translate-y-0;
 }
