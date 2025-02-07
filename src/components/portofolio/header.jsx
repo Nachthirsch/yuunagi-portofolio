@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
 import { FaInstagram, FaGithub, FaLinkedin, FaSoundcloud } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
-import { useEffect, useRef } from "react";
 import { TypeAnimation } from "react-type-animation";
-
-const AsciiSphere = () => {
+import { useEffect, useRef } from "react";
+const Header = () => {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -18,7 +17,7 @@ const AsciiSphere = () => {
     const baseRadius = isMobile ? 180 : 220; // Slightly reduced desktop radius
     const numPoints = isMobile ? 250 : 300; // Reduced desktop points
     const baseFontSize = isMobile ? 10 : 12; // Optimized font size
-    const rotationSpeed = isMobile ? 0.008 : 0.006; // Slower rotation on desktop
+    const rotationSpeed = isMobile ? 0.008 : 0.01; // Slower rotation on desktop
 
     const NUMBERS = ["-.--", "..-", "..-", "-.", ".-", "--.", ".."];
     const points = [];
@@ -128,14 +127,9 @@ const AsciiSphere = () => {
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
-
-  return <canvas ref={canvasRef} className="absolute inset-0" style={{ zIndex: 1, willChange: "transform", background: "transparent" }} />;
-};
-
-const Header = () => {
   return (
     <header className="relative h-screen font-Hanken tracking-wider overflow-hidden bg-neutral-900">
-      <AsciiSphere /> {/* Add explicit background color */}
+      <canvas ref={canvasRef} className="absolute inset-0" style={{ zIndex: 1, willChange: "transform", background: "transparent" }} />
       <div className="relative h-full flex flex-col justify-center px-4 sm:px-8 md:px-16 z-10">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true, amount: 0.3 }} className="mb-4 sm:mb-6">
           <TypeAnimation

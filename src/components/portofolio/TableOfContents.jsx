@@ -27,7 +27,10 @@ const TableOfContents = () => {
           }
         });
       },
-      { threshold: 0.3 }
+      {
+        threshold: 0.1, // Ubah threshold menjadi lebih kecil
+        rootMargin: "-20% 0px -20% 0px", // Tambahkan root margin
+      }
     );
 
     sections.forEach(({ id }) => {
