@@ -8,6 +8,7 @@ import ProjectSection from "../../portofolio/projects";
 import TechStack from "../../portofolio/tech_stacks";
 import Footer from "../../portofolio/footer";
 import TableOfContents from "../../portofolio/TableOfContents";
+import MBTI from "../../portofolio/mbti";
 
 const Portfolio = () => {
   return (
@@ -25,6 +26,9 @@ const Portfolio = () => {
       </div>
       <div id="imageSection">
         <ImageSection />
+      </div>
+      <div id="mbti">
+        <MBTI />
       </div>
       <div id="activities">
         <ActivitiesTimeline />
