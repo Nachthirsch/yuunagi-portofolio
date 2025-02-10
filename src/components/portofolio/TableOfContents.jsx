@@ -68,7 +68,7 @@ const TableOfContents = () => {
                   <span
                     className="absolute right-full mr-2 px-2 py-1 rounded bg-neutral-800 text-white
                               text-xs whitespace-nowrap opacity-0 group-hover:opacity-100
-                              transition-opacity duration-200"
+                              transition-opacity duration-200 pointer-events-none"
                   >
                     {label}
                   </span>
