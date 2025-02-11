@@ -45,7 +45,7 @@ export const testData = {
     type: "INTP-A",
     personality: {
       type: "INTP-A",
-      description: "As an INTP-A (Logician), I approach challenges with logical analysis and innovative thinking. My assertive nature helps me maintain emotional stability while pursuing creative solutions. I value intellectual discourse and am driven by curiosity to understand complex systems and concepts.",
+      description: "As an INTP-A (Logician), I approach challenges with logical analysis and innovative thinking. My assertive nature helps me maintain emotional stability while pursuing creative solutions. ",
     },
     role: {
       title: "Analyst",

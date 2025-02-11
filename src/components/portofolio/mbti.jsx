@@ -41,7 +41,7 @@ const MBTI = () => {
       <div className="max-w-6xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-8 flex justify-between items-center">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-neutral-300 tracking-wider flex items-center gap-3">
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-300 tracking-wider flex items-center gap-3">
               <IoPersonOutline className="text-neutral-400" />
               Personality Profile
             </h2>
@@ -55,6 +55,18 @@ const MBTI = () => {
             <AnimatePresence mode="wait">
               <TraitDescriptionsCard key={activeTraitInfo.trait} traitType={activeTraitInfo.type} traitName={activeTraitInfo.trait} percentage={activeTraitInfo.percentage} description={activeTraitInfo.description} color={traitColors[activeTraitInfo.trait]} />
             </AnimatePresence>
+            <div className="flex items-center px-2 justify-between">
+              <a href="https://www.16personalities.com/profiles/b560acc3a3d53" target="_blank" rel="noopener noreferrer" className="text-xs text-neutral-400 hover:text-neutral-300 inline-flex items-center gap-2 transition-colors">
+                <IoLinkOutline />
+                Full Profile
+              </a>
+              <div className="flex items-center gap-4">
+                <button onClick={() => setShowHistory(!showHistory)} className="flex items-center gap-2 text-xs text-neutral-400 hover:text-neutral-300 transition-colors">
+                  <IoTimeOutline />
+                  {showHistory ? "View Current" : "View History"}
+                </button>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-4">
@@ -66,22 +78,6 @@ const MBTI = () => {
               {activeTest.traits.map((item, index) => (
                 <TraitProgress key={index} trait={item.trait} opposite={item.opposite} percentage={item.percentage} index={index} color={traitColors[item.trait]} onHover={setActiveTraitInfo} />
               ))}
-            </div>
-
-            <div className="pt-4 border-t border-neutral-800">
-              <div className="flex items-center justify-between">
-                <a href="https://www.16personalities.com/profiles/b560acc3a3d53" target="_blank" rel="noopener noreferrer" className="text-xs text-neutral-400 hover:text-neutral-300 inline-flex items-center gap-2 transition-colors">
-                  <IoLinkOutline />
-                  Full Profile
-                </a>
-                <div className="flex items-center gap-4">
-                  <span className="text-xs text-neutral-400">Test: {activeTest.date}</span>
-                  <button onClick={() => setShowHistory(!showHistory)} className="flex items-center gap-2 text-xs text-neutral-400 hover:text-neutral-300 transition-colors">
-                    <IoTimeOutline />
-                    {showHistory ? "View Current" : "View History"}
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
