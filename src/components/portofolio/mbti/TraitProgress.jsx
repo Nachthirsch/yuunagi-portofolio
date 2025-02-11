@@ -35,7 +35,8 @@ export const TraitProgress = ({ trait, opposite, percentage, index, color, onHov
           className="absolute h-full rounded-full"
           style={{
             backgroundColor: `#${color}`,
-            boxShadow: `0 0 10px #${color}40`,
+            boxShadow: `0 0 10px #${color}80, 0 0 20px #${color}80, 0 0 30px #${color}0`,
+            filter: "brightness(1.2)",
           }}
         />
       </div>
