@@ -80,7 +80,7 @@ const ProjectSection = () => {
   ];
 
   return (
-    <section className="py-16 px-10 sm:px-8 md:px-16 bg-neutral-900 font-Hanken">
+    <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-12">

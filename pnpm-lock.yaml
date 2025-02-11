@@ -133,7 +133,7 @@ importers:
         specifier: ^9.13.0
         version: 9.13.0(jiti@1.21.6)
       eslint-plugin-react:
-        specifier: ^7.37.1
+        specifier: ^7.37.2
         version: 7.37.2(eslint@9.13.0(jiti@1.21.6))
       eslint-plugin-react-hooks:
         specifier: ^5.0.0
