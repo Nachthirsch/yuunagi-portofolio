@@ -31,6 +31,7 @@ const WritesPage = () => {
   const [currentLang, setCurrentLang] = useState("");
   const [post, setPost] = useState(null);
   const [isDark, setIsDark] = useState(true);
+  const [isTocOpen, setIsTocOpen] = useState(true);
 
   // Improved useEffect for language handling
   useEffect(() => {
@@ -60,11 +61,11 @@ const WritesPage = () => {
   // Updated theme styles with typewriter elements
   const themeStyles = {
     background: isDark ? "bg-neutral-900" : "bg-gray-50",
-    text: isDark ? "text-neutral-200" : "text-gray-900",
+    text: isDark ? "text-neutral-100" : "text-neutral-900",
     subtext: isDark ? "text-neutral-400" : "text-gray-600",
     border: isDark ? "border-neutral-700/30" : "border-gray-200",
     select: isDark ? "bg-neutral-800 text-neutral-200" : "bg-white text-gray-900 border border-gray-200",
-    content: isDark ? "text-neutral-300" : "text-gray-700",
+    content: isDark ? "text-neutral-300" : "text-neutral-700",
     hover: isDark ? "hover:text-neutral-200" : "hover:text-gray-900",
     paper: isDark ? "bg-neutral-800/50" : "bg-white",
   };
@@ -162,18 +163,30 @@ const WritesPage = () => {
 
           {/* Main Content */}
           <motion.div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-sm sm:prose-base font-mono prose-headings:font-elite prose-p:font-elite`}>
-            <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
-              {/* Table of Contents - Now sticky on both mobile and desktop */}
-              <aside className="lg:w-64">
-                <div className="sticky top-4 max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide">
-                  <div className="lg:block">
-                    <TableOfContents sections={post.sections} themeStyles={themeStyles} />
-                  </div>
+            <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 relative">
+              {/* Table of Contents */}
+              <motion.div
+                layout
+                transition={{
+                  layout: { type: "spring", stiffness: 300, damping: 30 },
+                  duration: 0.6,
+                }}
+                className={`${!isTocOpen ? "fixed top-20 left-4 z-50 w-10 h-10 rounded-lg shadow-lg" : "lg:w-72"} ${themeStyles.background} ${themeStyles.border}`}
+              >
+                <div className={`${isTocOpen ? "sticky top-16" : ""} max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide`}>
+                  <TableOfContents sections={post.sections} themeStyles={themeStyles} onStateChange={setIsTocOpen} />
                 </div>
-              </aside>
+              </motion.div>
 
-              {/* Main Content Area */}
-              <div className="flex-grow">
+              {/* Main Content Area with modified transition */}
+              <motion.div
+                layout
+                transition={{
+                  layout: { type: "spring", stiffness: 300, damping: 30 },
+                  duration: 0.6,
+                }}
+                className={`flex-grow transition-all duration-500 ease-in-out ${!isTocOpen ? "lg:w-full" : ""}`}
+              >
                 {post.sections?.map((section, index) => {
                   if (!section) return null;
 
@@ -208,11 +221,11 @@ const WritesPage = () => {
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
                       {section.title && <h2 className={`text-lg sm:text-2xl ${themeStyles.text} mb-3 font-bold uppercase tracking-wider`}>{section.title}</h2>}
-                      {section.type === "disclaimer" ? <div className={`${isDark ? "bg-neutral-800/30 border-neutral-700/30" : "bg-gray-100 border-gray-300"} p-4 rounded-lg border ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} /> : <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />}
+                      {section.type === "disclaimer" ? <div className={`${isDark ? "bg-neutral-800/30 border-neutral-700/30" : "bg-gray-100 border-gray-300"} p-4 rounded-lg border ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} /> : <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />}
                     </div>
                   );
                 })}
-              </div>
+              </motion.div>
             </div>
 
             {post.references && post.references.length > 0 && (

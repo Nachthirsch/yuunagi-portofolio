@@ -47,7 +47,7 @@ const Nav = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 p-4">
       {/* Desktop Menu */}
-      <div className="hidden md:block max-w-[320px] mx-auto">
+      <div className="hidden md:block max-w-[360px] mx-auto">
         <div
           className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full px-4 py-2.5 
                     border border-white/10"

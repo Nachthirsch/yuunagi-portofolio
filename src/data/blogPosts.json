@@ -167,7 +167,7 @@
           },
           {
             "type": "disclaimer",
-            "content": "<p><div class=\"bg-neutral-800/30 p-6 text-neutral-400 italic rounded-lg border border-neutral-700/30\">I don't explore many bands/artists out there, and I myself am not deeply involved in the world of music. In this article, I might use a slightly hyperbolic tone regarding them. I apologize if any of my words offend the feelings of the readers.</div></p>"
+            "content": "<p>I don't explore many bands/artists out there, and I myself am not deeply involved in the world of music. In this article, I might use a slightly hyperbolic tone regarding them. I apologize if any of my words offend the feelings of the readers.</p>"
           },
           {
             "type": "section",
@@ -265,8 +265,8 @@
             "content": "<p>I will provide an example where their lyrics have a poetic wordplay that resonates with me.</p>"
           },
           {
-            "type": "section",
-            "content": "<p><div class=\"bg-neutral-800/30 p-6 rounded-lg border border-neutral-700/30\"><h2 class=\"text-2xl font-semibold text-neutral-200 mb-4\">\"Fireworks Beneath my Shoes\"</h4><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 1</h4><p class=\"text-neutral-400 italic\">Beneath my shoes, flowers bloomed<br><p class=\"text-neutral-400 italic\">Giant flowers of fire bloomed<br><p class=\"text-neutral-400 italic\">\"I’ll leave behind everything that’s in my heart\", I think<br><p class=\"text-neutral-400 italic font-bold  mb-8\">That’s the kind of summer I could see.<br><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 2</h4> <p class=\"text-neutral-400 italic\">Flowers were always ringing out beneath me<br><p class=\"text-neutral-400 italic\">Giant flowers of fire were ringing out<br><p class=\"text-neutral-400 italic\">\"The noise alone makes me cry\", I think<br><p class=\"text-neutral-400 italic font-bold mb-8\">That’s the kind of summer I heard<br><h4 class=\"text-lg font-semibold text-neutral-200 mb-2\">Chorus 3</h4> <p class=\"text-neutral-400 italic\">In the summer sky, flowers bloomed<br><p class=\"text-neutral-400 italic\">Giant flowers of fire bloomed<br><p class=\"text-neutral-400 italic\">\"I want to keep crying forever\", I think<br><p class=\"text-neutral-400 italic font-bold\">That’s the kind of summer that vanished<br></div></p>"
+            "type": "disclaimer",
+            "content": "<p><b>#Chorus 1</b><br>---<br>Beneath my shoes, flowers bloomed<br>Giant flowers of fire bloomed<br>\"I'll leave behind everything that's in my heart\", I think<br>That's the kind of summer I could see.<br>----------------------------------------------------------<br><b>#Chorus 2</b><br>---<br>Flowers were always ringing out beneath me<br>Giant flowers of fire were ringing out<br>\"The noise alone makes me cry\", I think<br>That's the kind of summer I heard<br>----------------------------------------------------------<br><b>#Chorus 3</b><br>---<br>In the summer sky, flowers bloomed<br>Giant flowers of fire bloomed<br>\"I want to keep crying forever\", I think<br>That's the kind of summer that vanished</p>"
           },
           {
             "type": "section",
