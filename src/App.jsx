@@ -7,7 +7,6 @@ import ChatBot from "./components/ChatBot";
 import Portfolio from "./components/pages/v1/portofolio";
 import BlogList from "./components/pages/v1/BlogList";
 import WritesPage from "./components/pages/v1/writes";
-import PortfolioV2 from "./components/pages/v2/PortfolioV2";
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
             <Route path="/" element={<Portfolio />} />
             <Route path="/writes" element={<BlogList />} />
             <Route path="/writes/:slug" element={<WritesPage />} />
-            <Route path="/v2" element={<PortfolioV2 />} />
           </Routes>
           <ChatBot />
         </div>

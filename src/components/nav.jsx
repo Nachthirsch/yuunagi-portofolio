@@ -7,7 +7,6 @@ const Nav = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const location = useLocation();
-  const isV2 = location.pathname.includes("/v2");
 
   const toggleFullscreen = () => {
     if (!document.fullscreenElement) {
@@ -21,7 +20,6 @@ const Nav = () => {
     }
   };
 
-  // Add fullscreen change event listener
   useEffect(() => {
     const handleFullscreenChange = () => {
       setIsFullscreen(!!document.fullscreenElement);
@@ -31,75 +29,43 @@ const Nav = () => {
     return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
   }, []);
 
-  const getMenuItems = (isV2) => {
-    if (isV2) {
-      return [];
-    }
-    return [
-      {
-        to: "/",
-        icon: <Briefcase size={18} />,
-        label: "Portfolio",
-        description: "View my work experience & projects",
-      },
-      {
-        to: "/writes",
-        icon: <PenTool size={18} />,
-        label: "Blog",
-        description: "Read my thoughts & articles",
-      },
-    ];
-  };
-
-  const menuItems = getMenuItems(isV2);
+  const menuItems = [
+    {
+      to: "/",
+      icon: <Briefcase size={18} />,
+      label: "Portfolio",
+      description: "View my work experience & projects",
+    },
+    {
+      to: "/writes",
+      icon: <PenTool size={18} />,
+      label: "Blog",
+      description: "Read my thoughts & articles",
+    },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 p-4">
-      {/* Version Selector - Desktop */}
-      <div className="hidden md:flex absolute left-4 top-4">
-        <div
-          className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-1 
-                    border border-white/10 flex"
-        >
-          <Link
-            to={isV2 ? "/" : location.pathname}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 
-                      ${!isV2 ? "bg-white text-neutral-900" : "text-white hover:text-neutral-200"}`}
-          >
-            V1
-          </Link>
-          <Link
-            to={!isV2 ? "/v2" : location.pathname}
-            className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-300 
-                      ${isV2 ? "bg-white text-neutral-900" : "text-white hover:text-neutral-200"}`}
-          >
-            V2
-          </Link>
-        </div>
-      </div>
-
       {/* Desktop Menu */}
       <div className="hidden md:block max-w-[320px] mx-auto">
-        {menuItems.length > 0 && (
-          <div
-            className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full px-4 py-2.5 
-                        border border-white/10"
-          >
-            <div className="flex items-center justify-center gap-4">
-              {menuItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.to}
-                  className={`text-white text-sm font-bold hover:text-neutral-300 
-                             transition-colors duration-300
-                             ${location.pathname === item.to ? "text-neutral-300" : ""}`}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
+        <div
+          className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full px-4 py-2.5 
+                    border border-white/10"
+        >
+          <div className="flex items-center justify-center gap-4">
+            {menuItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className={`text-white text-sm font-bold hover:text-neutral-300 
+                           transition-colors duration-300
+                           ${location.pathname === item.to ? "text-neutral-300" : ""}`}
+              >
+                {item.label}
+              </Link>
+            ))}
           </div>
-        )}
+        </div>
       </div>
 
       {/* Control Buttons - Desktop Only */}
@@ -116,49 +82,25 @@ const Nav = () => {
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden flex justify-between items-center">
-        {/* Version Selector - Mobile */}
-        <div
-          className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-1 
-                    border border-white/10 flex"
+      <div className="md:hidden flex justify-end items-center">
+        <motion.button
+          onClick={() => setIsOpen(!isOpen)}
+          className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-2.5 
+                     border border-white/10 hover:bg-white/10 transition-all duration-300"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
         >
-          <Link
-            to={isV2 ? "/" : location.pathname}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 
-                      ${!isV2 ? "bg-white text-neutral-900" : "text-white hover:text-neutral-200"}`}
+          <motion.div
+            animate={{
+              rotate: isOpen ? 180 : 0,
+              scale: isOpen ? 0.8 : 1,
+            }}
+            transition={{ duration: 0.3 }}
+            className="text-white"
           >
-            V1
-          </Link>
-          <Link
-            to={!isV2 ? "/v2" : location.pathname}
-            className={`px-3 py-1 rounded-full text-xs font-medium transition-all duration-300 
-                      ${isV2 ? "bg-white text-neutral-900" : "text-white hover:text-neutral-200"}`}
-          >
-            V2
-          </Link>
-        </div>
-
-        {/* Mobile Menu Toggle */}
-        {menuItems.length > 0 && (
-          <motion.button
-            onClick={() => setIsOpen(!isOpen)}
-            className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-2.5 
-                       border border-white/10 hover:bg-white/10 transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.div
-              animate={{
-                rotate: isOpen ? 180 : 0,
-                scale: isOpen ? 0.8 : 1,
-              }}
-              transition={{ duration: 0.3 }}
-              className="text-white"
-            >
-              {isOpen ? <X size={20} /> : <Menu size={20} />}
-            </motion.div>
-          </motion.button>
-        )}
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </motion.div>
+        </motion.button>
       </div>
 
       {/* Mobile Menu Dropdown */}
