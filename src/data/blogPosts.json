@@ -436,7 +436,7 @@
           },
           {
             "type": "section",
-            "content": "<p>You, the one who guide me in the darkness of the night, say I love you to<br>the moon!<br>You, who keep me warm in the cold of the rain, say I love you to the sun!<br>You, who keep my scenery beautiful, say I love you to the flower!<br>You, who cover me when I feel sad, say I love you to the rain!</p>",
+            "content": "<p>You, the one who guide me in the darkness of the night, say <b>I love you to the moon</b>!<br>You, who keep me warm in the cold of the rain, say <b>I love you to the sun</b>!<br>You, who keep my scenery beautiful, say <b>I love you to the flower</b>!<br>You, who cover me when I feel sad, say <b>I love you to the rain</b>!</p>",
             "title": "The Time when the Moon shines"
           }
         ]
