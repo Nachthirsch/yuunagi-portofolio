@@ -171,7 +171,7 @@ const WritesPage = () => {
                   layout: { type: "spring", stiffness: 300, damping: 30 },
                   duration: 0.6,
                 }}
-                className={`${!isTocOpen ? "fixed top-20 left-4 z-50 w-10 h-10 rounded-lg shadow-lg" : "lg:w-72"} ${themeStyles.background} ${themeStyles.border}`}
+                className={`${!isTocOpen ? "fixed top-20 left-4 z-50 w-10 h-10 rounded-lg shadow-lg" : "lg:w-72"} bg-neutral-900/1  `}
               >
                 <div className={`${isTocOpen ? "sticky top-16" : ""} max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide`}>
                   <TableOfContents sections={post.sections} themeStyles={themeStyles} onStateChange={setIsTocOpen} />

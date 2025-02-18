@@ -174,7 +174,7 @@ export default function ChatBot() {
   };
 
   return (
-    <div className="fixed bottom-4 md:right-8 right-6 left-4 z-20">
+    <div className="fixed bottom-4 left-4 md:left-8 z-20">
       <AnimatePresence>
         {isOpen && (
           <motion.div ref={chatRef} initial={{ opacity: 0, scale: 0.8, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.8, y: 20 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="mb-4 w-[300px] md:w-[380px] rounded-3xl bg-neutral-900/70 shadow-2xl border border-neutral-700/30 backdrop-blur-xl">
@@ -220,7 +220,7 @@ export default function ChatBot() {
                       {[1, 2, 3].map((i) => (
                         <div
                           key={i}
-                          className="w-2 h-2 rounded-full bg-blue-500"
+                          className="w-2 h-2 rounded-full bg-neutral-500"
                           style={{
                             animation: `bounce 0.8s ease-in-out ${i * 0.2}s infinite`,
                           }}
@@ -242,8 +242,8 @@ export default function ChatBot() {
               </div>
               <form onSubmit={handleUserInput} className="p-4 border-t border-neutral-700/30">
                 <div className="flex space-x-2">
-                  <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder="Ask anything about Handra..." disabled={isLoading} className="flex-1 rounded-lg bg-neutral-800/20 px-4 py-2 text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-blue-500/50 disabled:opacity-50" />
-                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} type="submit" disabled={isLoading} className="flex items-center justify-center rounded-lg bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50 transition-colors">
+                  <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder="Ask anything about Handra..." disabled={isLoading} className="flex-1 rounded-lg bg-neutral-800/20 px-4 py-2 text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500/50 disabled:opacity-50" />
+                  <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} type="submit" disabled={isLoading} className="flex items-center justify-center rounded-lg bg-neutral-600 px-4 py-2 text-white hover:bg-neutral-700 disabled:opacity-50 transition-colors">
                     <Send size={16} />
                   </motion.button>
                 </div>
