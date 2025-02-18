@@ -442,5 +442,30 @@
         ]
       }
     }
+  },
+  "yorushika-favorite-lyrics": {
+    "translations": {
+      "en": {
+        "title": "Yorushika's Words",
+        "metadata": {
+          "date": "2025-02-18",
+          "author": "Yorushika",
+          "category": "Lyrics",
+          "tags": [
+            "music",
+            "poem",
+            "poetry",
+            "poem"
+          ]
+        },
+        "sections": [
+          {
+            "type": "section",
+            "content": "<p>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds<br>No, rather, I would make my whole self into a cattleya<br>Which I’d like you to have, but it’s the last of it</p>",
+            "title": "Cattleya | カトレア"
+          }
+        ]
+      }
+    }
   }
 }
