@@ -308,6 +308,11 @@
         },
         "sections": [
           {
+            "type": "section",
+            "content": "",
+            "title": "NATSUKUSA GA JAMA WO SURU | 夏草が邪魔をする"
+          },
+          {
             "type": "introduction",
             "content": "<p>Hacktiv8, kebanyakan programmer Indonesia pasti familiar dengan nama ini. Sebuah lembaga pendidikan yang menyediakan program reskilling yang mendalam atau bisa disebut sebagai bootcamp, dengan tujuan untuk mengubah talenta digital siap kerja.</p>"
           },
@@ -358,6 +363,10 @@
             "type": "section",
             "content": "<p>Program ini memberikan pengalaman belajar yang sangat berharga bagi saya. Dari instruktur yang berkualitas hingga materi yang disampaikan dengan baik, semuanya memberikan kontribusi besar dalam peningkatan pengetahuan dan keterampilan saya dalam bidang ReactJS dan Frontend Development. Saya sangat merekomendasikan program ini bagi siapa pun yang ingin mendalami bidang tersebut. Terima kasih Hacktiv8 dan Kampus Merdeka atas kesempatan belajar yang luar biasa ini!</p>",
             "title": "Kesimpulan"
+          },
+          {
+            "type": "footnote",
+            "content": "<p>Catatan: Artikel ini ditulis berdasarkan pengalaman pribadi penulis dan mungkin tidak mencerminkan pengalaman semua orang.</p>"
           }
         ]
       }
@@ -460,9 +469,60 @@
         },
         "sections": [
           {
+            "type": "introduction",
+            "content": "<p>English Title Translation: The Summer Grass Is Getting In My Way | The Summer Grass Gets In The Way<br>Album Classification: EP / Mini-Album<br><u><a href=\"https://open.spotify.com/album/3o5yzVy1ZXMfyATfj9OjbV\" target=\"_blank\" rel=\"noopener noreferrer\">Spotify: 夏草が邪魔をする - Album by Yorushika | Spotify</a></u></p>",
+            "title": "夏草が邪魔をする"
+          },
+          {
+            "type": "image",
+            "images": [
+              {
+                "src": "https://m.media-amazon.com/images/I/41oLbhMzp1L._UF1000,1000_QL80_.jpg",
+                "altText": "Album Cover"
+              }
+            ]
+          },
+          {
             "type": "section",
-            "content": "<p>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds<br>No, rather, I would make my whole self into a cattleya<br>Which I’d like you to have, but it’s the last of it</p>",
+            "content": "<p>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds</p>\n<p>No, rather, I would make my whole self into a cattleya.<br>Which I’d like you to have, but it’s the last of it</p>",
             "title": "Cattleya | カトレア"
+          },
+          {
+            "type": "section",
+            "content": "<p>Even if its petals scatter, a peony is still a flower<br>Even if the summer ends, the memories of it are still cherished</p>\n<p>Put it into words, give voice to it<br>Say it</p>",
+            "title": "言って | Say it"
+          },
+          {
+            "type": "image",
+            "images": [
+              {
+                "src": "https://i.postimg.cc/tJq1BF98/image-12.png",
+                "altText": "Itte Girl"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "content": "<p>When you walk, flowers bloom<br>When you walk, the sky cries<br>When you smile, the distant summer…<br>I want to draw your smiling face</p>",
+            "title": "あの夏に咲け | Blooming In That Summer"
+          },
+          {
+            "type": "section",
+            "content": "<p>I’m sure that everything I’ve eaten is a compensation paid to life<br>I’m too late, and now I can’t even become a nighthawk[1]</p>",
+            "title": "靴の花火 | Fireworks Beneath My Shoes"
+          },
+          {
+            "type": "image",
+            "images": [
+              {
+                "src": "https://i.postimg.cc/FRrfF0wG/image-13.png",
+                "altText": "Fireworks Beneath My Shoes MV"
+              }
+            ]
+          },
+          {
+            "type": "footnote",
+            "content": "<p>[1]This references the Miyazawa Kenji short story “The Nighthawk Star.” Text from the story appears at various points in the music video.</p>"
           }
         ]
       }
