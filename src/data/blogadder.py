@@ -138,7 +138,7 @@ class FullscreenEditor(tk.Toplevel):
 
 class Section:
     """Represents a section in the blog post"""
-    def __init__(self, parent, delete_callback):
+    def __init__(self, parent, delete_callback, add_below_callback):
         self.frame = ttk.Frame(parent)
         self.frame.pack(fill=tk.X, padx=10, pady=10)  # Increased padding
         
@@ -155,9 +155,17 @@ class Section:
         # Create content frames
         self._create_content_frames()
         
+        # Create button container
+        button_frame = ttk.Frame(self.border_frame)
+        button_frame.pack(pady=5)
+        
         # Create delete button
-        ttk.Button(self.border_frame, text="Delete Section", 
-                  command=lambda: delete_callback(self)).pack(pady=5)
+        ttk.Button(button_frame, text="Delete Section", 
+                  command=lambda: delete_callback(self)).pack(side=tk.LEFT, padx=2)
+                  
+        # Add "Add Below" button
+        ttk.Button(button_frame, text="Add Below", 
+                  command=lambda: add_below_callback(self)).pack(side=tk.LEFT, padx=2)
 
         # Initialize type
         self.on_type_change()
@@ -167,7 +175,7 @@ class Section:
         type_frame.pack(fill=tk.X, pady=5)  # Added vertical padding
         ttk.Label(type_frame, text="Type:", width=10).pack(side=tk.LEFT)
         self.type_var = tk.StringVar(value="section")
-        types = ["introduction", "section", "disclaimer", "image"]
+        types = ["introduction", "section", "disclaimer", "image", "footnote"]  # Added footnote
         self.type_combo = ttk.Combobox(type_frame, textvariable=self.type_var, 
                                      values=types, state="readonly")
         self.type_combo.pack(side=tk.LEFT, padx=5)
@@ -301,27 +309,28 @@ class Section:
 
     def _format_content(self, content: str) -> str:
         """Format content by properly handling line breaks"""
-        # Split content by newlines and remove empty lines
-        lines = [line.strip() for line in content.split('\n') if line.strip()]
-        
-        if not lines:
+        if not content.strip():
             return ""
-            
-        # Join lines with '<br>' and remove duplicate breaks
-        formatted_lines = []
-        for line in lines:
-            # Remove any existing <br> tags
-            line = line.replace("<br>", "").strip()
-            if line:
-                formatted_lines.append(line)
-                
-        formatted_content = '<br>'.join(formatted_lines)
-        
-        # Ensure proper <p> wrapping
-        if not formatted_content.startswith("<p>"):
-            formatted_content = f"<p>{formatted_content}</p>"
-            
-        return formatted_content
+
+        # Split content into paragraphs based on double newlines
+        paragraphs = content.split('\n\n')
+        formatted_paragraphs = []
+
+        for paragraph in paragraphs:
+            # Handle single newlines within paragraphs
+            lines = paragraph.strip().split('\n')
+            # Filter out empty lines and join with <br>
+            lines = [line.strip() for line in lines if line.strip()]
+            if lines:
+                # Join lines within paragraph with <br>
+                paragraph_content = '<br>'.join(lines)
+                # Wrap in <p> tags if not already wrapped
+                if not paragraph_content.startswith('<p>'):
+                    paragraph_content = f"<p>{paragraph_content}</p>"
+                formatted_paragraphs.append(paragraph_content)
+
+        # Join paragraphs with newlines for better readability
+        return '\n'.join(formatted_paragraphs)
 
     def get_data(self) -> Dict:
         """Return section data in dictionary format"""
@@ -391,6 +400,15 @@ class LanguageTab:
         self.sections: List[Section] = []
         self._create_metadata_frame()
         self._create_sections_frame()
+        self.button_frame = ttk.Frame(self.sections_frame)
+        self.button_frame.pack(fill=tk.X, pady=5)
+        
+        # Add buttons for both top and bottom section addition
+        ttk.Button(self.button_frame, text="Add Section at Top", 
+                  command=lambda: self.add_section(at_top=True)).pack(side=tk.LEFT, padx=5)
+        self.add_button = ttk.Button(self.sections_frame, text="Add New Section", 
+                                   command=lambda: self.add_section(at_top=False))
+        self.add_button.pack(pady=5)
 
     def _create_metadata_frame(self):
         meta_frame = ttk.LabelFrame(self.frame.scrollable_frame, text="Metadata", padding="10")
@@ -434,19 +452,41 @@ class LanguageTab:
         
         # Button will be added at the bottom after sections
         self.add_button = ttk.Button(self.sections_frame, text="Add New Section", 
-                                   command=self.add_section)
+                                   command=lambda: self.add_section())
 
-    def add_section(self):
-        """Add a new section to the tab"""
+    def add_section(self, after_section=None, at_top=False):
+        """Add a new section to the tab, optionally at top or after a specific section"""
         # Hide the button temporarily
         self.add_button.pack_forget()
         
         # Create new section
-        new_section = Section(self.sections_container, self.delete_section)
-        self.sections.append(new_section)
+        new_section = Section(self.sections_container, self.delete_section, self.add_section)
+        
+        if at_top:
+            # Insert at beginning of list
+            self.sections.insert(0, new_section)
+            self._repack_sections()
+        elif after_section:
+            # Insert after specified section
+            idx = self.sections.index(after_section)
+            self.sections.insert(idx + 1, new_section)
+            self._repack_sections()
+        else:
+            # Add to end as before
+            self.sections.append(new_section)
         
         # Show the button at the bottom
         self.add_button.pack(pady=5)
+
+    def _repack_sections(self):
+        """Repack all sections in the correct order"""
+        # Unpack all sections
+        for section in self.sections:
+            section.frame.pack_forget()
+        
+        # Repack in the correct order
+        for section in self.sections:
+            section.frame.pack(fill=tk.X, padx=10, pady=10)
 
     def set_data(self, data: Dict):
         """Set tab data from dictionary"""
@@ -464,7 +504,7 @@ class LanguageTab:
 
         # Create new sections
         for section_data in data.get("sections", []):
-            new_section = Section(self.sections_container, self.delete_section)
+            new_section = Section(self.sections_container, self.delete_section, self.add_section)
             self.sections.append(new_section)
             new_section.set_data(section_data)
         
@@ -586,7 +626,7 @@ class BlogPostEditor:
             if current_tab:
                 tab_id = self.notebook.index(current_tab)
                 tab_text = self.notebook.tab(tab_id, "text")
-                lang_code = tab_text.split("(")[1].split(")")[0].lower()
+                lang_code = tab_text.split("(")[1].split(")")[0].lower()  # Fixed double quotes
                 
                 if lang_code in self.language_tabs:
                     tab_data = self.language_tabs[lang_code].get_data()

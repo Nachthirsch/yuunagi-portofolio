@@ -98,3 +98,54 @@ export const getFilterOptions = (posts) => {
     languages: Array.from(languages),
   };
 };
+
+// Blog Editor Utils
+export const readBlogPosts = async () => {
+  try {
+    // First try to get from localStorage
+    const localData = localStorage.getItem('blog_posts');
+    if (localData) {
+      return JSON.parse(localData);
+    }
+    
+    // If no local data, return default structure with sample post
+    const defaultData = {
+      'welcome-post': {
+        metadata: {
+          title: 'Welcome to My Blog',
+          author: 'Author Name',
+          date: new Date().toISOString().split('T')[0],
+          tags: ['welcome', 'first-post']
+        },
+        translations: {
+          en: {
+            title: 'Welcome to My Blog',
+            sections: [
+              {
+                type: 'text',
+                content: 'Welcome to my blog! This is a sample post.'
+              }
+            ]
+          }
+        }
+      }
+    };
+    
+    localStorage.setItem('blog_posts', JSON.stringify(defaultData));
+    return defaultData;
+  } catch (error) {
+    console.error('Error reading blog posts:', error);
+    return {}; // Return empty object if everything fails
+  }
+};
+
+export const saveBlogPosts = async (data) => {
+  try {
+    // Save to localStorage
+    localStorage.setItem('blog_posts', JSON.stringify(data));
+    return { success: true };
+  } catch (error) {
+    console.error('Error saving blog posts:', error);
+    throw new Error('Failed to save blog posts');
+  }
+};

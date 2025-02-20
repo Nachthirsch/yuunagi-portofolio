@@ -221,7 +221,16 @@ const WritesPage = () => {
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
                       {section.title && <h2 className={`text-lg sm:text-2xl ${themeStyles.text} mb-3 font-bold uppercase tracking-wider`}>{section.title}</h2>}
-                      {section.type === "disclaimer" ? <div className={`${isDark ? "bg-neutral-800/30 border-neutral-700/30" : "bg-gray-100 border-gray-300"} p-4 rounded-lg border ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} /> : <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />}
+                      {section.type === "disclaimer" ? (
+                        <div className={`${isDark ? "bg-neutral-800/30 border-neutral-700/30" : "bg-gray-100 border-gray-300"} p-4 rounded-lg border ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                      ) : section.type === "footnote" ? (
+                        <div className="relative">
+                          <hr className={`w-full my-4 border-t ${themeStyles.border}`} />
+                          <div className={`${themeStyles.content} text-xs sm:text-sm leading-relaxed tracking-wide italic`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                        </div>
+                      ) : (
+                        <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                      )}
                     </div>
                   );
                 })}
