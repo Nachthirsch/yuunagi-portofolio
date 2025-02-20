@@ -226,10 +226,12 @@ const WritesPage = () => {
                       ) : section.type === "footnote" ? (
                         <div className="relative">
                           <hr className={`w-full my-4 border-t ${themeStyles.border}`} />
-                          <div className={`${themeStyles.content} text-xs sm:text-sm leading-relaxed tracking-wide italic`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                          <div className={`${themeStyles.content} text-xs sm:text-sm leading-relaxed tracking-wide italic p-2 sm:p-4 rounded-lg ${isDark ? "bg-neutral-800/30" : "bg-gray-100"}`} 
+                               dangerouslySetInnerHTML={{ __html: section.content || "" }} />
                         </div>
                       ) : (
-                        <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                        <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} 
+                             dangerouslySetInnerHTML={{ __html: section.content || "" }} />
                       )}
                     </div>
                   );
