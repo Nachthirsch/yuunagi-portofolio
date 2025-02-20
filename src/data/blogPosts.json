@@ -484,12 +484,12 @@
           },
           {
             "type": "section",
-            "content": "<p>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds</p>\n<p>No, rather, I would make my whole self into a cattleya.<br>Which I’d like you to have, but it’s the last of it</p>",
+            "content": "<p>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds<br>No, rather, I would make my whole self into a cattleya.<br>Which I’d like you to have, but it’s the last of it</p>",
             "title": "Cattleya | カトレア"
           },
           {
             "type": "section",
-            "content": "<p>Even if its petals scatter, a peony is still a flower<br>Even if the summer ends, the memories of it are still cherished</p>\n<p>Put it into words, give voice to it<br>Say it</p>",
+            "content": "<p>Even if its petals scatter, a peony is still a flower<br>Even if the summer ends, the memories of it are still cherished<br>Put it into words, give voice to it<br>Say it</p>",
             "title": "言って | Say it"
           },
           {
@@ -522,7 +522,7 @@
           },
           {
             "type": "footnote",
-            "content": "<p>[1]This references the Miyazawa Kenji short story “The Nighthawk Star.” Text from the story appears at various points in the music video.</p>"
+            "content": "<p>[1] This references the Miyazawa Kenji short story “The Nighthawk Star.” Text from the story appears at various points in the music video.</p>"
           }
         ]
       }
