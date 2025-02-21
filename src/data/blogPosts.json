@@ -484,12 +484,12 @@
           },
           {
             "type": "section",
-            "content": "<p>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds<br>No, rather, I would make my whole self into a cattleya.<br>Which I’d like you to have, but it’s the last of it</p>",
+            "content": "<p>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds</p>\n<p>No, rather, I would make my whole self into a cattleya.<br>Which I’d like you to have, but it’s the last of it</p>",
             "title": "Cattleya | カトレア"
           },
           {
             "type": "section",
-            "content": "<p>Even if its petals scatter, a peony is still a flower<br>Even if the summer ends, the memories of it are still cherished<br>Put it into words, give voice to it<br>Say it</p>",
+            "content": "<p>Even if its petals scatter, a peony is still a flower<br>Even if the summer ends, the memories of it are still cherished</p>\n<p>Put it into words, give voice to it<br>Say it</p>",
             "title": "言って | Say it"
           },
           {
@@ -508,7 +508,7 @@
           },
           {
             "type": "section",
-            "content": "<p>I’m sure that everything I’ve eaten is a compensation paid to life<br>I’m too late, and now I can’t even become a nighthawk[1]</p>",
+            "content": "<p>I’m sure that everything I’ve eaten is a compensation paid to life<br>I’m too late, and now I can’t even become a nighthawk [1]</p>",
             "title": "靴の花火 | Fireworks Beneath My Shoes"
           },
           {
@@ -522,7 +522,26 @@
           },
           {
             "type": "footnote",
-            "content": "<p>[1] This references the Miyazawa Kenji short story “The Nighthawk Star.” Text from the story appears at various points in the music video.</p>"
+            "content": "<p>[1] This references the Miyazawa Kenji short story “The Nighthawk Star.”</p>"
+          },
+          {
+            "type": "section",
+            "content": "<p>The clouds are far away, see? See?<br>It really is unbelievable that the clouds at night are so high</p>\n<p>So you see, so you see<br>Even for you, it’s all right now</p>",
+            "title": "雲と幽霊 | The Clouds and the Ghost"
+          },
+          {
+            "type": "image",
+            "images": [
+              {
+                "src": "https://i.postimg.cc/s2K4TsW2/image-14.png",
+                "altText": "Kumo to Yuurei MV"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "content": "<p>If I were to give a name to life<br><b>“Hope” </b>wouldn’t be the right word<br>How many years have we been waiting, do you know?</p>\n<p>I don’t care about anything but you<br>I’ve come to understand only that</p>\n<p>Even if I walk one more step, one more time, I won’t be able to say it<br>Will the music echo, after all? Will saying everything be saying enough?</p>\n<p>One more time, we don’t need an encore anymore<br>Show your crying faces, <b>hypocrites!</b>[1]</p>\n<p>If I walk even one more step, one more time I’ll lose<br>Are you singing of world peace? Hurry up and save the world with love and so on</p>\n<p>It’s all right, I already want to put this life at stake<br>As a loser, I only sing of regret<br><i>I’ve lost to dreams again, being too attached to yesterday</i></p>",
+            "title": "負け犬にアンコールはいらない\n | A Loser Doesn’t Need An Encore"
           }
         ]
       }
