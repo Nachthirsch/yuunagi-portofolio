@@ -18,3 +18,12 @@
 .social-icon-wrapper:hover .icon-tooltip {
   @apply opacity-100 translate-y-0;
 }
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}

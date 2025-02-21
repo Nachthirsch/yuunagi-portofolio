@@ -116,8 +116,8 @@ const WritesPage = () => {
   return (
     <>
       <SEO title={post.title} description={getMetaDescription(post)} image={post.sections?.find((s) => s.type === "image")?.images?.[0]?.src} />
-      <section className={`min-h-screen ${themeStyles.background} pt-12 sm:pt-16 pb-16 px-3 sm:px-8 md:px-16 font-mono transition-colors duration-300`}>
-        <div className={`max-w-4xl mx-auto relative ${themeStyles.paper} p-4 sm:p-8 rounded-lg shadow-lg border ${themeStyles.border}`}>
+      <section className={`min-h-screen ${themeStyles.background} pt-12 sm:pt-16 pb-16 px-3 sm:px-8 md:px-16 font-mono transition-colors duration-300 isolation`}>
+        <div className={`max-w-4xl mx-auto relative ${themeStyles.paper} p-4 sm:p-8 rounded-lg shadow-lg border ${themeStyles.border} z-[1]`}>
           {/* Header Section */}
           <motion.div className="mb-6 sm:mb-8 border-b pb-4 sm:pb-6 border-dashed">
             <div className="flex flex-col gap-3">
@@ -226,12 +226,10 @@ const WritesPage = () => {
                       ) : section.type === "footnote" ? (
                         <div className="relative">
                           <hr className={`w-full my-4 border-t ${themeStyles.border}`} />
-                          <div className={`${themeStyles.content} text-xs sm:text-sm leading-relaxed tracking-wide italic p-2 sm:p-4 rounded-lg ${isDark ? "bg-neutral-800/30" : "bg-gray-100"}`} 
-                               dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                          <div className={`${themeStyles.content} text-xs sm:text-sm leading-relaxed tracking-wide italic p-2 sm:p-4 rounded-lg ${isDark ? "bg-neutral-800/30" : "bg-gray-100"}`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
                         </div>
                       ) : (
-                        <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} 
-                             dangerouslySetInnerHTML={{ __html: section.content || "" }} />
+                        <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
                       )}
                     </div>
                   );
