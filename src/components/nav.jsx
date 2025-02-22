@@ -45,11 +45,11 @@ const Nav = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 p-4">
+    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-10">
       {/* Desktop Menu */}
-      <div className="hidden md:block max-w-[360px] mx-auto">
+      <div className="hidden md:block">
         <div
-          className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full px-4 py-2.5 
+          className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full px-20 py-2.5 
                     border border-white/10"
         >
           <div className="flex items-center justify-center gap-4">
@@ -69,7 +69,7 @@ const Nav = () => {
       </div>
 
       {/* Control Buttons - Desktop Only */}
-      <div className="hidden md:flex absolute right-4 top-4">
+      <div className="hidden md:flex absolute -right-16 top-0">
         <motion.button
           onClick={toggleFullscreen}
           className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-2.5 
@@ -82,7 +82,7 @@ const Nav = () => {
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden flex justify-end items-center">
+      <div className="md:hidden">
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
           className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-2.5 
@@ -106,7 +106,7 @@ const Nav = () => {
       {/* Mobile Menu Dropdown */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="absolute top-16 right-4 w-48">
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="absolute top-16 right-0 w-48">
             <div
               className="bg-black bg-opacity-10 backdrop-blur-xl 
                           rounded-2xl p-3 border border-white/10"

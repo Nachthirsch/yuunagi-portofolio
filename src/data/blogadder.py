@@ -312,25 +312,33 @@ class Section:
         if not content.strip():
             return ""
 
-        # Split content into paragraphs based on double newlines
-        paragraphs = content.split('\n\n')
-        formatted_paragraphs = []
+        # Split content into paragraphs (double newlines)
+        paragraphs = []
+        current_lines = []
+        
+        # Split all lines while preserving empty lines
+        lines = content.split('\n')
+        
+        for line in lines:
+            if line.strip():
+                # Non-empty line - add to current paragraph
+                current_lines.append(line.strip())
+            else:
+                # Empty line - end current paragraph if it exists
+                if current_lines:
+                    paragraph = '<br>'.join(current_lines)
+                    paragraphs.append(f"<p>{paragraph}</p>")
+                    current_lines = []
+                # Add empty paragraph to preserve spacing
+                paragraphs.append("<p><br></p>")
+        
+        # Add the last paragraph if it exists
+        if current_lines:
+            paragraph = '<br>'.join(current_lines)
+            paragraphs.append(f"<p>{paragraph}</p>")
 
-        for paragraph in paragraphs:
-            # Handle single newlines within paragraphs
-            lines = paragraph.strip().split('\n')
-            # Filter out empty lines and join with <br>
-            lines = [line.strip() for line in lines if line.strip()]
-            if lines:
-                # Join lines within paragraph with <br>
-                paragraph_content = '<br>'.join(lines)
-                # Wrap in <p> tags if not already wrapped
-                if not paragraph_content.startswith('<p>'):
-                    paragraph_content = f"<p>{paragraph_content}</p>"
-                formatted_paragraphs.append(paragraph_content)
-
-        # Join paragraphs with newlines for better readability
-        return '\n'.join(formatted_paragraphs)
+        # Join all paragraphs
+        return '\n'.join(paragraphs)
 
     def get_data(self) -> Dict:
         """Return section data in dictionary format"""
@@ -383,11 +391,21 @@ class Section:
                     alt_var.set(img.get("altText", ""))
         else:
             self.title_var.set(data.get("title", ""))
+            
             # Process content for display
             content = data.get("content", "")
-            content = content.replace("<p>", "").replace("</p>", "")
-            # Replace <br> with newlines for editing
+            
+            # First remove HTML tags
+            content = content.replace("<p>", "").replace("</p>", "\n\n")
             content = content.replace("<br>", "\n")
+            
+            # Now replace literal \n with actual newlines
+            content = content.replace("\\n", "\n")
+            
+            # Clean up extra newlines but preserve intentional blank lines
+            lines = content.split("\n")
+            content = "\n".join(line.rstrip() for line in lines)
+            
             self.content_text.delete("1.0", tk.END)
             self.content_text.insert("1.0", content.strip())
 
