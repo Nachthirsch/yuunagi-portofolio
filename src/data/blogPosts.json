@@ -479,12 +479,12 @@
           },
           {
             "type": "section",
-            "content": "<p>札束で心が買えるなら本望だ<br>傷一つない新しい心にして<br>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds</p>\n<p>いっそ僕の全部、カトレア<br>君にあげたいのに最後だ<br>No, rather, I would make my whole self into a cattleya.<br>Which I’d like you to have, but it’s the last of it</p>",
+            "content": "<p>札束で心が買えるなら本望だ<br>傷一つない新しい心にして<br>I long to buy a heart with a wad of bills.<br>I would buy a new one, free from any wounds</p>\n<p><br></p>\n<p>いっそ僕の全部、カトレア<br>君にあげたいのに最後だ<br>No, rather, I would make my whole self into a cattleya.<br>Which I’d like you to have, but it’s the last of it</p>",
             "title": "Cattleya | カトレア"
           },
           {
             "type": "section",
-            "content": "<p>牡丹は散っても花だ<br>夏が去っても追慕は切だ<br>Even if its petals scatter, a peony is still a flower<br>Even if the summer ends, the memories of it are still cherished</p>\n<p>口に出して 声に出して<br>君が言って<br>Put it into words, give voice to it<br>Say it</p>",
+            "content": "<p>牡丹は散っても花だ<br>夏が去っても追慕は切だ<br>Even if its petals scatter, a peony is still a flower<br>Even if the summer ends, the memories of it are still cherished</p>\n<p><br></p>\n<p>口に出して 声に出して<br>君が言って<br>Put it into words, give voice to it<br>Say it</p>",
             "title": "言って | Say it"
           },
           {
@@ -521,13 +521,40 @@
           },
           {
             "type": "section",
-            "content": "<p>雲が遠いね　ねぇ<br>夜の雲が高いこと、本当不思議だよ<br>The clouds are far away, see? See?<br>It really is unbelievable that the clouds at night are so high</p>\n<p>だからさ、だからさ<br>君もさ、もういいんだよ<br>So you see, so you see<br>Even for you, it’s all right now</p>",
+            "content": "<p>雲が遠いね　ねぇ<br>夜の雲が高いこと、本当不思議だよ<br>The clouds are far away, see? See?<br>It really is unbelievable that the clouds at night are so high</p>\n<p><br></p>\n<p>だからさ、だからさ<br>君もさ、もういいんだよ<br>So you see, so you see<br>Even for you, it’s all right now</p>",
             "title": "雲と幽霊 | The Clouds and the Ghost"
           },
           {
+            "type": "image",
+            "images": [
+              {
+                "src": "https://i.postimg.cc/s2K4TsW2/image-14.png",
+                "altText": "Kumo to Yuurei MV"
+              }
+            ]
+          },
+          {
             "type": "section",
-            "content": "<p>希望って言葉は違うだろ<br>もう何年待っているんだろう、わからないか<br>If I were to give a name to life<br><b>“Hope” </b>wouldn’t be the right word<br>How many years have we been waiting, do you know?</p>\n<p>君以外はどうでもいいんだよ<br>それだけはわかっていたんだろ<br>I don’t care about anything but you<br>I’ve come to understand only that</p>\n<p>もう一回、もう一歩だって歩いても言えない<br>所詮音楽が響くか 何もかもが言い足るものか<br>Even if I walk one more step, one more time, I won’t be able to say it<br>Will the music echo, after all? Will saying everything be saying enough?</p>\n<p>もう一回、僕たちにもうアンコールなどいらない<br>吠え面かけよ偽善者<br>One more time, we don’t need an encore anymore<br>Show your crying faces, <b>hypocrites!</b>[1]</p>\n<p>もう一回、もう一歩だって歩いたら負けだ<br>世界平和でも歌うか？早く全部を救えよ愛とやらで<br>If I walk even one more step, one more time I’ll lose<br>Are you singing of world peace? Hurry up and save the world with love and so on</p>\n<p>もういい、もうこんな人生全部を賭けたい<br>負け犬なりに後悔ばっか歌って<br>また夢に負けて、昨日を愛おしんで<br>It’s all right, I already want to put this life at stake<br>As a loser, I only sing of regret<br><i>I’ve lost to dreams again, being too attached to yesterday</i></p>",
+            "content": "<p>English Title Translation: A Loser Doesn’t Need An Encore<br>Album Classification: EP / Mini-Album<br>Spotify: <u><a href=\"https://open.spotify.com/album/4jEsFbcpgjHiu0rsTdlaOy\" target=\"_blank\" rel=\"noopener noreferrer\">負け犬にアンコールはいらない - Album by Yorushika | Spotify</a></u></p>",
+            "title": "負け犬にアンコールはいらない"
+          },
+          {
+            "type": "image",
+            "images": [
+              {
+                "src": "https://i.postimg.cc/P5bFKYyz/image-15.png",
+                "altText": "Album Cover"
+              }
+            ]
+          },
+          {
+            "type": "section",
+            "content": "<p>希望って言葉は違うだろ<br>もう何年待っているんだろう、わからないか<br>If I were to give a name to life<br><b>“Hope” </b>wouldn’t be the right word<br>How many years have we been waiting, do you know?</p>\n<p><br></p>\n<p>君以外はどうでもいいんだよ<br>それだけはわかっていたんだろ<br>I don’t care about anything but you<br>I’ve come to understand only that</p>\n<p><br></p>\n<p>もう一回、もう一歩だって歩いても言えない<br>所詮音楽が響くか 何もかもが言い足るものか<br>Even if I walk one more step, one more time, I won’t be able to say it<br>Will the music echo, after all? Will saying everything be saying enough?</p>\n<p><br></p>\n<p>もう一回、僕たちにもうアンコールなどいらない<br>吠え面かけよ偽善者<br>One more time, we don’t need an encore anymore<br>Show your crying faces, <b>hypocrites!</b>[1]</p>\n<p><br></p>\n<p>もう一回、もう一歩だって歩いたら負けだ<br>世界平和でも歌うか？早く全部を救えよ愛とやらで<br>If I walk even one more step, one more time I’ll lose<br>Are you singing of world peace? Hurry up and save the world with love and so on</p>\n<p><br></p>\n<p>もういい、もうこんな人生全部を賭けたい<br>負け犬なりに後悔ばっか歌って<br>また夢に負けて、昨日を愛おしんで<br>It’s all right, I already want to put this life at stake<br>As a loser, I only sing of regret<br><i>I’ve lost to dreams again, being too attached to yesterday</i></p>",
             "title": "負け犬にアンコールはいらない\n | A Loser Doesn’t Need An Encore"
+          },
+          {
+            "type": "footnote",
+            "content": "<p>[1] “吠え面” means “tearful/crying face,” but for “crying” it uses the same word that’s used for “howl.”</p>"
           }
         ]
       }
