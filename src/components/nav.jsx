@@ -45,9 +45,9 @@ const Nav = () => {
   ];
 
   return (
-    <nav className="fixed top-4 left-1/2 -translate-x-1/2 z-10">
+    <nav className="fixed top-0 w-full z-10 p-4">
       {/* Desktop Menu */}
-      <div className="hidden md:block">
+      <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
         <div
           className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full px-20 py-2.5 
                     border border-white/10"
@@ -69,7 +69,7 @@ const Nav = () => {
       </div>
 
       {/* Control Buttons - Desktop Only */}
-      <div className="hidden md:flex absolute -right-16 top-0">
+      <div className="hidden md:flex absolute right-4 top-4">
         <motion.button
           onClick={toggleFullscreen}
           className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-2.5 
@@ -82,7 +82,7 @@ const Nav = () => {
       </div>
 
       {/* Mobile Menu Button */}
-      <div className="md:hidden">
+      <div className="md:hidden flex justify-end">
         <motion.button
           onClick={() => setIsOpen(!isOpen)}
           className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full p-2.5 
@@ -101,40 +101,40 @@ const Nav = () => {
             {isOpen ? <X size={20} /> : <Menu size={20} />}
           </motion.div>
         </motion.button>
-      </div>
 
-      {/* Mobile Menu Dropdown */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="absolute top-16 right-0 w-48">
-            <div
-              className="bg-black bg-opacity-10 backdrop-blur-xl 
-                          rounded-2xl p-3 border border-white/10"
-            >
-              {menuItems.map((item, index) => (
-                <motion.div
-                  key={item.label}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{
-                    opacity: 1,
-                    y: 0,
-                    transition: { delay: index * 0.1 },
-                  }}
-                >
-                  <Link
-                    to={item.to}
-                    onClick={() => setIsOpen(false)}
-                    className="group flex items-center gap-3 p-2 rounded-xl
-                             hover:bg-white/10 transition-all duration-300"
+        {/* Mobile Menu Dropdown */}
+        <AnimatePresence>
+          {isOpen && (
+            <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className="absolute top-16 right-4 w-48">
+              <div
+                className="bg-black bg-opacity-10 backdrop-blur-xl 
+                            rounded-2xl p-3 border border-white/10"
+              >
+                {menuItems.map((item, index) => (
+                  <motion.div
+                    key={item.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      transition: { delay: index * 0.1 },
+                    }}
                   >
-                    <span className="text-white text-sm font-bold">{item.label}</span>
-                  </Link>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                    <Link
+                      to={item.to}
+                      onClick={() => setIsOpen(false)}
+                      className="group flex items-center gap-3 p-2 rounded-xl
+                               hover:bg-white/10 transition-all duration-300"
+                    >
+                      <span className="text-white text-sm font-bold">{item.label}</span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </nav>
   );
 };

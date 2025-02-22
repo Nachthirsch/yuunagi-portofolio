@@ -170,37 +170,37 @@ const ProjectSection = () => {
   };
 
   return (
-    <section className="min-h-screen bg-neutral-900 font-Hanken overflow-hidden py-8">
-      <div className="max-w-7xl mx-auto flex flex-col px-4 sm:px-8 md:px-16">
+    <section className="min-h-screen bg-neutral-900 font-Hanken overflow-hidden py-4 sm:py-8">
+      <div className="max-w-7xl mx-auto flex flex-col px-3 sm:px-8 md:px-16">
         {/* Header with Controls */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h2 className="text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-3">
-              <Code2 className="text-neutral-400" size={32} />
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-2 sm:gap-3">
+              <Code2 className="text-neutral-400" size={24} sm:size={32} />
               Featured Projects
             </h2>
           </motion.div>
 
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-2 sm:gap-4">
             {/* View Mode Toggle */}
             <div className="bg-neutral-800 rounded-lg p-1 flex">
-              <button onClick={() => setViewMode("carousel")} className={`p-2 rounded ${viewMode === "carousel" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}>
-                <Rows size={20} />
+              <button onClick={() => setViewMode("carousel")} className={`p-1.5 sm:p-2 rounded ${viewMode === "carousel" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}>
+                <Rows size={18} sm:size={20} />
               </button>
-              <button onClick={() => setViewMode("grid")} className={`p-2 rounded ${viewMode === "grid" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}>
-                <LayoutGrid size={20} />
+              <button onClick={() => setViewMode("grid")} className={`p-1.5 sm:p-2 rounded ${viewMode === "grid" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}>
+                <LayoutGrid size={18} sm:size={20} />
               </button>
             </div>
 
             {/* Filters */}
-            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="bg-neutral-800 text-neutral-200 rounded-lg px-3 py-2 text-sm">
+            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="bg-neutral-800 text-neutral-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm">
               <option value="all">All Status</option>
               <option value="Completed">Completed</option>
               <option value="In Development">In Development</option>
             </select>
 
-            <select value={filterTech} onChange={(e) => setFilterTech(e.target.value)} className="bg-neutral-800 text-neutral-200 rounded-lg px-3 py-2 text-sm">
-              <option value="all">All Technologies</option>
+            <select value={filterTech} onChange={(e) => setFilterTech(e.target.value)} className="bg-neutral-800 text-neutral-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm">
+              <option value="all">All Tech</option>
               {allTechStacks.map((tech) => (
                 <option key={tech} value={tech}>
                   {tech}
@@ -212,26 +212,23 @@ const ProjectSection = () => {
 
         {/* Content */}
         {viewMode === "carousel" ? (
-          // Existing carousel view
-          <div className="flex flex-col lg:flex-row gap-8">
+          // Carousel view with responsive adjustments
+          <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
             {/* Left Column - Project Details */}
-            <div className="flex-1 flex flex-col">
-              {/* Header */}
-
-              {/* Project Details Panel */}
+            <div className="flex-1 flex flex-col order-2 lg:order-1">
               <AnimatePresence mode="wait">
                 <motion.div
                   key={selectedProject}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="bg-neutral-800/50 backdrop-blur rounded-2xl p-8 border border-neutral-700
+                  className="bg-neutral-800/50 backdrop-blur rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-neutral-700
                           shadow-lg flex-1 flex flex-col"
                 >
-                  <div className="flex flex-col h-full gap-8">
+                  <div className="flex flex-col h-full gap-4 sm:gap-8">
                     {/* Project Info */}
-                    <div className="space-y-6">
-                      <div className="flex flex-wrap gap-3">
+                    <div className="space-y-4 sm:space-y-6">
+                      <div className="flex flex-wrap gap-2 sm:gap-3">
                         <span
                           className="px-4 py-1.5 bg-neutral-800 text-neutral-300 text-sm rounded-full 
                                     border border-neutral-600 flex items-center gap-2"
