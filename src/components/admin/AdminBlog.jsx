@@ -1,12 +1,15 @@
 import { useState, useEffect } from "react";
 import { Tab } from "@headlessui/react";
 import { getAllBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "../../utils/blogUtils";
+import { useNavigate } from "react-router-dom";
 import LanguageTab from "./LanguageTab";
-import { Plus, Save, Trash2, Eye, RefreshCw, LogOut } from "lucide-react";
+import { Plus, Save, Trash2, Eye, RefreshCw, LogOut, User, ChevronDown } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 
 const AdminBlog = () => {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
+  const navigate = useNavigate();
+  const [showUserMenu, setShowUserMenu] = useState(false);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -22,6 +25,11 @@ const AdminBlog = () => {
       setSelectedLanguages(Object.keys(currentPost.translations));
     }
   }, [currentPost]);
+
+  useEffect(() => {
+    // Debug log to verify authentication
+    console.log("Current user:", user);
+  }, [user]);
 
   const loadPosts = async () => {
     try {
@@ -119,7 +127,7 @@ const AdminBlog = () => {
   const handleSignOut = async () => {
     try {
       await signOut();
-      // Will be redirected to login by PrivateRoute
+      navigate("/admin/login");
     } catch (err) {
       console.error("Error signing out:", err);
     }
@@ -130,18 +138,49 @@ const AdminBlog = () => {
 
   return (
     <div className="min-h-screen bg-neutral-900 text-neutral-100">
+      {/* Admin Header */}
+      <div className="bg-neutral-800 border-b border-neutral-700">
+        <div className="container mx-auto px-6 py-3">
+          <div className="flex justify-between items-center">
+            <h1 className="text-xl font-bold">Blog Admin</h1>
+
+            {/* User Menu */}
+            <div className="relative">
+              <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2 px-3 py-2 rounded hover:bg-neutral-700 transition-colors">
+                <User size={18} />
+                <span>{user?.email}</span>
+                <ChevronDown size={16} />
+              </button>
+
+              {/* Dropdown Menu */}
+              {showUserMenu && (
+                <div className="absolute right-0 mt-2 w-48 bg-neutral-800 rounded-lg shadow-lg border border-neutral-700 py-1">
+                  <div className="px-4 py-2 text-sm text-neutral-400 border-b border-neutral-700">
+                    Signed in as:
+                    <br />
+                    <span className="font-medium text-neutral-200">{user?.email}</span>
+                  </div>
+                  <button onClick={handleSignOut} className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-neutral-700 flex items-center gap-2">
+                    <LogOut size={16} />
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
       <div className="container mx-auto p-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Blog Management</h1>
+          <h2 className="text-2xl font-bold">Blog Management</h2>
           <div className="flex gap-2">
             <button onClick={createNewPost} className="flex items-center gap-1 px-3 py-1 bg-blue-500 rounded hover:bg-blue-600">
               <Plus size={20} /> New Post
             </button>
             <button onClick={loadPosts} className="flex items-center gap-1 px-3 py-1 bg-neutral-700 rounded hover:bg-neutral-600">
               <RefreshCw size={20} />
-            </button>
-            <button onClick={handleSignOut} className="flex items-center gap-1 px-3 py-1 bg-neutral-700 rounded hover:bg-neutral-600">
-              <LogOut size={20} />
             </button>
           </div>
         </div>

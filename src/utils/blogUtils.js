@@ -188,15 +188,21 @@ export const saveBlogPosts = async (data) => {
 // Add CRUD operations
 export const createBlogPost = async (postData) => {
   try {
-    // Only send the fields that exist in the database
-    const dataToInsert = {
-      slug: postData.slug,
-      translations: postData.translations,
-    };
+    const { data, error } = await supabase
+      .from("blog_posts")
+      .insert([
+        {
+          slug: postData.slug,
+          translations: postData.translations,
+        },
+      ])
+      .select()
+      .single();
 
-    const { data, error } = await supabase.from("blog_posts").insert([dataToInsert]).select().single();
-
-    if (error) throw error;
+    if (error) {
+      console.error("Error details:", error);
+      throw error;
+    }
     return data;
   } catch (error) {
     console.error("Error creating blog post:", error);
