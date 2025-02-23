@@ -27,31 +27,52 @@ const getExcerpt = (post, maxLength = 160) => {
 
 const WritesPage = () => {
   const { slug } = useParams();
-  const blogPost = getBlogPostBySlug(slug);
+  const [blogPost, setBlogPost] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [currentLang, setCurrentLang] = useState("");
   const [post, setPost] = useState(null);
   const [isDark, setIsDark] = useState(true);
   const [isTocOpen, setIsTocOpen] = useState(true);
 
-  // Improved useEffect for language handling
   useEffect(() => {
-    if (blogPost?.translations) {
-      const langs = Object.keys(blogPost.translations);
+    const fetchPost = async () => {
+      try {
+        setLoading(true);
+        const data = await getBlogPostBySlug(slug);
+        if (!data) {
+          setError("Post not found");
+          return;
+        }
+        setBlogPost(data);
 
-      // If current language is valid for this post, keep it
-      if (currentLang && langs.includes(currentLang)) {
-        setPost(blogPost.translations[currentLang]);
-      } else {
-        // Otherwise, set new initial language
-        const initialLang = langs.includes("id") ? "id" : langs[0];
-        setCurrentLang(initialLang);
-        setPost(blogPost.translations[initialLang]);
+        // Set initial language
+        const langs = Object.keys(data.translations || {});
+        if (currentLang && langs.includes(currentLang)) {
+          // Keep current language if valid
+          setPost(data.translations[currentLang]);
+        } else {
+          // Set new language (prefer ID, fallback to first available)
+          const initialLang = langs.includes("id") ? "id" : langs[0];
+          setCurrentLang(initialLang);
+          setPost(data.translations[initialLang]);
+        }
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
-    } else {
-      setCurrentLang("");
-      setPost(null);
+    };
+
+    fetchPost();
+  }, [slug]);
+
+  // Add new useEffect for language changes
+  useEffect(() => {
+    if (blogPost && currentLang && blogPost.translations[currentLang]) {
+      setPost(blogPost.translations[currentLang]);
     }
-  }, [blogPost, currentLang]); // Add currentLang to dependencies
+  }, [currentLang, blogPost]);
 
   // Handle theme toggle
   const toggleTheme = () => {
@@ -75,6 +96,26 @@ const WritesPage = () => {
     const plainText = introSection?.content?.replace(/<[^>]+>/g, "").slice(0, 160) || "";
     return plainText;
   };
+
+  if (loading) {
+    return (
+      <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken`}>
+        <div className="max-w-4xl mx-auto">
+          <h1 className={`text-3xl font-bold ${themeStyles.text}`}>Loading...</h1>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16`}>
+        <div className="max-w-4xl mx-auto">
+          <h1 className={`text-3xl font-bold ${themeStyles.text}`}>{error}</h1>
+        </div>
+      </section>
+    );
+  }
 
   if (!blogPost) {
     return (
@@ -103,6 +144,7 @@ const WritesPage = () => {
     const newLang = e.target.value;
     if (blogPost?.translations?.[newLang]) {
       setCurrentLang(newLang);
+      setPost(blogPost.translations[newLang]);
     }
   };
 

@@ -176,7 +176,7 @@ const ProjectSection = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-2 sm:gap-3">
-              <Code2 className="text-neutral-400" size={24} sm:size={32} />
+              <Code2 className="text-neutral-400" />
               Featured Projects
             </h2>
           </motion.div>

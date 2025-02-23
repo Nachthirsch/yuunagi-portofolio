@@ -1,51 +1,86 @@
-import blogPosts from "../data/blogPosts.json";
+import { supabase } from "./supabaseClient";
 
-export const getBlogPostBySlug = (slug) => {
-  const post = blogPosts[slug];
-  if (!post) return null;
+export const getBlogPostBySlug = async (slug) => {
+  try {
+    const { data: post, error } = await supabase.from("blog_posts").select("*").eq("slug", slug).single();
 
-  // Get available languages
-  const availableLanguages = Object.keys(post.translations || {});
+    if (error) {
+      console.error("Error fetching blog post:", error);
+      return null;
+    }
 
-  // If no translations available, return null
-  if (availableLanguages.length === 0) return null;
+    if (!post || !post.translations) {
+      console.log("Post not found or invalid format");
+      return null;
+    }
 
-  return {
-    ...post,
-    availableLanguages,
-  };
+    // Validate translations
+    const availableLanguages = Object.keys(post.translations);
+    if (availableLanguages.length === 0) {
+      console.log("No translations available");
+      return null;
+    }
+
+    console.log("Post loaded successfully:", {
+      slug: post.slug,
+      languages: availableLanguages,
+    });
+
+    return post;
+  } catch (error) {
+    console.error("Error in getBlogPostBySlug:", error);
+    return null;
+  }
 };
 
-export const getAllBlogPosts = () => {
-  if (!blogPosts) return [];
+export const getAllBlogPosts = async () => {
+  try {
+    console.log("Fetching all blog posts...");
+    const { data: posts, error } = await supabase.from("blog_posts").select("*").order("created_at", { ascending: false });
 
-  return Object.entries(blogPosts)
-    .map(([slug, post]) => {
-      const translations = post?.translations || {};
-      const languages = Object.keys(translations);
-      if (languages.length === 0) return null;
+    if (error) {
+      console.error("Error fetching blog posts:", error);
+      return [];
+    }
 
-      const firstTranslation = translations[languages[0]];
-      if (!firstTranslation) return null;
+    if (!posts) {
+      console.log("No posts found");
+      return [];
+    }
 
-      // Find first image from sections
-      const firstImageSection = firstTranslation.sections?.find((section) => section?.type === "image" && ((section.images && section.images.length > 0) || (section.image && section.image.src)));
+    return posts
+      .map((post) => {
+        const translations = post?.translations || {};
+        const firstLang = Object.keys(translations)[0];
+        const firstTranslation = translations[firstLang];
 
-      // Get thumbnail URL from either new or old format
-      const thumbnailSrc = firstImageSection ? firstImageSection.images?.[0]?.src || firstImageSection.image?.src : null;
+        if (!firstTranslation) {
+          console.log(`No translation found for post ${post.slug}`);
+          return null;
+        }
 
-      return {
-        slug,
-        title: firstTranslation.title || "Untitled",
-        thumbnail: thumbnailSrc,
-        date: firstTranslation.metadata?.date || "",
-        author: firstTranslation.metadata?.author || "",
-        tags: firstTranslation.metadata?.tags || [],
-        excerpt: getExcerpt(firstTranslation),
-        languages: languages.map((lang) => lang.toUpperCase()),
-      };
-    })
-    .filter(Boolean);
+        // Get thumbnail from sections
+        const firstImageSection = firstTranslation.sections?.find((section) => section?.type === "image" && (section.images?.length > 0 || section.image?.src));
+
+        return {
+          id: post.id,
+          slug: post.slug,
+          title: firstTranslation.title || "Untitled",
+          thumbnail: firstImageSection?.images?.[0]?.src || firstImageSection?.image?.src,
+          date: firstTranslation.metadata?.date || "",
+          author: firstTranslation.metadata?.author || "",
+          tags: firstTranslation.metadata?.tags || [],
+          excerpt: getExcerpt(firstTranslation),
+          languages: Object.keys(translations).map((lang) => lang.toUpperCase()),
+          translations: post.translations,
+          created_at: post.created_at,
+        };
+      })
+      .filter(Boolean);
+  } catch (error) {
+    console.error("Error in getAllBlogPosts:", error);
+    return [];
+  }
 };
 
 // Helper function to get clean excerpt
@@ -103,38 +138,38 @@ export const getFilterOptions = (posts) => {
 export const readBlogPosts = async () => {
   try {
     // First try to get from localStorage
-    const localData = localStorage.getItem('blog_posts');
+    const localData = localStorage.getItem("blog_posts");
     if (localData) {
       return JSON.parse(localData);
     }
-    
+
     // If no local data, return default structure with sample post
     const defaultData = {
-      'welcome-post': {
+      "welcome-post": {
         metadata: {
-          title: 'Welcome to My Blog',
-          author: 'Author Name',
-          date: new Date().toISOString().split('T')[0],
-          tags: ['welcome', 'first-post']
+          title: "Welcome to My Blog",
+          author: "Author Name",
+          date: new Date().toISOString().split("T")[0],
+          tags: ["welcome", "first-post"],
         },
         translations: {
           en: {
-            title: 'Welcome to My Blog',
+            title: "Welcome to My Blog",
             sections: [
               {
-                type: 'text',
-                content: 'Welcome to my blog! This is a sample post.'
-              }
-            ]
-          }
-        }
-      }
+                type: "text",
+                content: "Welcome to my blog! This is a sample post.",
+              },
+            ],
+          },
+        },
+      },
     };
-    
-    localStorage.setItem('blog_posts', JSON.stringify(defaultData));
+
+    localStorage.setItem("blog_posts", JSON.stringify(defaultData));
     return defaultData;
   } catch (error) {
-    console.error('Error reading blog posts:', error);
+    console.error("Error reading blog posts:", error);
     return {}; // Return empty object if everything fails
   }
 };
@@ -142,10 +177,53 @@ export const readBlogPosts = async () => {
 export const saveBlogPosts = async (data) => {
   try {
     // Save to localStorage
-    localStorage.setItem('blog_posts', JSON.stringify(data));
+    localStorage.setItem("blog_posts", JSON.stringify(data));
     return { success: true };
   } catch (error) {
-    console.error('Error saving blog posts:', error);
-    throw new Error('Failed to save blog posts');
+    console.error("Error saving blog posts:", error);
+    throw new Error("Failed to save blog posts");
   }
+};
+
+// Add CRUD operations
+export const createBlogPost = async (postData) => {
+  try {
+    // Only send the fields that exist in the database
+    const dataToInsert = {
+      slug: postData.slug,
+      translations: postData.translations,
+    };
+
+    const { data, error } = await supabase.from("blog_posts").insert([dataToInsert]).select().single();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error("Error creating blog post:", error);
+    throw error;
+  }
+};
+
+export const updateBlogPost = async (slug, postData) => {
+  try {
+    // Only send the fields that exist in the database
+    const dataToUpdate = {
+      translations: postData.translations,
+    };
+
+    const { data, error } = await supabase.from("blog_posts").update(dataToUpdate).eq("slug", slug).select().single();
+
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error("Error updating blog post:", error);
+    throw error;
+  }
+};
+
+export const deleteBlogPost = async (slug) => {
+  const { error } = await supabase.from("blog_posts").delete().eq("slug", slug);
+
+  if (error) throw error;
+  return true;
 };
