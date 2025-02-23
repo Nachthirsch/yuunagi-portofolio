@@ -37,42 +37,64 @@ const LanguageTab = ({ data, onChange }) => {
   };
 
   return (
-    <div className="space-y-6 p-4">
+    <div className="px-4 py-2 space-y-4">
       {/* Metadata Section */}
-      <div className="bg-neutral-800/50 p-4 rounded-lg">
-        <h3 className="text-lg font-semibold mb-4">Metadata</h3>
-        <div className="grid grid-cols-2 gap-4">
-          <input type="text" value={data.title || ""} onChange={(e) => onChange({ ...data, title: e.target.value })} placeholder="Post Title" className="bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-          <input type="text" value={data.metadata?.author || ""} onChange={(e) => handleMetadataChange("author", e.target.value)} placeholder="Author" className="bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-          <input type="date" value={data.metadata?.date || ""} onChange={(e) => handleMetadataChange("date", e.target.value)} className="bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-          <input type="text" value={data.metadata?.category || ""} onChange={(e) => handleMetadataChange("category", e.target.value)} placeholder="Category" className="bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-          <input
-            type="text"
-            value={data.metadata?.tags?.join(", ") || ""}
-            onChange={(e) =>
-              handleMetadataChange(
-                "tags",
-                e.target.value.split(",").map((tag) => tag.trim())
-              )
-            }
-            placeholder="Tags (comma-separated)"
-            className="bg-neutral-800 border border-neutral-600 rounded px-2 py-1 col-span-2"
-          />
+      <div className="bg-neutral-800/50 rounded-lg">
+        <div className="p-3 border-b border-neutral-700">
+          <h3 className="text-lg font-semibold">Metadata</h3>
+        </div>
+        <div className="p-3 space-y-3">
+          <div className="space-y-2">
+            <label className="text-sm text-neutral-400">Title</label>
+            <input type="text" value={data.title || ""} onChange={(e) => onChange({ ...data, title: e.target.value })} placeholder="Post Title" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+          </div>
+
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-2">
+              <label className="text-sm text-neutral-400">Author</label>
+              <input type="text" value={data.metadata?.author || ""} onChange={(e) => handleMetadataChange("author", e.target.value)} placeholder="Author" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm text-neutral-400">Date</label>
+              <input type="date" value={data.metadata?.date || ""} onChange={(e) => handleMetadataChange("date", e.target.value)} className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label className="text-sm text-neutral-400">Category</label>
+            <input type="text" value={data.metadata?.category || ""} onChange={(e) => handleMetadataChange("category", e.target.value)} placeholder="Category" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+          </div>
+          <div className="space-y-2">
+            <label className="text-sm text-neutral-400">Tags (comma-separated)</label>
+            <input
+              type="text"
+              value={data.metadata?.tags?.join(", ") || ""}
+              onChange={(e) =>
+                handleMetadataChange(
+                  "tags",
+                  e.target.value.split(",").map((tag) => tag.trim())
+                )
+              }
+              placeholder="Tags (comma-separated)"
+              className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base"
+            />
+          </div>
         </div>
       </div>
 
       {/* Sections */}
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
+      <div className="bg-neutral-800/50 rounded-lg">
+        <div className="p-3 border-b border-neutral-700 flex justify-between items-center">
           <h3 className="text-lg font-semibold">Sections</h3>
-          <button onClick={handleAddSection} className="flex items-center gap-1 text-blue-500 hover:text-blue-400">
-            <Plus size={20} /> Add Section
+          <button onClick={handleAddSection} className="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 rounded-lg flex items-center gap-1">
+            <Plus size={18} /> Add
           </button>
         </div>
-
-        {data.sections?.map((section, index) => (
-          <SectionEditor key={index} section={section} onUpdate={(newSection) => handleSectionUpdate(index, newSection)} onDelete={() => handleDeleteSection(index)} />
-        ))}
+        <div className="p-3 space-y-4">
+          {data.sections?.map((section, index) => (
+            <SectionEditor key={index} section={section} onUpdate={(newSection) => handleSectionUpdate(index, newSection)} onDelete={() => handleDeleteSection(index)} />
+          ))}
+        </div>
       </div>
     </div>
   );

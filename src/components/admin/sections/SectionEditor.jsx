@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Trash2, Plus, Bold, Italic, Underline, Code, Link as LinkIcon, ListIcon } from "lucide-react";
 
 const TextFormatButton = ({ icon: Icon, label, onClick, className = "" }) => (
-  <button type="button" onClick={onClick} className={`p-1.5 rounded hover:bg-neutral-700 transition-colors ${className}`} title={label}>
+  <button type="button" onClick={onClick} className={`p-2 rounded hover:bg-neutral-700 active:bg-neutral-600 touch-manipulation ${className}`} title={label}>
     <Icon size={16} />
   </button>
 );
@@ -74,51 +74,57 @@ const SectionEditor = ({ section, onUpdate, onDelete }) => {
   };
 
   return (
-    <div className="border border-neutral-700 p-4 rounded-lg mb-4 bg-neutral-800/50">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex gap-2">
-          <select value={sectionData.type} onChange={(e) => handleTypeChange(e.target.value)} className="bg-neutral-800 border border-neutral-600 rounded px-2 py-1">
-            <option value="section">Text Section</option>
-            <option value="image">Image</option>
-            <option value="introduction">Introduction</option>
-            <option value="disclaimer">Disclaimer</option>
-            <option value="footnote">Footnote</option>
-          </select>
-        </div>
-        <button onClick={() => onDelete()} className="text-red-500 hover:text-red-400">
+    <div className="border border-neutral-700 rounded-lg bg-neutral-900/50">
+      <div className="p-3 border-b border-neutral-700 flex items-center gap-2">
+        <select value={sectionData.type} onChange={(e) => handleTypeChange(e.target.value)} className="flex-1 bg-neutral-700 px-3 py-2 rounded-lg text-base">
+          <option value="section">Text Section</option>
+          <option value="image">Image</option>
+          <option value="introduction">Introduction</option>
+          <option value="disclaimer">Disclaimer</option>
+          <option value="footnote">Footnote</option>
+        </select>
+        <button onClick={() => onDelete()} className="p-2 text-red-500 hover:bg-red-500/10 rounded-lg">
           <Trash2 size={20} />
         </button>
       </div>
 
-      {sectionData.type === "image" ? (
-        <div className="space-y-2">
-          {(sectionData.images || [{}]).map((img, idx) => (
-            <div key={idx} className="flex gap-2">
-              <input type="text" value={img.src || ""} onChange={(e) => handleImageChange(idx, "src", e.target.value)} placeholder="Image URL" className="flex-1 bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-              <input type="text" value={img.altText || ""} onChange={(e) => handleImageChange(idx, "altText", e.target.value)} placeholder="Alt text" className="flex-1 bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-            </div>
-          ))}
-          <button onClick={() => handleImageChange(sectionData.images?.length || 0, "src", "")} className="text-blue-500 hover:text-blue-400 flex items-center gap-1">
-            <Plus size={16} /> Add Image
-          </button>
-        </div>
-      ) : (
-        <div className="space-y-2">
-          <input type="text" value={sectionData.title || ""} onChange={handleTitleChange} placeholder="Section Title (optional)" className="w-full bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-
-          {/* Text Formatting Toolbar */}
-          <div className="flex gap-1 p-1 bg-neutral-800 border border-neutral-600 rounded">
-            <TextFormatButton icon={Bold} label="Bold" onClick={() => insertFormatting('<strong class="font-bold">', "</strong>")} />
-            <TextFormatButton icon={Italic} label="Italic" onClick={() => insertFormatting("<i>", "</i>")} />
-            <TextFormatButton icon={Underline} label="Underline" onClick={() => insertFormatting("<u>", "</u>")} />
-            <TextFormatButton icon={Code} label="Code" onClick={() => insertFormatting("<code>", "</code>")} />
-            <TextFormatButton icon={LinkIcon} label="Link" onClick={() => insertFormatting('<a href="URL" target="_blank" rel="noopener noreferrer">', "</a>")} />
-            <TextFormatButton icon={ListIcon} label="List Item" onClick={() => insertFormatting("<li>", "</li>")} />
+      <div className="p-3 space-y-3">
+        {sectionData.type === "image" ? (
+          <div className="space-y-3">
+            {(sectionData.images || [{}]).map((img, idx) => (
+              <div key={idx} className="space-y-2">
+                <input type="text" value={img.src || ""} onChange={(e) => handleImageChange(idx, "src", e.target.value)} placeholder="Image URL" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+                <input type="text" value={img.altText || ""} onChange={(e) => handleImageChange(idx, "altText", e.target.value)} placeholder="Alt text" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+              </div>
+            ))}
+            <button onClick={() => handleImageChange(sectionData.images?.length || 0, "src", "")} className="text-blue-500 hover:text-blue-400 flex items-center gap-1">
+              <Plus size={16} /> Add Image
+            </button>
           </div>
+        ) : (
+          <div className="space-y-3">
+            <input type="text" value={sectionData.title || ""} onChange={handleTitleChange} placeholder="Section Title" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
 
-          <textarea id={`section-content-${section.id}`} value={sectionData.content || ""} onChange={handleContentChange} onSelect={handleSelect} placeholder="Section Content" rows={5} className="w-full bg-neutral-800 border border-neutral-600 rounded px-2 py-1" />
-        </div>
-      )}
+            {/* Mobile-optimized formatting toolbar */}
+            <div className="flex gap-1 p-1 bg-neutral-700 rounded-lg overflow-x-auto snap-x snap-mandatory">
+              {[
+                { icon: Bold, label: "Bold", tag: '<strong class="font-bold">', endTag: "</strong>" },
+                { icon: Italic, label: "Italic", tag: "<i>", endTag: "</i>" },
+                { icon: Underline, label: "Underline", tag: "<u>", endTag: "</u>" },
+                { icon: Code, label: "Code", tag: "<code>", endTag: "</code>" },
+                { icon: LinkIcon, label: "Link", tag: '<a href="URL">', endTag: "</a>" },
+                { icon: ListIcon, label: "List", tag: "<li>", endTag: "</li>" },
+              ].map((tool) => (
+                <button key={tool.label} onClick={() => insertFormatting(tool.tag, tool.endTag)} className="flex-none snap-start p-2 hover:bg-neutral-600 rounded-lg">
+                  <tool.icon size={20} />
+                </button>
+              ))}
+            </div>
+
+            <textarea id={`section-content-${section.id}`} value={sectionData.content || ""} onChange={handleContentChange} onSelect={handleSelect} placeholder="Section Content" rows={5} className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+          </div>
+        )}
+      </div>
     </div>
   );
 };
