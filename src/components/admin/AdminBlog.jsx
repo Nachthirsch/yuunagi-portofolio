@@ -147,9 +147,28 @@ const AdminBlog = () => {
             <Menu size={24} />
           </button>
           <h1 className="text-lg font-bold">Blog Admin</h1>
-          <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-2 hover:bg-neutral-700 rounded-lg">
-            <User size={24} />
-          </button>
+          <div className="relative">
+            <button 
+              onClick={() => setShowUserMenu(!showUserMenu)} 
+              className="p-2 hover:bg-neutral-700 rounded-lg"
+            >
+              <User size={24} />
+            </button>
+            {showUserMenu && (
+              <div className="absolute right-0 top-full mt-2 w-48 bg-neutral-800 rounded-lg shadow-lg border border-neutral-700 py-1 z-50">
+                <div className="px-4 py-2 text-sm text-neutral-400 border-b border-neutral-700">
+                  {user?.email}
+                </div>
+                <button 
+                  onClick={handleSignOut}
+                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-neutral-700 flex items-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Sign Out
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

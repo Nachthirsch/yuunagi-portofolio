@@ -25,6 +25,17 @@ const getExcerpt = (post, maxLength = 160) => {
   return plainText.length > maxLength ? plainText.slice(0, maxLength) + "..." : plainText;
 };
 
+// Add this helper function at the top of your file
+const processContent = (content) => {
+  if (!content) return "";
+  return content
+    .split("\n")
+    .map((paragraph) => paragraph.trim())
+    .filter((paragraph) => paragraph.length > 0)
+    .map((paragraph) => `<p class="mb-4 last:mb-0">${paragraph}</p>`)
+    .join("");
+};
+
 const WritesPage = () => {
   const { slug } = useParams();
   const [blogPost, setBlogPost] = useState(null);
@@ -148,7 +159,7 @@ const WritesPage = () => {
     }
   };
 
-  // Function to limit the number of displayed tags
+  // Function to limit the number of displayed tags>
   const displayTags = (tags = [], limit = 3) => {
     if (!Array.isArray(tags)) return "";
     if (tags.length <= limit) return tags.join(", ");
@@ -158,24 +169,25 @@ const WritesPage = () => {
   return (
     <>
       <SEO title={post.title} description={getMetaDescription(post)} image={post.sections?.find((s) => s.type === "image")?.images?.[0]?.src} />
-      <section className={`min-h-screen ${themeStyles.background} pt-12 sm:pt-16 pb-16 px-3 sm:px-8 md:px-16 font-mono transition-colors duration-300 isolation`}>
+      <section className={`min-h-screen ${themeStyles.background} pt-16 sm:pt-20 pb-16 px-3 sm:px-8 md:px-16 font-mono transition-colors duration-300 isolation`}>
         <div className={`max-w-4xl mx-auto relative ${themeStyles.paper} p-4 sm:p-8 rounded-lg shadow-lg border ${themeStyles.border} z-[1]`}>
           {/* Header Section */}
-          <motion.div className="mb-6 sm:mb-8 border-b pb-4 sm:pb-6 border-dashed">
-            <div className="flex flex-col gap-3">
+          <div className="mb-8 sm:mb-10 border-b pb-6 sm:pb-8 border-dashed">
+            <div className="flex flex-col gap-4 sm:gap-5">
               {/* Title and Controls */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <h1 className={`text-lg sm:text-2xl ${themeStyles.text} tracking-tight flex items-center gap-2 sm:gap-3 font-bold uppercase leading-tight`}>
-                  <Book className={themeStyles.subtext} size={20} /> {post.title}
+              <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-6">
+                <h1 className={`text-xl sm:text-3xl ${themeStyles.text} tracking-tight flex items-start gap-3 font-bold uppercase leading-tight max-w-2xl`}>
+                  <Book className={`${themeStyles.subtext} mt-1`} size={24} />
+                  <span>{post.title}</span>
                 </h1>
-                <div className="flex items-center gap-3 self-end sm:self-auto">
-                  <button onClick={toggleTheme} className={`p-1.5 rounded-full ${themeStyles.subtext} hover:scale-110 transition-transform`}>
-                    {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                <div className="flex items-center gap-3 self-start">
+                  <button onClick={toggleTheme} className={`p-2 rounded-full ${themeStyles.subtext} hover:scale-110 transition-transform`}>
+                    {isDark ? <Sun size={20} /> : <Moon size={20} />}
                   </button>
                   {availableLanguages.length > 1 && (
                     <div className="flex items-center gap-2">
-                      <Globe size={16} className={themeStyles.subtext} />
-                      <select value={currentLang} onChange={handleLanguageChange} className={`${themeStyles.select} py-1 px-2 rounded text-xs sm:text-sm min-w-[70px]`}>
+                      <Globe size={18} className={themeStyles.subtext} />
+                      <select value={currentLang} onChange={handleLanguageChange} className={`${themeStyles.select} py-1.5 px-3 rounded text-sm min-w-[80px]`}>
                         {availableLanguages.map((lang) => (
                           <option key={lang} value={lang}>
                             {lang === "id" ? "ID" : lang === "en" ? "EN" : lang.toUpperCase()}
@@ -188,157 +200,102 @@ const WritesPage = () => {
               </div>
 
               {/* Metadata */}
-              <div className={`flex flex-wrap gap-2 ${themeStyles.subtext} text-xs sm:text-sm`}>
+              <div className={`flex flex-wrap gap-3 sm:gap-4 ${themeStyles.subtext} text-sm`}>
                 <span className="flex items-center gap-2">
-                  <Calendar size={14} /> {post.metadata.date}
+                  <Calendar size={16} /> {post.metadata.date}
                 </span>
                 <span className="flex items-center gap-2">
-                  <User size={14} /> {post.metadata.author}
+                  <User size={16} /> {post.metadata.author}
                 </span>
                 <span className="flex items-start gap-2">
-                  <Tag size={14} className="mt-1" />
+                  <Tag size={16} className="mt-1" />
                   <span>{displayTags(post.metadata.tags)}</span>
                 </span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          {/* Main Content */}
-          <motion.div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-sm sm:prose-base font-mono prose-headings:font-elite prose-p:font-elite`}>
-            <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 relative">
-              {/* Table of Contents */}
-              <motion.div
-                layout
-                transition={{
-                  layout: { type: "spring", stiffness: 300, damping: 30 },
-                  duration: 0.6,
-                }}
-                className={`${!isTocOpen ? "fixed top-20 left-4 z-50 w-10 h-10 rounded-lg shadow-lg" : "lg:w-72"} bg-neutral-900/1  `}
-              >
-                <div className={`${isTocOpen ? "sticky top-16" : ""} max-h-[calc(100vh-2rem)] overflow-y-auto scrollbar-hide`}>
-                  <TableOfContents sections={post.sections} themeStyles={themeStyles} onStateChange={setIsTocOpen} />
-                </div>
-              </motion.div>
+          {/* Content Area */}
+          <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 relative">
+            {/* Table of Contents */}
+            <motion.div layout transition={{ layout: { type: "spring", stiffness: 300, damping: 30 } }} className={`${!isTocOpen ? "fixed top-20 left-4 z-50 w-10 h-10 rounded-lg shadow-lg" : "lg:w-72"} bg-neutral-900/1`}>
+              <div className={`${isTocOpen ? "sticky top-20" : ""} max-h-[calc(100vh-5rem)] overflow-y-auto scrollbar-hide`}>
+                <TableOfContents sections={post.sections} themeStyles={themeStyles} onStateChange={setIsTocOpen} />
+              </div>
+            </motion.div>
 
-              {/* Main Content Area with modified transition */}
-              <motion.div
-                layout
-                transition={{
-                  layout: { type: "spring", stiffness: 300, damping: 30 },
-                  duration: 0.6,
-                }}
-                className={`flex-grow transition-all duration-500 ease-in-out ${!isTocOpen ? "lg:w-full" : ""}`}
-              >
+            {/* Main Content */}
+            <motion.div layout transition={{ layout: { type: "spring", stiffness: 300, damping: 30 } }} className={`flex-grow transition-all duration-500 ease-in-out ${!isTocOpen ? "lg:w-full" : ""}`}>
+              <div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-sm sm:prose-base prose-p:font-mono prose-headings:font-mono`}>
                 {post.sections?.map((section, index) => {
                   if (!section) return null;
 
                   const sectionId = section.title ? section.title.toLowerCase().replace(/\s+/g, "-") : `section-${index}`;
 
-                  // Handle image sections
+                  // Handle different section types
                   if (section.type === "image") {
-                    // Handle both old and new image formats
-                    const images = section.images || (section.image ? [section.image] : []);
-
-                    if (images.length === 0) return null;
-
                     return (
                       <div key={index} className="my-6 sm:my-8">
-                        <div className={`grid ${images.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
-                          {images.map(
-                            (image, imgIndex) =>
-                              image &&
-                              image.src && (
-                                <div key={imgIndex} className="flex flex-col items-center">
-                                  <img src={image.src} alt={image.altText || ""} className={`rounded-lg border ${themeStyles.border} shadow-md max-w-full h-auto`} />
-                                  {image.altText && <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText}</p>}
-                                </div>
-                              )
-                          )}
+                        <div className={`grid ${section.images?.length > 1 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1"} gap-4`}>
+                          {(section.images || [section.image]).filter(Boolean).map((image, imgIndex) => (
+                            <div key={imgIndex} className="flex flex-col items-center">
+                              <img src={image.src} alt={image.altText || ""} className="rounded-lg border shadow-md max-w-full h-auto" />
+                              {image.altText && <p className={`mt-2 text-sm ${themeStyles.subtext} italic text-center`}>{image.altText}</p>}
+                            </div>
+                          ))}
                         </div>
                       </div>
                     );
                   }
 
-                  // Handle regular sections with added id
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
-                      {section.title && <h2 className={`text-lg sm:text-2xl ${themeStyles.text} mb-3 font-bold uppercase tracking-wider`}>{section.title}</h2>}
-                      {section.type === "disclaimer" ? (
-                        <div className={`${isDark ? "bg-neutral-800/30 border-neutral-700/30" : "bg-gray-100 border-gray-300"} p-4 rounded-lg border ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
-                      ) : section.type === "footnote" ? (
-                        <div className="relative">
-                          <hr className={`w-full my-4 border-t ${themeStyles.border}`} />
-                          <div className={`${themeStyles.content} text-xs sm:text-sm leading-relaxed tracking-wide italic p-2 sm:p-4 rounded-lg ${isDark ? "bg-neutral-800/30" : "bg-gray-100"}`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
-                        </div>
-                      ) : (
-                        <div className={`space-y-4 ${themeStyles.content} text-sm sm:text-base leading-relaxed tracking-wide ${!isTocOpen ? "text-justify" : ""} transition-all duration-300`} dangerouslySetInnerHTML={{ __html: section.content || "" }} />
-                      )}
+                      {section.title && <h2 className={`text-lg sm:text-2xl ${themeStyles.text} mb-4 font-bold tracking-wider`}>{section.title}</h2>}
+                      <div
+                        className={`
+                          ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? "text-sm italic" : ""} 
+                          ${themeStyles.content} leading-relaxed tracking-wide
+                        `}
+                        dangerouslySetInnerHTML={{ __html: processContent(section.content) }}
+                      />
                     </div>
                   );
                 })}
-              </motion.div>
-            </div>
 
-            {post.references && post.references.length > 0 && (
-              <div className={`mt-8 pt-6 border-t border-dashed ${themeStyles.border}`}>
-                <h3 className={`text-lg sm:text-xl ${themeStyles.text} mb-3 font-bold uppercase tracking-wider`}>References</h3>
-                <ul className="list-disc list-inside space-y-2 text-sm">
-                  {post.references.map(
-                    (ref, index) =>
-                      ref && (
-                        <li key={index} className={themeStyles.subtext}>
-                          <a href={ref.url} target="_blank" rel="noopener noreferrer" className={`${themeStyles.hover} transition-colors`}>
-                            {ref.title || "Untitled Reference"}
-                          </a>
-                        </li>
-                      )
-                  )}
-                </ul>
+                {/* References Section */}
+                {post.references?.length > 0 && (
+                  <div className={`mt-8 pt-6 border-t border-dashed ${themeStyles.border}`}>
+                    <h3 className={`text-lg sm:text-xl ${themeStyles.text} mb-3 font-bold tracking-wider`}>References</h3>
+                    <ul className="list-disc list-inside space-y-2 text-sm">
+                      {post.references.map(
+                        (ref, index) =>
+                          ref && (
+                            <li key={index} className={themeStyles.subtext}>
+                              <a href={ref.url} target="_blank" rel="noopener noreferrer" className={`${themeStyles.hover} transition-colors`}>
+                                {ref.title || "Untitled Reference"}
+                              </a>
+                            </li>
+                          )
+                      )}
+                    </ul>
+                  </div>
+                )}
               </div>
-            )}
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
       </section>
+
+      {/* Meta tags */}
       <Helmet>
         <title>{post.title} | Yuunagi Blog</title>
         <meta name="description" content={getExcerpt(post, 160)} />
         <meta name="keywords" content={post.metadata.tags.join(", ")} />
 
-        {/* Open Graph tags */}
-        <meta property="og:title" content={post.title} />
-        <meta property="og:description" content={getExcerpt(post, 160)} />
-        <meta property="og:type" content="article" />
-        <meta property="og:url" content={window.location.href} />
-        {post.thumbnail && <meta property="og:image" content={post.thumbnail} />}
-
-        {/* Twitter Card tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={post.title} />
-        <meta name="twitter:description" content={getExcerpt(post, 160)} />
-        {post.thumbnail && <meta name="twitter:image" content={post.thumbnail} />}
-
-        {/* Article specific metadata */}
-        <meta property="article:published_time" content={post.metadata.date} />
-        <meta property="article:author" content={post.metadata.author} />
-        {post.metadata.tags.map((tag) => (
-          <meta property="article:tag" content={tag} key={tag} />
-        ))}
+        {/* ...existing meta tags... */}
       </Helmet>
     </>
   );
 };
+
 export default WritesPage;
-const getStructuredData = (post) => ({
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  headline: post.title,
-  datePublished: post.metadata.date,
-  author: {
-    "@type": "Person",
-    name: post.metadata.author,
-  },
-  keywords: post.metadata.tags.join(","),
-  articleBody: getExcerpt(post, 500),
-  image: post.thumbnail || "",
-  url: window.location.href,
-});

@@ -45,12 +45,14 @@ const Nav = () => {
   ];
 
   return (
-    <nav className="fixed top-0 w-full z-10 p-4">
+    <nav className="fixed top-0 w-full z-50 p-4">
+      {" "}
+      {/* Changed z-10 to z-50 */}
       {/* Desktop Menu */}
       <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
         <div
-          className="bg-black bg-opacity-10 backdrop-blur-sm rounded-full px-20 py-2.5 
-                    border border-white/10"
+          className="bg-black/80 backdrop-blur-sm rounded-full px-20 py-2.5 
+                    border border-white/10 shadow-lg" // Added shadow-lg and increased opacity
         >
           <div className="flex items-center justify-center gap-4">
             {menuItems.map((item) => (
@@ -67,7 +69,6 @@ const Nav = () => {
           </div>
         </div>
       </div>
-
       {/* Control Buttons - Desktop Only */}
       <div className="hidden md:flex absolute right-4 top-4">
         <motion.button
@@ -80,7 +81,6 @@ const Nav = () => {
           <motion.div className="text-white">{isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}</motion.div>
         </motion.button>
       </div>
-
       {/* Mobile Menu Button */}
       <div className="md:hidden flex justify-end">
         <motion.button
