@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { getAllBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "../../utils/blogUtils";
 import { useNavigate } from "react-router-dom";
 import LanguageTab from "./LanguageTab";
+import PostPreview from "./PostPreview"; // Add this import
 import { Plus, Save, Trash2, Eye, RefreshCw, LogOut, User, ChevronDown, Menu, X } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
 import TOCSidebar from "./sections/TOCSidebar";
@@ -20,6 +21,7 @@ const AdminBlog = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const tabPanelsRef = useRef(null);
+  const [showPreview, setShowPreview] = useState(false);
 
   useEffect(() => {
     loadPosts();
@@ -249,6 +251,13 @@ const AdminBlog = () => {
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-2xl font-bold">Blog Management</h2>
             <div className="flex gap-2">
+              {/* Add Preview Button here */}
+              {currentPost && (
+                <button onClick={() => setShowPreview(true)} className="flex items-center gap-2 px-4 py-2 bg-indigo-500 hover:bg-indigo-600 rounded-lg text-white font-medium">
+                  <Eye size={20} />
+                  Preview Post
+                </button>
+              )}
               <button onClick={createNewPost} className="flex items-center gap-1 px-3 py-2 bg-blue-500 rounded hover:bg-blue-600">
                 <Plus size={20} /> New Post
               </button>
@@ -405,6 +414,12 @@ const AdminBlog = () => {
 
         {/* Mobile Bottom Action Bar */}
         <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-neutral-800 border-t border-neutral-700 p-3 flex gap-2">
+          {currentPost && (
+            <button onClick={() => setShowPreview(true)} className="flex-1 bg-indigo-500 hover:bg-indigo-600 rounded-lg py-2 flex items-center justify-center gap-2">
+              <Eye size={20} />
+              Preview
+            </button>
+          )}
           <button onClick={createNewPost} className="flex-1 bg-blue-500 hover:bg-blue-600 rounded-lg py-2 flex items-center justify-center gap-2">
             <Plus size={20} /> New Post
           </button>
@@ -417,6 +432,9 @@ const AdminBlog = () => {
             </button>
           )}
         </div>
+
+        {/* Preview Modal */}
+        {showPreview && currentPost && <PostPreview post={currentPost} onClose={() => setShowPreview(false)} />}
       </div>
     </div>
   );

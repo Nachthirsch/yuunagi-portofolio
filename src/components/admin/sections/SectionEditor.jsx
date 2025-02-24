@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Trash2, Plus, Bold, Italic, Underline, Code, Link as LinkIcon, ListIcon } from "lucide-react";
+import { Trash2, Plus, Bold, Italic, Underline, Code, Link as LinkIcon, ListIcon, Eye, Maximize2, Minimize2, EyeOff } from "lucide-react";
+import SectionPreview from "./SectionPreview";
 
 const TextFormatButton = ({ icon: Icon, label, onClick }) => (
   <button type="button" onClick={onClick} className="btn btn-ghost btn-sm" title={label}>
@@ -10,6 +11,8 @@ const TextFormatButton = ({ icon: Icon, label, onClick }) => (
 const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBelow }) => {
   const [sectionData, setSectionData] = useState(section);
   const [selectedText, setSelectedText] = useState({ start: 0, end: 0, text: "" });
+  const [isPreview, setIsPreview] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
     setSectionData(section);
@@ -81,14 +84,29 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
     });
   };
 
-  return (
-    <div id={`section-${index}`} className="card bg-base-300 mb-4 scroll-m-32">
-      {/* Add Above Button */}
-      <div className="absolute left-1/2 -top-3 -translate-x-1/2 z-10">
-        <button onClick={() => onAddAbove(index)} className="btn btn-circle btn-xs btn-ghost bg-base-300 hover:bg-primary/20" title="Add section above">
-          +
-        </button>
+  const togglePreview = () => setIsPreview(!isPreview);
+  const toggleFullscreen = () => setIsFullscreen(!isFullscreen);
+
+  const renderPreview = () => {
+    return (
+      <div className={`preview-wrapper ${isFullscreen ? "p-4" : ""}`}>
+        <SectionPreview section={sectionData} />
       </div>
+    );
+  };
+
+  const editorClasses = `card bg-base-300 mb-4 scroll-m-32 ${isFullscreen ? "fixed inset-0 z-50 m-0 rounded-none overflow-auto" : "relative"}`;
+
+  return (
+    <div id={`section-${index}`} className={editorClasses}>
+      {/* Add Above Button */}
+      {!isFullscreen && (
+        <div className="absolute left-1/2 -top-3 -translate-x-1/2 z-10">
+          <button onClick={() => onAddAbove(index)} className="btn btn-circle btn-xs btn-ghost bg-base-300 hover:bg-primary/20" title="Add section above">
+            +
+          </button>
+        </div>
+      )}
 
       <div className="card-body p-4">
         <div className="flex items-center gap-2">
@@ -100,13 +118,21 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
             <option value="footnote">Footnote</option>
             <option value="lyric">Lyric</option>
           </select>
+          <button onClick={togglePreview} className="btn btn-ghost btn-square" title={isPreview ? "Edit mode" : "Preview mode"}>
+            {isPreview ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+          <button onClick={toggleFullscreen} className="btn btn-ghost btn-square" title={isFullscreen ? "Exit fullscreen" : "Fullscreen mode"}>
+            {isFullscreen ? <Minimize2 size={20} /> : <Maximize2 size={20} />}
+          </button>
           <button onClick={() => onDelete()} className="btn btn-error btn-square">
             <Trash2 size={20} />
           </button>
         </div>
 
         <div className="space-y-4">
-          {sectionData.type === "image" ? (
+          {isPreview ? (
+            renderPreview()
+          ) : sectionData.type === "image" ? (
             <div className="space-y-3">
               {(sectionData.images || [{}]).map((img, idx) => (
                 <div key={idx} className="space-y-2">
@@ -167,11 +193,13 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
       </div>
 
       {/* Add Below Button */}
-      <div className="absolute left-1/2 -bottom-3 -translate-x-1/2 z-10">
-        <button onClick={() => onAddBelow(index)} className="btn btn-circle btn-xs btn-ghost bg-base-300 hover:bg-primary/20" title="Add section below">
-          +
-        </button>
-      </div>
+      {!isFullscreen && (
+        <div className="absolute left-1/2 -bottom-3 -translate-x-1/2 z-10">
+          <button onClick={() => onAddBelow(index)} className="btn btn-circle btn-xs btn-ghost bg-base-300 hover:bg-primary/20" title="Add section below">
+            +
+          </button>
+        </div>
+      )}
     </div>
   );
 };
