@@ -36,6 +36,23 @@ const LanguageTab = ({ data, onChange }) => {
     onChange({ ...data, sections: newSections });
   };
 
+  const handleAddSectionAt = (index, position = "below") => {
+    const newSections = [...data.sections];
+    const newSection = {
+      type: "section",
+      content: "",
+      title: "",
+    };
+
+    if (position === "above") {
+      newSections.splice(index, 0, newSection);
+    } else {
+      newSections.splice(index + 1, 0, newSection);
+    }
+
+    onChange({ ...data, sections: newSections });
+  };
+
   return (
     <div className="px-4 py-2 space-y-4">
       {/* Metadata Section */}
@@ -92,7 +109,15 @@ const LanguageTab = ({ data, onChange }) => {
         </div>
         <div className="p-3 space-y-4">
           {data.sections?.map((section, index) => (
-            <SectionEditor key={index} section={section} onUpdate={(newSection) => handleSectionUpdate(index, newSection)} onDelete={() => handleDeleteSection(index)} />
+            <SectionEditor
+              key={index}
+              index={index} // Pastikan index diteruskan
+              section={section}
+              onUpdate={(newSection) => handleSectionUpdate(index, newSection)}
+              onDelete={() => handleDeleteSection(index)}
+              onAddAbove={(idx) => handleAddSectionAt(idx, "above")}
+              onAddBelow={(idx) => handleAddSectionAt(idx, "below")}
+            />
           ))}
         </div>
       </div>

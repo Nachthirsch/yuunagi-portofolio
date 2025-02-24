@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Tab } from "@headlessui/react";
+import { motion } from "framer-motion";
 import { getAllBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "../../utils/blogUtils";
 import { useNavigate } from "react-router-dom";
 import LanguageTab from "./LanguageTab";
 import { Plus, Save, Trash2, Eye, RefreshCw, LogOut, User, ChevronDown, Menu, X } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import TOCSidebar from "./sections/TOCSidebar";
 
 const AdminBlog = () => {
   const { signOut, user } = useAuth();
@@ -16,7 +18,8 @@ const AdminBlog = () => {
   const [currentPost, setCurrentPost] = useState(null);
   const [selectedLanguages, setSelectedLanguages] = useState([]); // Changed: Initialize as empty array
   const [isSidebarOpen, setSidebarOpen] = useState(false);
-  const [showMobileActions, setShowMobileActions] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
+  const tabPanelsRef = useRef(null);
 
   useEffect(() => {
     loadPosts();
@@ -135,8 +138,18 @@ const AdminBlog = () => {
     }
   };
 
-  if (loading) return <div className="p-8">Loading...</div>;
-  if (error) return <div className="p-8 text-red-500">Error: {error}</div>;
+  const scrollToSection = (index) => {
+    const element = document.getElementById(`section-${index}`);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+
+      // Add highlight effect
+      element.style.backgroundColor = "rgba(59, 130, 246, 0.1)";
+      setTimeout(() => {
+        element.style.backgroundColor = "";
+      }, 2000);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-neutral-900 text-neutral-100">
@@ -148,21 +161,13 @@ const AdminBlog = () => {
           </button>
           <h1 className="text-lg font-bold">Blog Admin</h1>
           <div className="relative">
-            <button 
-              onClick={() => setShowUserMenu(!showUserMenu)} 
-              className="p-2 hover:bg-neutral-700 rounded-lg"
-            >
+            <button onClick={() => setShowUserMenu(!showUserMenu)} className="p-2 hover:bg-neutral-700 rounded-lg">
               <User size={24} />
             </button>
             {showUserMenu && (
               <div className="absolute right-0 top-full mt-2 w-48 bg-neutral-800 rounded-lg shadow-lg border border-neutral-700 py-1 z-50">
-                <div className="px-4 py-2 text-sm text-neutral-400 border-b border-neutral-700">
-                  {user?.email}
-                </div>
-                <button 
-                  onClick={handleSignOut}
-                  className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-neutral-700 flex items-center gap-2"
-                >
+                <div className="px-4 py-2 text-sm text-neutral-400 border-b border-neutral-700">{user?.email}</div>
+                <button onClick={handleSignOut} className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-neutral-700 flex items-center gap-2">
                   <LogOut size={16} />
                   Sign Out
                 </button>
@@ -272,64 +277,71 @@ const AdminBlog = () => {
             </div>
 
             {/* Desktop Editor */}
-            <div className="col-span-3 bg-neutral-800 rounded-lg">
+            <div className="col-span-3 bg-neutral-800 rounded-lg relative overflow-y-auto max-h-[calc(100vh-200px)]">
               {currentPost ? (
-                <div className="p-4">
-                  <div className="flex justify-between items-center mb-4">
-                    <input type="text" value={currentPost.slug} onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value })} placeholder="Post Slug" className="flex-1 bg-neutral-700 px-3 py-2 rounded-lg mr-4" />
-                    <div className="flex gap-2">
-                      <button onClick={handleSave} className="flex items-center gap-1 px-4 py-2 bg-green-500 rounded hover:bg-green-600">
-                        <Save size={20} /> Save
-                      </button>
-                      <button onClick={() => handleDelete(currentPost.slug)} className="flex items-center gap-1 px-4 py-2 bg-red-500 rounded hover:bg-red-600">
-                        <Trash2 size={20} /> Delete
-                      </button>
+                <>
+                  <div className="p-4">
+                    <div className="mb-4">
+                      <input type="text" value={currentPost.slug} onChange={(e) => setCurrentPost({ ...currentPost, slug: e.target.value })} placeholder="Post Slug" className="w-full bg-neutral-700 px-3 py-2 rounded-lg" />
                     </div>
+
+                    <Tab.Group onChange={(index) => setActiveTab(index)}>
+                      <Tab.List className="flex gap-2 mb-4 border-b border-neutral-700 pb-2">
+                        {selectedLanguages.map((lang) => (
+                          <Tab key={lang} className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? "bg-blue-500" : "bg-neutral-700"}`}>
+                            {lang.toUpperCase()}
+                          </Tab>
+                        ))}
+                        <select onChange={(e) => e.target.value && addLanguage(e.target.value)} className="bg-neutral-700 rounded-lg px-3 py-2" value="">
+                          <option value="">Add Language</option>
+                          {["en", "id", "jp"]
+                            .filter((lang) => !selectedLanguages.includes(lang))
+                            .map((lang) => (
+                              <option key={lang} value={lang}>
+                                {lang.toUpperCase()}
+                              </option>
+                            ))}
+                        </select>
+                      </Tab.List>
+
+                      <Tab.Panels ref={tabPanelsRef}>
+                        {selectedLanguages.map((lang) => (
+                          <Tab.Panel key={lang}>
+                            {currentPost.translations[lang] ? (
+                              <LanguageTab
+                                data={currentPost.translations[lang]}
+                                onChange={(newData) => {
+                                  setCurrentPost({
+                                    ...currentPost,
+                                    translations: {
+                                      ...currentPost.translations,
+                                      [lang]: newData,
+                                    },
+                                  });
+                                }}
+                              />
+                            ) : (
+                              <div className="p-4 text-neutral-400">Translation data not found for {lang.toUpperCase()}</div>
+                            )}
+                          </Tab.Panel>
+                        ))}
+                      </Tab.Panels>
+                    </Tab.Group>
                   </div>
 
-                  <Tab.Group>
-                    <Tab.List className="flex gap-2 mb-4 border-b border-neutral-700 pb-2">
-                      {selectedLanguages.map((lang) => (
-                        <Tab key={lang} className={({ selected }) => `px-4 py-2 rounded-lg ${selected ? "bg-blue-500" : "bg-neutral-700"}`}>
-                          {lang.toUpperCase()}
-                        </Tab>
-                      ))}
-                      <select onChange={(e) => e.target.value && addLanguage(e.target.value)} className="bg-neutral-700 rounded-lg px-3 py-2" value="">
-                        <option value="">Add Language</option>
-                        {["en", "id", "jp"]
-                          .filter((lang) => !selectedLanguages.includes(lang))
-                          .map((lang) => (
-                            <option key={lang} value={lang}>
-                              {lang.toUpperCase()}
-                            </option>
-                          ))}
-                      </select>
-                    </Tab.List>
+                  {/* Desktop Sticky Action Buttons */}
+                  <div className="fixed bottom-8 left-8 flex flex-col gap-3">
+                    <motion.button onClick={handleSave} className="flex items-center justify-center w-12 h-12 bg-green-500 hover:bg-green-600 rounded-full shadow-lg" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} title="Save Post">
+                      <Save size={20} className="text-white" />
+                    </motion.button>
+                    <motion.button onClick={() => handleDelete(currentPost.slug)} className="flex items-center justify-center w-12 h-12 bg-red-500 hover:bg-red-600 rounded-full shadow-lg" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} title="Delete Post">
+                      <Trash2 size={20} className="text-white" />
+                    </motion.button>
+                  </div>
 
-                    <Tab.Panels>
-                      {selectedLanguages.map((lang) => (
-                        <Tab.Panel key={lang}>
-                          {currentPost.translations[lang] ? (
-                            <LanguageTab
-                              data={currentPost.translations[lang]}
-                              onChange={(newData) => {
-                                setCurrentPost({
-                                  ...currentPost,
-                                  translations: {
-                                    ...currentPost.translations,
-                                    [lang]: newData,
-                                  },
-                                });
-                              }}
-                            />
-                          ) : (
-                            <div className="p-4 text-neutral-400">Translation data not found for {lang.toUpperCase()}</div>
-                          )}
-                        </Tab.Panel>
-                      ))}
-                    </Tab.Panels>
-                  </Tab.Group>
-                </div>
+                  {/* Add TOC Sidebar */}
+                  {currentPost && selectedLanguages.length > 0 && <TOCSidebar sections={currentPost.translations[selectedLanguages[activeTab]]?.sections || []} onSectionClick={scrollToSection} />}
+                </>
               ) : (
                 <div className="p-8 text-center text-neutral-400">Select a post to edit or create a new one</div>
               )}

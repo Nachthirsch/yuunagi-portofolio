@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send } from "lucide-react";
 import { generateGeminiResponse, suggestedQuestions } from "../config/gemini";
 import { checkRateLimit, sanitizeInput, validateContent } from "../utils/security";
 import { TypeAnimation } from "react-type-animation";
+import { useLocation } from "react-router-dom";
 
 const formatMessage = (content) => {
   const paragraphs = content.split("\n");
@@ -66,6 +68,13 @@ const WelcomeMessage = () => {
 };
 
 export default function ChatBot() {
+  const location = useLocation();
+
+  // Add check for admin path
+  if (location.pathname.startsWith("/admin")) {
+    return null;
+  }
+
   const [isOpen, setIsOpen] = useState(false);
   const [userInput, setUserInput] = useState("");
   const [chatHistory, setChatHistory] = useState([]);

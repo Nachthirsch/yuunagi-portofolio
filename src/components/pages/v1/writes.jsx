@@ -26,8 +26,21 @@ const getExcerpt = (post, maxLength = 160) => {
 };
 
 // Add this helper function at the top of your file
-const processContent = (content) => {
+const processContent = (content, type = "section") => {
   if (!content) return "";
+
+  // Special handling for lyrics - preserve empty lines
+  if (type === "lyric") {
+    return (
+      content
+        .split("\n")
+        .map((line) => line.trim())
+        // Remove filter to keep empty lines
+        .join("\n")
+    );
+  }
+
+  // Normal content processing
   return content
     .split("\n")
     .map((paragraph) => paragraph.trim())
@@ -253,10 +266,10 @@ const WritesPage = () => {
                       {section.title && <h2 className={`text-lg sm:text-2xl ${themeStyles.text} mb-4 font-bold tracking-wider`}>{section.title}</h2>}
                       <div
                         className={`
-                          ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? "text-sm italic" : ""} 
-                          ${themeStyles.content} leading-relaxed tracking-wide
-                        `}
-                        dangerouslySetInnerHTML={{ __html: processContent(section.content) }}
+                        ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? `text-sm italic ${isDark ? "bg-neutral-800/20" : "bg-gray-50"} p-3 border-l-2 ${isDark ? "border-neutral-700" : "border-gray-300"}` : section.type === "lyric" ? "whitespace-pre-line font-mono leading-[1.5]" : ""} 
+                        ${themeStyles.content} leading-relaxed tracking-wide
+                      `}
+                        dangerouslySetInnerHTML={{ __html: processContent(section.content, section.type) }}
                       />
                     </div>
                   );

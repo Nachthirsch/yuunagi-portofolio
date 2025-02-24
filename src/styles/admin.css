@@ -1,0 +1,163 @@
+/* Custom scrollbar for admin panels */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced tooltips */
+.tooltip {
+  position: relative;
+}
+
+.tooltip:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 8px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  font-size: 12px;
+  white-space: nowrap;
+  border-radius: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+  z-index: 50;
+}
+
+.tooltip:hover:before {
+  opacity: 1;
+  visibility: visible;
+  bottom: calc(100% + 5px);
+}
+
+/* Focus styles */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50;
+}
+
+/* Animations */
+@keyframes saving {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.saving-indicator {
+  animation: saving 1.5s ease-in-out infinite;
+}
+
+/* CSS Variables */
+:root {
+  --sidebar-right-position: 24px;
+  --sidebar-bg: #262626;
+}
+
+@media (min-width: 1024px) {
+  .container {
+    --sidebar-right-position: calc((100vw - 1024px) / 2 + 24px);
+  }
+}
+
+/* Sidebar transitions */
+.sidebar-transition {
+  transition: width 0.3s ease-in-out;
+}
+
+/* Improved scrollbar for sidebars */
+.sidebar-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+}
+
+.sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Smooth transitions for sidebar toggles */
+.sidebar-toggle {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+.sidebar-toggle:hover {
+  @apply bg-neutral-700;
+}
+
+/* Mobile-first responsive classes */
+@layer utilities {
+  .editor-container {
+    @apply w-full max-w-full overflow-x-hidden;
+  }
+
+  .mobile-nav {
+    @apply fixed inset-0 z-50 lg:hidden;
+  }
+
+  .mobile-nav-content {
+    @apply fixed inset-y-0 left-0 w-[280px] bg-neutral-800 
+           transform transition-transform duration-300;
+  }
+
+  .mobile-sidebar {
+    @apply fixed inset-y-0 bg-neutral-800 z-40
+           transition-all duration-300 ease-in-out
+           border-neutral-700;
+  }
+
+  .touch-scroll {
+    @apply overflow-auto overscroll-contain;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Responsive toolbar */
+.toolbar-container {
+  @apply flex flex-wrap gap-1 p-1 bg-neutral-700 rounded-lg
+         overflow-x-auto touch-scroll scrollbar-hide;
+}
+
+/* Mobile-optimized inputs */
+.mobile-input {
+  @apply min-h-[44px] /* Better touch targets */
+         text-base    /* Larger text on mobile */
+         p-3; /* More padding for touch */
+}
+
+/* Floating action button for mobile */
+.fab {
+  @apply fixed bottom-4 right-4 
+         rounded-full shadow-lg 
+         flex items-center justify-center
+         transform transition-transform active:scale-95
+         lg:hidden;
+}
