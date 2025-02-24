@@ -102,7 +102,7 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
       {/* Add Above Button */}
       {!isFullscreen && (
         <div className="absolute left-1/2 -top-3 -translate-x-1/2 z-10">
-          <button onClick={() => onAddAbove(index)} className="btn btn-circle btn-xs btn-ghost bg-base-300 hover:bg-primary/20" title="Add section above">
+          <button onClick={() => onAddAbove(index)} className="btn btn-circle btn-md btn-ghost bg-base-300 hover:bg-primary/20" title="Add section above">
             +
           </button>
         </div>
@@ -195,7 +195,7 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
       {/* Add Below Button */}
       {!isFullscreen && (
         <div className="absolute left-1/2 -bottom-3 -translate-x-1/2 z-10">
-          <button onClick={() => onAddBelow(index)} className="btn btn-circle btn-xs btn-ghost bg-base-300 hover:bg-primary/20" title="Add section below">
+          <button onClick={() => onAddBelow(index)} className="btn btn-circle btn-md btn-ghost bg-base-300 hover:bg-primary/20" title="Add section below">
             +
           </button>
         </div>

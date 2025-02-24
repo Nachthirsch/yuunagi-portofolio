@@ -54,35 +54,46 @@ const LanguageTab = ({ data, onChange }) => {
   };
 
   return (
-    <div className="px-4 py-2 space-y-4">
+    <div className="p-4 space-y-6">
       {/* Metadata Section */}
-      <div className="bg-neutral-800/50 rounded-lg">
-        <div className="p-3 border-b border-neutral-700">
-          <h3 className="text-lg font-semibold">Metadata</h3>
-        </div>
-        <div className="p-3 space-y-3">
-          <div className="space-y-2">
-            <label className="text-sm text-neutral-400">Title</label>
-            <input type="text" value={data.title || ""} onChange={(e) => onChange({ ...data, title: e.target.value })} placeholder="Post Title" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+      <div className="card bg-base-200 shadow-lg">
+        <div className="card-body gap-4">
+          <h3 className="card-title text-lg font-bold">Metadata</h3>
+
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text font-medium">Title</span>
+            </label>
+            <input type="text" value={data.title || ""} onChange={(e) => onChange({ ...data, title: e.target.value })} placeholder="Enter post title" className="input input-bordered w-full" aria-label="Post title" />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div className="space-y-2">
-              <label className="text-sm text-neutral-400">Author</label>
-              <input type="text" value={data.metadata?.author || ""} onChange={(e) => handleMetadataChange("author", e.target.value)} placeholder="Author" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Author</span>
+              </label>
+              <input type="text" value={data.metadata?.author || ""} onChange={(e) => handleMetadataChange("author", e.target.value)} placeholder="Enter author name" className="input input-bordered" aria-label="Author name" />
             </div>
-            <div className="space-y-2">
-              <label className="text-sm text-neutral-400">Date</label>
-              <input type="date" value={data.metadata?.date || ""} onChange={(e) => handleMetadataChange("date", e.target.value)} className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text font-medium">Publication Date</span>
+              </label>
+              <input type="date" value={data.metadata?.date || ""} onChange={(e) => handleMetadataChange("date", e.target.value)} className="input input-bordered" aria-label="Publication date" />
             </div>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm text-neutral-400">Category</label>
-            <input type="text" value={data.metadata?.category || ""} onChange={(e) => handleMetadataChange("category", e.target.value)} placeholder="Category" className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base" />
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-medium">Category</span>
+            </label>
+            <input type="text" value={data.metadata?.category || ""} onChange={(e) => handleMetadataChange("category", e.target.value)} placeholder="Enter post category" className="input input-bordered" aria-label="Post category" />
           </div>
-          <div className="space-y-2">
-            <label className="text-sm text-neutral-400">Tags (comma-separated)</label>
+
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-medium">Tags</span>
+              <span className="label-text-alt text-base-content/70">Separate with commas</span>
+            </label>
             <input
               type="text"
               value={data.metadata?.tags?.join(", ") || ""}
@@ -92,33 +103,32 @@ const LanguageTab = ({ data, onChange }) => {
                   e.target.value.split(",").map((tag) => tag.trim())
                 )
               }
-              placeholder="Tags (comma-separated)"
-              className="w-full bg-neutral-700 px-3 py-2 rounded-lg text-base"
+              placeholder="e.g. technology, programming, web"
+              className="input input-bordered"
+              aria-label="Post tags"
             />
           </div>
         </div>
       </div>
 
       {/* Sections */}
-      <div className="bg-neutral-800/50 rounded-lg">
-        <div className="p-3 border-b border-neutral-700 flex justify-between items-center">
-          <h3 className="text-lg font-semibold">Sections</h3>
-          <button onClick={handleAddSection} className="px-3 py-1.5 bg-blue-500 hover:bg-blue-600 rounded-lg flex items-center gap-1">
-            <Plus size={18} /> Add
-          </button>
-        </div>
-        <div className="p-3 space-y-4">
-          {data.sections?.map((section, index) => (
-            <SectionEditor
-              key={index}
-              index={index} // Pastikan index diteruskan
-              section={section}
-              onUpdate={(newSection) => handleSectionUpdate(index, newSection)}
-              onDelete={() => handleDeleteSection(index)}
-              onAddAbove={(idx) => handleAddSectionAt(idx, "above")}
-              onAddBelow={(idx) => handleAddSectionAt(idx, "below")}
-            />
-          ))}
+      <div className="card bg-base-200 shadow-lg">
+        <div className="card-body gap-4">
+          <div className="flex justify-between items-center">
+            <h3 className="card-title text-lg font-bold">Sections</h3>
+            <button onClick={handleAddSection} className="btn btn-primary btn-sm gap-2" aria-label="Add new section">
+              <Plus size={16} />
+              Add Section
+            </button>
+          </div>
+
+          <div className="space-y-6">
+            {data.sections?.map((section, index) => (
+              <div key={index} className="card bg-base-100 shadow-sm" role="region" aria-label={`Section ${index + 1}`}>
+                <SectionEditor index={index} section={section} onUpdate={(newSection) => handleSectionUpdate(index, newSection)} onDelete={() => handleDeleteSection(index)} onAddAbove={(idx) => handleAddSectionAt(idx, "above")} onAddBelow={(idx) => handleAddSectionAt(idx, "below")} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
