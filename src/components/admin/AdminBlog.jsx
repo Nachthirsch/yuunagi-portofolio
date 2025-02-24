@@ -202,9 +202,9 @@ const AdminBlog = () => {
             </label>
             {showUserMenu && (
               <ul tabIndex={0} className="menu dropdown-content z-[1] p-3 shadow-lg bg-base-200 rounded-box w-64 mt-2">
-                <li className="menu-title text-sm opacity-70">
+                <li className="menu-title">
                   Signed in as:
-                  <span className="font-semibold text-base opacity-100">{user?.email}</span>
+                  <span>{user?.email}</span>
                 </li>
                 <div className="divider my-1"></div>
                 <li>
@@ -286,26 +286,29 @@ const AdminBlog = () => {
 
                   {/* Language Tabs */}
                   <Tab.Group onChange={(index) => setActiveTab(index)}>
-                    <div className="flex items-center justify-between mb-6">
-                      <Tab.List className="tabs tabs-boxed bg-base-300 p-1 rounded-lg flex-grow max-w-2xl">
+                    <div className="flex items-center gap-4 mb-6">
+                      <Tab.List className="flex gap-2 p-1 bg-base-300 rounded-xl">
                         {selectedLanguages.map((lang) => (
-                          <Tab key={lang} className={({ selected }) => `tab transition-all duration-200 flex-1 ${selected ? "tab-active bg-primary text-primary-content font-medium" : "hover:bg-base-100"}`}>
+                          <Tab key={lang} className={({ selected }) => `px-6 py-2.5 rounded-lg font-medium transition-all duration-300 ${selected ? "bg-primary text-primary-content shadow-lg transform scale-105" : "hover:bg-base-100 text-base-content/70 hover:text-base-content"}`}>
                             {lang.toUpperCase()}
                           </Tab>
                         ))}
-                        <select onChange={(e) => e.target.value && addLanguage(e.target.value)} className="select select-sm ml-2 bg-base-100 border-none focus:outline-none hover:bg-base-200" value="">
+                      </Tab.List>
+
+                      <div className="relative">
+                        <select onChange={(e) => e.target.value && addLanguage(e.target.value)} className="select select-bordered select-primary w-32 pl-4 pr-8" value="">
                           <option value="" disabled>
-                            Add Language
+                            + Add Lang
                           </option>
                           {["en", "id", "jp"]
                             .filter((lang) => !selectedLanguages.includes(lang))
                             .map((lang) => (
-                              <option key={lang} value={lang}>
+                              <option key={lang} value={lang} className="py-2">
                                 {lang.toUpperCase()}
                               </option>
                             ))}
                         </select>
-                      </Tab.List>
+                      </div>
                     </div>
 
                     <Tab.Panels ref={tabPanelsRef} className="min-h-[calc(100vh-400px)] bg-base-100 rounded-lg p-4 shadow-inner">
