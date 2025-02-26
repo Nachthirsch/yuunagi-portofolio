@@ -261,6 +261,16 @@ const WritesPage = () => {
                     );
                   }
 
+                  // Add new handler for divider section type
+                  if (section.type === "divider") {
+                    return (
+                      <div key={index} className="my-8 sm:my-10">
+                        <hr className={`border-t-2 ${isDark ? "border-neutral-300" : "border-gray-200"} w-full`} />
+                        {section.title && <p className={`text-center text-sm ${themeStyles.subtext} -mt-3 bg-inherit px-4 mx-auto w-fit`}>{section.title}</p>}
+                      </div>
+                    );
+                  }
+
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
                       {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.text} mb-4 font-bold tracking-wider`}>{section.title}</h2>}

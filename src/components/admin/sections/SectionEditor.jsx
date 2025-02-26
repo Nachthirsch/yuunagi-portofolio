@@ -117,6 +117,7 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
             <option value="disclaimer">Disclaimer</option>
             <option value="footnote">Footnote</option>
             <option value="lyric">Lyric</option>
+            <option value="divider">Divider</option>
           </select>
           <button onClick={togglePreview} className="btn btn-ghost btn-square" title={isPreview ? "Edit mode" : "Preview mode"}>
             {isPreview ? <EyeOff size={20} /> : <Eye size={20} />}
@@ -161,6 +162,26 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
               </div>
 
               <textarea id={`section-content-${section.id}-${index}`} value={sectionData.content || ""} onChange={handleContentChange} onSelect={handleSelect} placeholder="Enter lyrics here... Use line breaks for new lines" rows={8} className="textarea textarea-bordered w-full font-mono" />
+            </div>
+          ) : sectionData.type === "divider" ? (
+            <div className="space-y-3">
+              <input 
+                type="text" 
+                value={sectionData.title || ""} 
+                onChange={handleTitleChange} 
+                placeholder="Optional divider label" 
+                className="input input-bordered w-full" 
+              />
+              <div className="bg-base-200 p-4 rounded-md border border-base-300 flex items-center justify-center">
+                <div className="w-full h-0.5 bg-base-content opacity-20 relative">
+                  {sectionData.title && (
+                    <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-base-200 px-4 text-sm">
+                      {sectionData.title}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <p className="text-xs opacity-70">This will render a horizontal divider line. Add optional text to display in the middle of the divider.</p>
             </div>
           ) : (
             <div className="space-y-3">
