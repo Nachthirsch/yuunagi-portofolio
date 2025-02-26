@@ -40,7 +40,7 @@ export const traitColors = {
 };
 
 export const testData = {
-  current: {
+  historical: {
     date: "Feb 10, 2025",
     type: "INTP-A",
     personality: {
@@ -63,7 +63,7 @@ export const testData = {
       { trait: "Assertive", percentage: 65, opposite: "Turbulent" },
     ],
   },
-  historical: {
+  current: {
     date: "Jun 22, 2023",
     type: "ESTP-A",
     personality: {

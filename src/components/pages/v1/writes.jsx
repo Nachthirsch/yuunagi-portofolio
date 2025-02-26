@@ -239,7 +239,7 @@ const WritesPage = () => {
 
             {/* Main Content */}
             <motion.div layout transition={{ layout: { type: "spring", stiffness: 300, damping: 30 } }} className={`flex-grow transition-all duration-500 ease-in-out ${!isTocOpen ? "lg:w-full" : ""}`}>
-              <div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-sm sm:prose-base prose-p:font-mono prose-headings:font-mono`}>
+              <div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-xs sm:prose-sm md:prose-base prose-p:font-mono prose-headings:font-mono text-justify sm:text-left`}>
                 {post.sections?.map((section, index) => {
                   if (!section) return null;
 
@@ -263,11 +263,11 @@ const WritesPage = () => {
 
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
-                      {section.title && <h2 className={`text-lg sm:text-2xl ${themeStyles.text} mb-4 font-bold tracking-wider`}>{section.title}</h2>}
+                      {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.text} mb-4 font-bold tracking-wider`}>{section.title}</h2>}
                       <div
                         className={`
                         ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? `text-sm italic ${isDark ? "bg-neutral-800/20" : "bg-gray-50"} p-3 border-l-2 ${isDark ? "border-neutral-700" : "border-gray-300"}` : section.type === "lyric" ? "whitespace-pre-line font-mono leading-[1.5]" : ""} 
-                        ${themeStyles.content} leading-relaxed tracking-wide
+                        ${themeStyles.content} leading-relaxed tracking-wide text-[0.9rem] sm:text-base
                       `}
                         dangerouslySetInnerHTML={{ __html: processContent(section.content, section.type) }}
                       />
