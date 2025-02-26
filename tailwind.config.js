@@ -18,6 +18,7 @@ module.exports = {
         Mono: ["monospace"],
         typewriter: ["Special Elite"],
         elite: ["Special Elite"],
+        merriweather: ["Merriweather", "serif"],
       },
       animation: {
         float: "float 6s ease-in-out infinite",

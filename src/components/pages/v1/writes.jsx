@@ -106,11 +106,12 @@ const WritesPage = () => {
   // Updated theme styles with typewriter elements
   const themeStyles = {
     background: isDark ? "bg-neutral-900" : "bg-gray-50",
-    text: isDark ? "text-neutral-100" : "text-neutral-900",
+    text: isDark ? "text-neutral-100" : "text-white",
+    title: isDark ? "text-white" : "text-black",
     subtext: isDark ? "text-neutral-400" : "text-gray-600",
     border: isDark ? "border-neutral-700/30" : "border-gray-200",
     select: isDark ? "bg-neutral-800 text-neutral-200" : "bg-white text-gray-900 border border-gray-200",
-    content: isDark ? "text-neutral-300" : "text-neutral-700",
+    content: isDark ? "text-neutral-200" : "text-neutral-900",
     hover: isDark ? "hover:text-neutral-200" : "hover:text-gray-900",
     paper: isDark ? "bg-neutral-800/50" : "bg-white",
   };
@@ -125,7 +126,7 @@ const WritesPage = () => {
     return (
       <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken`}>
         <div className="max-w-4xl mx-auto">
-          <h1 className={`text-3xl font-bold ${themeStyles.text}`}>Loading...</h1>
+          <h1 className={`text-3xl font-bold ${themeStyles.title}`}>Loading...</h1>
         </div>
       </section>
     );
@@ -135,7 +136,7 @@ const WritesPage = () => {
     return (
       <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16`}>
         <div className="max-w-4xl mx-auto">
-          <h1 className={`text-3xl font-bold ${themeStyles.text}`}>{error}</h1>
+          <h1 className={`text-3xl font-bold ${themeStyles.title}`}>{error}</h1>
         </div>
       </section>
     );
@@ -145,7 +146,7 @@ const WritesPage = () => {
     return (
       <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16`}>
         <div className="max-w-4xl mx-auto">
-          <h1 className={`text-3xl font-bold ${themeStyles.text}`}>Blog post not found</h1>
+          <h1 className={`text-3xl font-bold ${themeStyles.title}`}>Blog post not found</h1>
         </div>
       </section>
     );
@@ -155,7 +156,7 @@ const WritesPage = () => {
     return (
       <section className={`min-h-screen ${themeStyles.background} pt-24 pb-16 px-4 sm:px-8 md:px-16 font-Hanken`}>
         <div className="max-w-4xl mx-auto">
-          <h1 className={`text-3xl font-bold ${themeStyles.text}`}>Loading...</h1>
+          <h1 className={`text-3xl font-bold ${themeStyles.title}`}>Loading...</h1>
         </div>
       </section>
     );
@@ -182,14 +183,14 @@ const WritesPage = () => {
   return (
     <>
       <SEO title={post.title} description={getMetaDescription(post)} image={post.sections?.find((s) => s.type === "image")?.images?.[0]?.src} />
-      <section className={`min-h-screen ${themeStyles.background} pt-16 sm:pt-20 pb-16 px-3 sm:px-8 md:px-16 font-mono transition-colors duration-300 isolation`}>
+      <section className={`min-h-screen ${themeStyles.background} pt-16 sm:pt-20 pb-16 px-3 sm:px-8 md:px-16 font-merriweather transition-colors duration-300 isolation`}>
         <div className={`max-w-4xl mx-auto relative ${themeStyles.paper} p-4 sm:p-8 rounded-lg shadow-lg border ${themeStyles.border} z-[1]`}>
           {/* Header Section */}
           <div className="mb-8 sm:mb-10 border-b pb-6 sm:pb-8 border-dashed">
             <div className="flex flex-col gap-4 sm:gap-5">
               {/* Title and Controls */}
               <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 sm:gap-6">
-                <h1 className={`text-xl sm:text-3xl ${themeStyles.text} tracking-tight flex items-start gap-3 font-bold uppercase leading-tight max-w-2xl`}>
+                <h1 className={`text-xl sm:text-3xl ${themeStyles.title} tracking-tight flex items-start gap-3 font-bold uppercase leading-tight max-w-2xl`}>
                   <Book className={`${themeStyles.subtext} mt-1`} size={24} />
                   <span>{post.title}</span>
                 </h1>
@@ -239,7 +240,7 @@ const WritesPage = () => {
 
             {/* Main Content */}
             <motion.div layout transition={{ layout: { type: "spring", stiffness: 300, damping: 30 } }} className={`flex-grow transition-all duration-500 ease-in-out ${!isTocOpen ? "lg:w-full" : ""}`}>
-              <div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-xs sm:prose-sm md:prose-base prose-p:font-mono prose-headings:font-mono text-justify sm:text-left`}>
+              <div className={`prose ${isDark ? "prose-invert" : ""} max-w-none prose-xs sm:prose-sm md:prose-base prose-p:font-merriweather prose-headings:font-merriweather text-justify sm:text-left`}>
                 {post.sections?.map((section, index) => {
                   if (!section) return null;
 
@@ -273,11 +274,11 @@ const WritesPage = () => {
 
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
-                      {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.text} mb-4 font-bold tracking-wider`}>{section.title}</h2>}
+                      {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.title} mb-4 font-bold tracking-wider`}>{section.title}</h2>}
                       <div
                         className={`
-                        ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? `text-sm italic ${isDark ? "bg-neutral-800/20" : "bg-gray-50"} p-3 border-l-2 ${isDark ? "border-neutral-700" : "border-gray-300"}` : section.type === "lyric" ? "whitespace-pre-line font-mono leading-[1.5]" : ""} 
-                        ${themeStyles.content} leading-relaxed tracking-wide text-[0.9rem] sm:text-base
+                        ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? `text-sm italic ${isDark ? "bg-neutral-800/20" : "bg-gray-50"} p-3 border-l-2 ${isDark ? "border-neutral-700" : "border-gray-300"}` : section.type === "lyric" ? "whitespace-pre-line font-merriweather leading-[1.5]" : ""} 
+                        ${themeStyles.content} leading-loose sm:leading-loose tracking-wide text-[0.9rem] sm:text-base
                       `}
                         dangerouslySetInnerHTML={{ __html: processContent(section.content, section.type) }}
                       />
@@ -288,7 +289,7 @@ const WritesPage = () => {
                 {/* References Section */}
                 {post.references?.length > 0 && (
                   <div className={`mt-8 pt-6 border-t border-dashed ${themeStyles.border}`}>
-                    <h3 className={`text-lg sm:text-xl ${themeStyles.text} mb-3 font-bold tracking-wider`}>References</h3>
+                    <h3 className={`text-lg sm:text-xl ${themeStyles.title} mb-3 font-bold tracking-wider`}>References</h3>
                     <ul className="list-disc list-inside space-y-2 text-sm">
                       {post.references.map(
                         (ref, index) =>

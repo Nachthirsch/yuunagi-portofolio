@@ -85,7 +85,7 @@ const TableOfContents = ({ sections, themeStyles, onStateChange }) => {
           <div className="flex items-center justify-between cursor-pointer mb-6" onClick={() => setIsOpen(false)}>
             <div className="flex items-center gap-3">
               <List size={22} className={`${themeStyles.subtext} transition-colors duration-300`} />
-              <h3 className={`font-bold text-base sm:text-lg ${themeStyles.text} tracking-wide`}>Contents</h3>
+              <h3 className={`font-bold text-base sm:text-lg ${themeStyles.title} tracking-wide`}>Contents</h3>
             </div>
           </div>
 

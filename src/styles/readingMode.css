@@ -1,0 +1,48 @@
+body.reading-mode {
+  overflow: auto !important;
+}
+
+body.reading-mode header,
+body.reading-mode footer,
+body.reading-mode nav,
+body.reading-mode .sidebar,
+body.reading-mode aside {
+  display: none !important;
+}
+
+body.reading-mode main,
+body.reading-mode article,
+body.reading-mode section {
+  margin: 0 auto !important;
+  padding: 2rem !important;
+  max-width: 65ch !important;
+}
+
+body.reading-mode .table-of-contents {
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+}
+
+body.reading-mode .table-of-contents:hover {
+  opacity: 1;
+}
+
+/* Add styles for image focus */
+.image-focus {
+  cursor: zoom-in;
+}
+
+.image-focus.expanded {
+  cursor: zoom-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 2rem;
+}

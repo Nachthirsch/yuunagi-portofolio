@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Trash2, Plus, Bold, Italic, Underline, Code, Link as LinkIcon, ListIcon, Eye, Maximize2, Minimize2, EyeOff } from "lucide-react";
 import SectionPreview from "./SectionPreview";
+import { containsJapaneseText } from "../../../utils/textUtils";
 
 const TextFormatButton = ({ icon: Icon, label, onClick }) => (
   <button type="button" onClick={onClick} className="btn btn-ghost btn-sm" title={label}>
@@ -209,6 +210,17 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
           </button>
         </div>
       )}
+    </div>
+  );
+};
+
+const SectionPreviewJap = ({ section }) => {
+  const hasJapanese = containsJapaneseText(section.title) || containsJapaneseText(section.content);
+
+  return (
+    <div className="preview-content">
+      {hasJapanese && <div className="text-xs bg-info/10 text-info p-2 mb-2 rounded">Japanese text detected! Will use Hina Mincho font in the published post.</div>}
+      {/* Rest of preview content */}
     </div>
   );
 };
