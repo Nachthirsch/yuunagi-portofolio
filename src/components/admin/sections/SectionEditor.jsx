@@ -165,21 +165,9 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
             </div>
           ) : sectionData.type === "divider" ? (
             <div className="space-y-3">
-              <input 
-                type="text" 
-                value={sectionData.title || ""} 
-                onChange={handleTitleChange} 
-                placeholder="Optional divider label" 
-                className="input input-bordered w-full" 
-              />
+              <input type="text" value={sectionData.title || ""} onChange={handleTitleChange} placeholder="Optional divider label" className="input input-bordered w-full" />
               <div className="bg-base-200 p-4 rounded-md border border-base-300 flex items-center justify-center">
-                <div className="w-full h-0.5 bg-base-content opacity-20 relative">
-                  {sectionData.title && (
-                    <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-base-200 px-4 text-sm">
-                      {sectionData.title}
-                    </span>
-                  )}
-                </div>
+                <div className="w-full h-0.5 bg-base-content opacity-20 relative">{sectionData.title && <span className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-base-200 px-4 text-sm">{sectionData.title}</span>}</div>
               </div>
               <p className="text-xs opacity-70">This will render a horizontal divider line. Add optional text to display in the middle of the divider.</p>
             </div>
@@ -193,7 +181,7 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
                   { icon: Italic, label: "Italic", tag: "<i>", endTag: "</i>" },
                   { icon: Underline, label: "Underline", tag: "<u>", endTag: "</u>" },
                   { icon: Code, label: "Code", tag: "<code>", endTag: "</code>" },
-                  { icon: LinkIcon, label: "Link", tag: '<a href="URL">', endTag: "</a>" },
+                  { icon: LinkIcon, label: "Link", tag: '<a href="URL" class="text-blue-400 hover:underline">', endTag: "</a>" },
                   { icon: ListIcon, label: "List", tag: "<li>", endTag: "</li>" },
                 ].map((tool) => (
                   <button
