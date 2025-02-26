@@ -266,7 +266,7 @@ const WritesPage = () => {
                   if (section.type === "divider") {
                     return (
                       <div key={index} className="my-8 sm:my-10">
-                        <hr className={`border-t-2 ${isDark ? "border-neutral-300" : "border-gray-200"} w-full`} />
+                        <hr className={`border-dashed ${isDark ? "border-neutral-300" : "border-gray-200"} w-full`} />
                         {section.title && <p className={`text-center text-sm ${themeStyles.subtext} -mt-3 bg-inherit px-4 mx-auto w-fit`}>{section.title}</p>}
                       </div>
                     );
