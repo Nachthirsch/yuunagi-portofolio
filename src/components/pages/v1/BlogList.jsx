@@ -51,7 +51,7 @@ const BlogList = () => {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={window.location.href} />
       </Helmet>
-      <section className="min-h-screen bg-neutral-900 font-mono pt-24 pb-16 px-4 sm:px-8 md:px-16">
+      <section className="min-h-screen bg-neutral-900 font-merriweather pt-24 pb-16 px-4 sm:px-8 md:px-16">
         <div className="max-w-4xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-12">
             <h1 className="text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-3">

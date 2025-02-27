@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Trash2, Plus, Bold, Italic, Underline, Code, Link as LinkIcon, ListIcon, Eye, Maximize2, Minimize2, EyeOff } from "lucide-react";
+import { Trash2, Plus, Bold, Italic, Underline, Code, Link as LinkIcon, ListIcon, Eye, Maximize2, Minimize2, EyeOff, MinusIcon } from "lucide-react";
 import SectionPreview from "./SectionPreview";
 import { containsJapaneseText } from "../../../utils/textUtils";
 
@@ -155,6 +155,12 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
                 {[
                   { icon: Bold, label: "Bold", tag: '<strong class="font-bold">', endTag: "</strong>" },
                   { icon: Italic, label: "Italic", tag: "<i>", endTag: "</i>" },
+                  {
+                    icon: MinusIcon,
+                    label: "Horizontal Line",
+                    tag: '<hr class="border-double border-neutral-300 dark:border-gray-200 w-full my-4" />',
+                    endTag: "",
+                  },
                 ].map((tool) => (
                   <button key={tool.label} onClick={(e) => insertFormatting(e, tool.tag, tool.endTag)} className="btn btn-sm join-item" type="button">
                     <tool.icon size={20} />
@@ -184,12 +190,19 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
                   { icon: Code, label: "Code", tag: "<code>", endTag: "</code>" },
                   { icon: LinkIcon, label: "Link", tag: '<a href="URL" class="text-blue-400 hover:underline">', endTag: "</a>" },
                   { icon: ListIcon, label: "List", tag: "<li>", endTag: "</li>" },
+                  {
+                    icon: MinusIcon,
+                    label: "Horizontal Line",
+                    tag: '<hr class="border-dashed border-neutral-300 dark:border-gray-200 w-full my-4" />',
+                    endTag: "",
+                  },
                 ].map((tool) => (
                   <button
                     key={tool.label}
                     onClick={(e) => insertFormatting(e, tool.tag, tool.endTag)}
                     className="btn btn-sm join-item"
                     type="button" // Explicitly set type to prevent form submission
+                    title={tool.label}
                   >
                     <tool.icon size={20} />
                   </button>
@@ -210,17 +223,6 @@ const SectionEditor = ({ section, index, onUpdate, onDelete, onAddAbove, onAddBe
           </button>
         </div>
       )}
-    </div>
-  );
-};
-
-const SectionPreviewJap = ({ section }) => {
-  const hasJapanese = containsJapaneseText(section.title) || containsJapaneseText(section.content);
-
-  return (
-    <div className="preview-content">
-      {hasJapanese && <div className="text-xs bg-info/10 text-info p-2 mb-2 rounded">Japanese text detected! Will use Hina Mincho font in the published post.</div>}
-      {/* Rest of preview content */}
     </div>
   );
 };

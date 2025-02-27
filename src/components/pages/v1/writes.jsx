@@ -274,7 +274,7 @@ const WritesPage = () => {
 
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
-                      {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.title} mb-4 font-bold tracking-wider`}>{section.title}</h2>}
+                      {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.title} mb-4 font-bold tracking-wider `}>{section.title}</h2>}
                       <div
                         className={`
                         ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? `text-sm italic ${isDark ? "bg-neutral-800/20" : "bg-gray-50"} p-3 border-l-2 ${isDark ? "border-neutral-700" : "border-gray-300"}` : section.type === "lyric" ? "whitespace-pre-line font-merriweather leading-[1.5]" : ""} 
