@@ -192,7 +192,7 @@ const BlogList = () => {
         <meta name="robots" content="index, follow" />
         <link rel="canonical" href={window.location.href} />
       </Helmet>
-      <section className="min-h-screen bg-neutral-900 font-merriweather pt-20 sm:pt-24 pb-12 sm:pb-16 px-3 sm:px-8 md:px-16 relative overflow-hidden">
+      <section className="min-h-screen bg-neutral-900 font-merriweather pt-16 pb-8 px-3 sm:pt-24 sm:pb-16 sm:px-8 md:px-16 relative overflow-hidden">
         {/* Ambient background elements */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(163,163,163,0.03)_0%,transparent_65%)] pointer-events-none"></div>
         <div className="absolute top-40 left-10 w-32 h-32 rounded-full bg-neutral-900/5 blur-3xl pointer-events-none"></div>
@@ -201,7 +201,7 @@ const BlogList = () => {
         <DecorativeLines />
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="mb-8 sm:mb-12">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }} className="mb-6 sm:mb-12">
             <div className="flex flex-col space-y-4">
               <div className="flex items-center space-x-2">
                 <span className="text-xs tracking-[0.2em] sm:tracking-[0.3em] text-neutral-400 font-mono uppercase">yuunagi</span>
@@ -211,11 +211,11 @@ const BlogList = () => {
                 </TypewriterText>
               </div>
 
-              <DecorativeHeading className="text-2xl sm:text-3xl text-neutral-200">BLOG POSTS</DecorativeHeading>
+              <DecorativeHeading className="text-xl sm:text-2xl md:text-3xl text-neutral-200">BLOG POSTS</DecorativeHeading>
 
               <div className="relative pl-4 sm:pl-5 border-l border-neutral-500/30 max-w-2xl">
                 <TypewriterText delay={0.3}>
-                  <p className="text-neutral-400">Explorations in development, design, and digital musings. A collection of my thoughts and experiences in the ever-evolving digital landscape.</p>
+                  <p className="text-neutral-400">Everything about words</p>
                 </TypewriterText>
 
                 <motion.div initial={{ scaleX: 0, originX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.6, duration: 0.4 }} className="absolute -bottom-4 left-0 h-px w-24 bg-gradient-to-r from-neutral-500 to-transparent"></motion.div>
@@ -223,9 +223,9 @@ const BlogList = () => {
             </div>
           </motion.div>
 
-          <div className="mb-8 sm:mb-10">
-            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-0 mb-6">
-              <div className="flex items-center">
+          <div className="mb-6 sm:mb-10 space-y-4 sm:space-y-0">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+              <div className="flex items-center mb-4">
                 <span className="text-neutral-400 text-sm mr-2">
                   Found <span className="text-neutral-400 font-medium">{filteredPosts.length}</span> articles
                 </span>
@@ -263,7 +263,9 @@ const BlogList = () => {
                 </button>
               </div>
             </div>
-            <SearchFilters filters={filters} setFilters={setFilters} filterOptions={filterOptions} />
+            <div className="-mx-3 sm:mx-0 px-3 sm:px-0 py-2 sm:py-0 bg-neutral-800/50 sm:bg-transparent">
+              <SearchFilters filters={filters} setFilters={setFilters} filterOptions={filterOptions} />
+            </div>
           </div>
 
           {filteredPosts.length === 0 ? (
@@ -296,22 +298,22 @@ const BlogList = () => {
           ) : (
             <motion.div
               className={`
-              ${layout === "grid" ? "grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 lg:gap-8" : "space-y-4 sm:space-y-6"}
+              ${layout === "grid" ? "grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6 lg:gap-8" : "space-y-3 sm:space-y-6"}
             `}
             >
               {filteredPosts.map((post, index) => (
-                <motion.div key={post.slug} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} className="group">
+                <motion.div key={post.slug} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} className="group touch-pan-y">
                   <Link to={`/writes/${post.slug}`} className="block h-full">
                     <article
                       className={`
                         rounded-lg overflow-hidden shadow-lg hover:shadow-xl 
                         transition-all duration-300 transform hover:-translate-y-1
                         ${getUniqueCardStyle(index)} h-full
-                        group-hover:[box-shadow:0_0_1.25rem_rgba(163,163,163,0.15)]
+                        active:scale-[0.98] touch-pan-y
                       `}
                     >
                       {post.thumbnail && (
-                        <div className="relative h-36 sm:h-48 overflow-hidden">
+                        <div className="relative h-32 xs:h-36 sm:h-48 overflow-hidden">
                           <img
                             src={post.thumbnail}
                             alt={post.title}
@@ -326,8 +328,10 @@ const BlogList = () => {
                           {/* Category badge with matching icon */}
                           {post.category && (
                             <span
-                              className="absolute top-3 right-3 px-2 py-1 rounded text-xs flex items-center gap-1.5 
-                              backdrop-blur-sm border border-neutral-500/30 bg-neutral-900/80 text-neutral-300"
+                              className="absolute top-2 right-2 sm:top-3 sm:right-3 px-2 py-1 
+                    rounded text-[10px] sm:text-xs flex items-center gap-1.5 
+                    backdrop-blur-sm border border-neutral-500/30 
+                    bg-neutral-900/90 text-neutral-300"
                             >
                               {getCategoryIcon(post.category)}
                               {post.category}
@@ -341,17 +345,17 @@ const BlogList = () => {
                         </div>
                       )}
 
-                      <div className="p-4 sm:p-6 flex flex-col h-full">
+                      <div className="p-3 sm:p-4 md:p-6 flex flex-col h-full">
                         <div className="mb-2 sm:mb-3 flex flex-col">
                           {/* Title with decorative element */}
-                          <h2 className="text-lg sm:text-xl font-semibold text-neutral-200 group-hover:text-neutral-300 transition-colors duration-300 relative">
+                          <h2 className="text-base sm:text-lg md:text-xl font-semibold text-neutral-200 group-hover:text-neutral-300 transition-colors duration-300 relative leading-snug">
                             {post.title}
                             <span className="absolute -left-4 top-2 w-2 h-2 bg-neutral-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                           </h2>
 
                           {/* Languages indicator */}
                           {post.languages?.length > 0 && (
-                            <div className="flex items-center gap-1 text-xs text-neutral-500 mt-2">
+                            <div className="flex items-center gap-1 text-[10px] sm:text-xs text-neutral-500 mt-1.5 sm:mt-2">
                               <Globe size={12} />
                               <span>{post.languages.join(" / ")}</span>
                             </div>
@@ -359,10 +363,10 @@ const BlogList = () => {
                         </div>
 
                         {/* Content preview */}
-                        {post.excerpt && <p className="mt-2 text-neutral-400 text-xs sm:text-sm line-clamp-2 flex-grow font-light">{post.excerpt}</p>}
+                        {post.excerpt && <p className="mt-1.5 sm:mt-2 text-neutral-400 text-[11px] sm:text-sm line-clamp-2 flex-grow font-light leading-relaxed">{post.excerpt}</p>}
 
                         {/* Metadata bar */}
-                        <div className="mt-4 pt-4 border-t border-dashed border-neutral-700/30 flex flex-wrap gap-2 sm:gap-3 text-[10px] sm:text-xs text-neutral-400">
+                        <div className="mt-3 pt-3 sm:mt-4 sm:pt-4 border-t border-dashed border-neutral-700/30 flex flex-wrap gap-2 text-[10px] sm:text-xs text-neutral-400">
                           {post.date && (
                             <span className="flex items-center gap-1">
                               <Calendar size={12} className="text-neutral-400" />
@@ -383,7 +387,7 @@ const BlogList = () => {
 
                         {/* Tags */}
                         {post.tags?.length > 0 && (
-                          <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-3">
+                          <div className="flex flex-wrap gap-1 sm:gap-2 mt-2 sm:mt-3">
                             {post.tags.slice(0, 2).map((tag, tagIndex) => (
                               <span key={tagIndex} className="text-xs px-2 py-0.5 rounded-sm bg-neutral-700/30 text-neutral-300 font-mono">
                                 #{tag}
@@ -394,7 +398,7 @@ const BlogList = () => {
                         )}
 
                         {/* Read more indicator */}
-                        <div className="mt-3 sm:mt-4 text-neutral-400 text-xs sm:text-sm font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="mt-2 sm:mt-4 text-neutral-400 text-xs sm:text-sm font-medium flex items-center gap-1 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity duration-300">
                           <span className="font-mono">&gt;</span> Read article <ArrowRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" />
                         </div>
                       </div>
@@ -410,17 +414,38 @@ const BlogList = () => {
             </motion.div>
           )}
 
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-8 sm:mt-12 text-center">
-            <div className="inline-block relative py-2 px-4">
-              <p className="text-neutral-400 text-xs font-mono">
-                <span className="text-neutral-500">[</span>
-                Showing {filteredPosts.length} of {allPosts.length} posts
-                <span className="text-neutral-500">]</span>
-              </p>
-              <div className="absolute top-0 left-0 w-1 h-1 bg-neutral-500"></div>
-              <div className="absolute top-0 right-0 w-1 h-1 bg-neutral-500"></div>
-              <div className="absolute bottom-0 left-0 w-1 h-1 bg-neutral-500"></div>
-              <div className="absolute bottom-0 right-0 w-1 h-1 bg-neutral-500"></div>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="mt-6 sm:mt-12 text-center">
+            <div className="inline-block relative py-3 px-5 group hover:scale-[1.02] transition-transform duration-300">
+              {/* Decorative background */}
+              <div className="absolute inset-0 bg-neutral-800/30 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+              {/* Scan line effect */}
+              <div className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-10 transition-opacity duration-300">
+                <div className="absolute inset-0 [background:repeating-linear-gradient(0deg,transparent,transparent_2px,rgba(255,255,255,0.08)_3px,transparent_4px)] animate-scan"></div>
+              </div>
+
+              {/* Main content */}
+              <div className="relative">
+                <p className="text-neutral-400 text-xs font-mono flex items-center justify-center gap-1.5">
+                  <span className="text-neutral-500 group-hover:text-neutral-400 transition-colors">[</span>
+                  <span>Showing</span>
+                  <span className="bg-neutral-800/80 px-1.5 py-0.5 rounded text-neutral-300 min-w-[1.5rem]">{filteredPosts.length}</span>
+                  <span>of</span>
+                  <span className="bg-neutral-800/50 px-1.5 py-0.5 rounded text-neutral-400 min-w-[1.5rem]">{allPosts.length}</span>
+                  <span>posts</span>
+                  <span className="text-neutral-500 group-hover:text-neutral-400 transition-colors">]</span>
+                </p>
+              </div>
+
+              {/* Enhanced corner decorations */}
+              <div className="absolute top-0 left-0 w-2 h-2 border-t border-l border-neutral-500 transition-all duration-300 group-hover:border-neutral-400 group-hover:w-3 group-hover:h-3"></div>
+              <div className="absolute top-0 right-0 w-2 h-2 border-t border-r border-neutral-500 transition-all duration-300 group-hover:border-neutral-400 group-hover:w-3 group-hover:h-3"></div>
+              <div className="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-neutral-500 transition-all duration-300 group-hover:border-neutral-400 group-hover:w-3 group-hover:h-3"></div>
+              <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-neutral-500 transition-all duration-300 group-hover:border-neutral-400 group-hover:w-3 group-hover:h-3"></div>
+
+              {/* Center dots */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-neutral-500/50 group-hover:bg-neutral-400/70 transition-colors duration-300"></div>
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-1 bg-neutral-500/50 group-hover:bg-neutral-400/70 transition-colors duration-300"></div>
             </div>
           </motion.div>
         </div>

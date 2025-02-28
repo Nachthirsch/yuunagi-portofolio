@@ -5,8 +5,8 @@ const PostSidebar = ({ posts, currentPost, onSelectPost }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <div className={`transition-all duration-300 ease-in-out ${isCollapsed ? "w-16" : "w-80"}`} role="complementary" aria-label="Posts navigation">
-      <div className="card bg-base-200 sticky top-6 h-[calc(100vh-100px)]">
+    <div className={`transition-all duration-300 ease-in-out sticky top-0 h-screen ${isCollapsed ? "w-16" : "w-80"}`} role="complementary" aria-label="Posts navigation">
+      <div className="card bg-base-200 h-full">
         <div className="card-body p-4 relative">
           {/* Collapse Toggle Button */}
           <button onClick={() => setIsCollapsed(!isCollapsed)} className="btn btn-circle btn-ghost btn-sm absolute -right-3 top-6 bg-base-200 shadow-lg" aria-label={isCollapsed ? "Expand sidebar" : "Collapse sidebar"} title={isCollapsed ? "Expand" : "Collapse"}>

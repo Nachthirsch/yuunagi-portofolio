@@ -267,17 +267,17 @@ const WritesPage = () => {
                     return (
                       <div key={index} className="my-8 sm:my-10">
                         <hr className={`border-dashed ${isDark ? "border-neutral-300" : "border-gray-200"} w-full`} />
-                        {section.title && <p className={`text-center text-sm ${themeStyles.subtext} -mt-3 bg-inherit px-4 mx-auto w-fit`}>{section.title}</p>}
+                        {section.title && <p className={`text-center text-base ${themeStyles.subtext} -mt-3 bg-inherit px-4 mx-auto w-fit`}>{section.title}</p>}
                       </div>
                     );
                   }
 
                   return (
                     <div key={index} id={sectionId} className="mb-6 scroll-mt-20">
-                      {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.title} mb-4 font-bold tracking-wider `}>{section.title}</h2>}
+                      {section.title && <h2 className={`text-base sm:text-lg md:text-2xl ${themeStyles.title} mb-4 font-bold tracking-wider ${section.type === "lyric" ? "text-center" : ""}`}>{section.title}</h2>}
                       <div
                         className={`
-                        ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? `text-sm italic ${isDark ? "bg-neutral-800/20" : "bg-gray-50"} p-3 border-l-2 ${isDark ? "border-neutral-700" : "border-gray-300"}` : section.type === "lyric" ? "whitespace-pre-line font-merriweather leading-[1.5]" : ""} 
+                        ${section.type === "disclaimer" ? `${isDark ? "bg-neutral-800/30" : "bg-gray-100"} p-4 rounded-lg border` : section.type === "footnote" ? `text-sm italic ${isDark ? "bg-neutral-800/20" : "bg-gray-50"} p-3 border-l-2 ${isDark ? "border-neutral-700" : "border-gray-300"}` : section.type === "lyric" ? "whitespace-pre-line text-center font-merriweather leading-[1.5]" : ""} 
                         ${themeStyles.content} leading-loose sm:leading-loose tracking-wide text-[0.9rem] sm:text-base
                       `}
                         dangerouslySetInnerHTML={{ __html: processContent(section.content, section.type) }}
