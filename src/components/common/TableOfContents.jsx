@@ -87,17 +87,19 @@ const TableOfContents = ({ sections, themeStyles, onStateChange }) => {
       aria-label="Table of contents"
     >
       {isOpen ? (
-        <>
-          <div className="flex items-center justify-between cursor-pointer mb-6" onClick={() => setIsOpen(false)}>
-            <div className="flex items-center gap-3">
-              <div className={`p-1.5 rounded-lg bg-neutral-800/30 ${themeStyles.border}`}>
-                <List size={18} className={`${themeStyles.subtext} transition-colors duration-300`} />
+        <div className="relative">
+          <div className={`sticky top-0 z-10 -mt-5 -mx-5 sm:-mx-6 px-5 sm:px-6 pt-5 sm:pt-6 pb-6 ${themeStyles.background}`}>
+            <div className="flex items-center justify-between cursor-pointer" onClick={() => setIsOpen(false)}>
+              <div className="flex items-center gap-3">
+                <div className={`p-1.5 rounded-lg bg-neutral-800/30 ${themeStyles.border}`}>
+                  <List size={18} className={`${themeStyles.subtext} transition-colors duration-300`} />
+                </div>
+                <h3 className={`font-bold text-base sm:text-lg ${themeStyles.title} tracking-wide`}>Contents</h3>
               </div>
-              <h3 className={`font-bold text-base sm:text-lg ${themeStyles.title} tracking-wide`}>Contents</h3>
+              <motion.button whileHover={{ rotate: 90 }} transition={{ duration: 0.2 }} className={`p-1.5 rounded-full hover:bg-neutral-800/30 ${themeStyles.subtext}`} aria-label="Collapse table of contents">
+                <ChevronRight size={16} />
+              </motion.button>
             </div>
-            <motion.button whileHover={{ rotate: 90 }} transition={{ duration: 0.2 }} className={`p-1.5 rounded-full hover:bg-neutral-800/30 ${themeStyles.subtext}`} aria-label="Collapse table of contents">
-              <ChevronRight size={16} />
-            </motion.button>
           </div>
 
           <AnimatePresence>
@@ -162,7 +164,7 @@ const TableOfContents = ({ sections, themeStyles, onStateChange }) => {
               })}
             </motion.ul>
           </AnimatePresence>
-        </>
+        </div>
       ) : (
         <motion.div className="flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
           <motion.button className="relative p-2.5 rounded-lg hover:bg-neutral-800/30 transition-colors" onClick={() => setIsOpen(true)} whileHover={{ scale: 1.1, rotate: -10 }} whileTap={{ scale: 0.95 }} aria-label="Open table of contents">
