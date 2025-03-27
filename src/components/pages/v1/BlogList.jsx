@@ -363,7 +363,7 @@ const BlogList = () => {
                         </div>
 
                         {/* Content preview */}
-                        {post.excerpt && <p className="mt-1.5 sm:mt-2 text-neutral-400 text-[11px] sm:text-sm line-clamp-2 flex-grow font-light leading-relaxed">{post.excerpt}</p>}
+                        {post.excerpt && <p className="mt-1.5 sm:mt-2 text-neutral-400 text-[11px] sm:text-sm line-clamp-2 flex-grow font-light leading-loose">{post.excerpt}</p>}
 
                         {/* Metadata bar */}
                         <div className="mt-3 pt-3 sm:mt-4 sm:pt-4 border-t border-dashed border-neutral-700/30 flex flex-wrap gap-2 text-[10px] sm:text-xs text-neutral-400">

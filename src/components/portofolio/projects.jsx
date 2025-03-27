@@ -1,5 +1,5 @@
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
-import { Code2, Github, MonitorSmartphone, Calendar, LayoutGrid, Rows, Filter } from "lucide-react";
+import { Code2, Github, MonitorSmartphone, Calendar, LayoutGrid, Rows, Filter, Star, ExternalLink } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import weather from "../../assets/weather-app.jpg";
 import ngutang from "../../assets/ngutang-yuk.jpg";
@@ -7,6 +7,7 @@ import portofolio from "../../assets/portofolio-app.jpg";
 import movie from "../../assets/movie-app.jpg";
 import news from "../../assets/news-app.png";
 import bee from "../../assets/bee.png";
+import yorushika from "../../assets/yorushika.gif";
 
 const ProjectSection = () => {
   const [selectedProject, setSelectedProject] = useState(0);
@@ -17,6 +18,19 @@ const ProjectSection = () => {
   const carouselRef = useRef(null);
   const projects = [
     {
+      title: "Yorushika Fanzone",
+      description: "Interactive fan website dedicated to Yorushika, the Japanese indie rock duo. Features artist information, discography, music analysis, and a community forum with rich media sharing capabilities.",
+      date: "March 2025",
+      tech: ["React 19", "Tailwind CSS", "Vite", "Supabase", "React Router", "Framer Motion", "Google AI", "Recaptcha"],
+      github: "",
+      website: "https://yorushikafanzone.netlify.app/",
+      type: "Fan Website",
+      image: yorushika,
+      status: "Completed",
+      featured: true,
+      longDescription: "Yorushika Fanzone is an immersive and interactive platform dedicated to celebrating the artistry of Yorushika, the acclaimed Japanese indie rock duo. This passion project serves as a comprehensive portal for fans to explore the band's musical journey, artistic evolution, and lyrical depth.\n\nThe site features a meticulous discography section with album analyses, interactive lyrics with translations, and audio previews. Users can explore the artistic themes that define Yorushika's work through visual timelines and thematic explorations. The community forum encourages fans to share interpretations, artwork, and covers, creating a vibrant space for cultural exchange.",
+    },
+    {
       title: "Weather Dashboard",
       description: "Simple Real-time weather application with detailed forecasts. Built with React and OpenWeather API for live weather data. Features include current weather conditions, hourly forecasts, and location-based weather updates.",
       date: "Sep 2024",
@@ -26,6 +40,7 @@ const ProjectSection = () => {
       type: "Web App",
       image: weather,
       status: "In Development",
+      featured: false,
     },
     {
       title: "Ngutang Yuk!",
@@ -85,6 +100,9 @@ const ProjectSection = () => {
       status: "Completed",
     },
   ];
+
+  // Find featured project
+  const featuredProject = projects.find((project) => project.featured) || projects[0];
 
   // Get unique tech stacks for filter
   const allTechStacks = [...new Set(projects.flatMap((p) => p.tech))];
@@ -172,15 +190,83 @@ const ProjectSection = () => {
   return (
     <section className="min-h-screen bg-neutral-900 font-Hanken overflow-hidden py-4 sm:py-8">
       <div className="max-w-7xl mx-auto flex flex-col px-3 sm:px-8 md:px-16">
-        {/* Header with Controls */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
+        {/* Featured Project Section */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="mb-16 mt-4">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-2 sm:gap-3">
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-2 mb-8 sm:gap-3">
               <Code2 className="text-neutral-400" />
               Featured Projects
             </h2>
           </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-neutral-800/30 p-6 sm:p-8 rounded-2xl border border-neutral-700">
+            <div className="relative overflow-hidden rounded-xl aspect-video group">
+              <img src={featuredProject.image} alt={featuredProject.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                <span
+                  className={`px-3 py-1 text-xs rounded-full inline-block
+                  ${featuredProject.status === "Completed" ? "bg-emerald-900/60 text-emerald-400" : "bg-amber-900/60 text-amber-400"}`}
+                >
+                  {featuredProject.status}
+                </span>
+              </div>
+            </div>
 
+            <div className="flex flex-col">
+              <h3 className="text-2xl sm:text-3xl font-bold text-neutral-100 mb-3">{featuredProject.title}</h3>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {featuredProject.tech.map((tech, i) => (
+                  <span key={i} className="px-3 py-1 bg-neutral-700/50 text-neutral-300 text-sm rounded-full">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <p className="text-neutral-400 mb-6 leading-relaxed">{featuredProject.longDescription || featuredProject.description}</p>
+
+              <div className="mt-auto flex items-center justify-between">
+                <div className="flex items-center gap-2 text-neutral-500">
+                  <Calendar size={16} />
+                  {featuredProject.date}
+                </div>
+
+                <div className="flex gap-3">
+                  {featuredProject.github && (
+                    <a
+                      href={featuredProject.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2
+                        bg-neutral-700 hover:bg-neutral-600 
+                        text-neutral-300 hover:text-neutral-200 
+                        rounded-lg transition-all duration-300
+                        text-sm"
+                    >
+                      <Github size={16} />
+                      Source
+                    </a>
+                  )}
+                  {featuredProject.website && (
+                    <a
+                      href={featuredProject.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 hover:bg-neutral-700 rounded-lg transition-colors
+                                     flex items-center gap-1 text-neutral-400 hover:text-neutral-300"
+                    >
+                      <ExternalLink size={16} />
+                      Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Header with Controls */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
           <div className="flex flex-wrap gap-2 sm:gap-4">
             {/* View Mode Toggle */}
             <div className="bg-neutral-800 rounded-lg p-1 flex">
