@@ -28,8 +28,8 @@ const TableOfContents = () => {
         });
       },
       {
-        threshold: 0.1, // Ubah threshold menjadi lebih kecil
-        rootMargin: "-20% 0px -20% 0px", // Tambahkan root margin
+        threshold: 0.1,
+        rootMargin: "-20% 0px -20% 0px",
       }
     );
 
@@ -50,56 +50,133 @@ const TableOfContents = () => {
 
   return (
     <>
-      {/* Desktop version */}
-      <motion.nav initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="fixed right-3 top-1/4 transform -translate-y-1/2 z-50 hidden lg:block">
-        <div className="bg-neutral-800/20 backdrop-blur-sm rounded-full p-2">
-          <ul className="space-y-1">
-            {sections.map(({ id, label, icon: Icon }) => (
-              <motion.li key={id}>
+      {/* Desktop version - Neobrutalism style */}
+      <motion.nav 
+        initial={{ opacity: 0, x: 20 }} 
+        animate={{ opacity: 1, x: 0 }} 
+        transition={{ duration: 0.5 }} 
+        className="fixed right-6 top-1/3 z-50 hidden lg:block"
+      >
+        <div className="border-3 border-black bg-neutral-800/80 backdrop-blur-sm rounded-lg p-2.5 shadow-[5px_5px_0px_rgba(0,0,0,0.8)] rotate-1">
+          <ul className="space-y-3">
+            {sections.map(({ id, label, icon: Icon }, index) => (
+              <motion.li 
+                key={id}
+                initial={{ opacity: 0, x: 20 }} 
+                animate={{ opacity: 1, x: 0 }} 
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
                 <button
                   onClick={() => handleClick(id)}
-                  className={`relative w-10 h-10 rounded-full flex items-center justify-center
-                            group transition-all duration-300 hover:bg-neutral-700/30
-                            ${activeSection === id ? "bg-neutral-700/50 text-white" : "text-neutral-400 hover:text-neutral-200"}`}
+                  className={`relative w-11 h-11 flex items-center justify-center
+                            group transition-all duration-300
+                            ${activeSection === id 
+                              ? "bg-neutral-700 text-white border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] -rotate-2" 
+                              : "text-neutral-400 hover:text-neutral-200 hover:-translate-y-0.5"}`}
                 >
                   <Icon size={18} className="flex-shrink-0" />
 
-                  {/* Tooltip */}
-                  <span
-                    className="absolute right-full mr-2 px-2 py-1 rounded bg-neutral-800 text-white
-                              text-xs whitespace-nowrap opacity-0 group-hover:opacity-100
-                              transition-opacity duration-200 pointer-events-none"
+                  {/* Tooltip - Neobrutalism style */}
+                  <motion.span
+                    initial={{ opacity: 0, x: -10, scale: 0.9 }}
+                    whileHover={{ opacity: 1, x: 0, scale: 1 }}
+                    className="absolute right-full mr-3 px-3 py-1.5 bg-neutral-800 text-white
+                              text-xs whitespace-nowrap pointer-events-none border-2 border-black
+                              shadow-[3px_3px_0px_rgba(0,0,0,0.8)] font-bold rotate-1"
                   >
                     {label}
-                  </span>
+                  </motion.span>
 
-                  {/* Active indicator */}
-                  {activeSection === id && <motion.div layoutId="activeSection" className="absolute inset-0 border-2 border-neutral-600 rounded-full" transition={{ type: "spring", stiffness: 380, damping: 30 }} />}
+                  {/* Decorative elements for active item */}
+                  {activeSection === id && (
+                    <>
+                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-neutral-700 border-1 border-black rotate-12"></div>
+                      <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-neutral-700 border-1 border-black -rotate-12"></div>
+                    </>
+                  )}
                 </button>
+              </motion.li>
+            ))}
+          </ul>
+          
+          {/* Decorative element */}
+          <div className="w-full h-1 bg-neutral-700 mt-3 border-t-1 border-black"></div>
+        </div>
+      </motion.nav>
+
+      {/* Mobile version - Improved responsiveness */}
+      <motion.nav 
+        initial={{ opacity: 0, y: 20 }} 
+        animate={{ opacity: 1, y: 0 }} 
+        transition={{ duration: 0.5 }} 
+        className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90%] lg:hidden"
+      >
+        <div className="bg-neutral-900/90 backdrop-blur-md rounded-full border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] 
+                      px-2 py-1.5 flex justify-center w-full overflow-x-auto scrollbar-none">
+          <ul className="flex items-center space-x-1">
+            {sections.map(({ id, label, icon: Icon }, index) => (
+              <motion.li 
+                key={id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="flex-shrink-0"
+              >
+                <button
+                  onClick={() => handleClick(id)}
+                  aria-label={label}
+                  className={`relative p-1.5 transition-all duration-300
+                            ${activeSection === id 
+                              ? "text-white bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] rounded-md -rotate-2" 
+                              : "text-neutral-400 hover:text-white"}`}
+                >
+                  <Icon size={16} className="flex-shrink-0" />
+                </button>
+                
+                {/* Mobile tooltip - appears on active */}
+                {activeSection === id && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="absolute -top-6 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-[10px] 
+                              px-1.5 py-0.5 rounded border-1 border-black shadow-[1px_1px_0px_rgba(0,0,0,0.8)]
+                              whitespace-nowrap max-w-[80px] truncate"
+                  >
+                    {label}
+                  </motion.div>
+                )}
               </motion.li>
             ))}
           </ul>
         </div>
       </motion.nav>
-
-      {/* Mobile version */}
-      <motion.nav initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="fixed bottom-2 left-1/2 -translate-x-1/2 z-50 lg:hidden">
-        <div className="bg-neutral-900/70 backdrop-blur-md rounded-full px-2 py-1.5 shadow-lg border border-neutral-800/50">
-          <ul className="flex items-center gap-1">
-            {sections.map(({ id, icon: Icon }) => (
-              <li key={id}>
-                <button
-                  onClick={() => handleClick(id)}
-                  className={`relative p-1.5 rounded-full transition-all duration-300
-                            ${activeSection === id ? "text-white bg-neutral-700/50" : "text-neutral-400 hover:text-white hover:bg-neutral-700/30"}`}
-                >
-                  <Icon size={16} />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.nav>
+      
+      {/* Styles for neobrutalism and responsiveness */}
+      <style>
+        {`
+          .border-3 {
+            border-width: 3px;
+          }
+          .border-1 {
+            border-width: 1px;
+          }
+          .scrollbar-none {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+          }
+          .scrollbar-none::-webkit-scrollbar {
+            display: none;
+          }
+          @media (max-width: 360px) {
+            .mobile-nav-container {
+              padding: 0.25rem 0.5rem;
+            }
+            .mobile-icon {
+              font-size: 14px;
+            }
+          }
+        `}
+      </style>
     </>
   );
 };
