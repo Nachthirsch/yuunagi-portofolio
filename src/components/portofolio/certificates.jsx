@@ -8,25 +8,59 @@ const CertificatesSection = () => {
   return (
     <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider">
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} className="mb-12">
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-300 tracking-wider flex items-center gap-3">
-            <HiAcademicCap className="text-neutral-400" />
-            Certificates & Badges
+        {/* Header - Enhanced Neobrutalism Style with Original Color Theme */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.6 }} 
+          className="mb-16 relative"
+        >
+          <div className="absolute -left-5 -top-5 w-20 h-20 bg-neutral-400 opacity-20 rotate-12 z-0"></div>
+          <div className="absolute -left-2 -top-2 w-12 h-12 bg-neutral-500 opacity-20 -rotate-6 z-0"></div>
+          
+          <h2 className="text-2xl sm:text-3xl font-extrabold uppercase text-neutral-300 tracking-wider flex items-center gap-3 relative z-10">
+            <div className="p-3 bg-neutral-800 border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)] rotate-2">
+              <HiAcademicCap className="text-neutral-300 text-2xl" />
+            </div>
+            <span className="text-shadow-neo relative">
+              Certificates & Badges
+              <span className="absolute -bottom-1 left-0 w-full h-1 bg-neutral-400"></span>
+            </span>
           </h2>
-          <motion.div className="w-20 h-0.5 bg-neutral-300 mt-3" initial={{ width: 0 }} whileInView={{ width: "5rem" }} transition={{ duration: 0.8, delay: 0.3 }} />
+          
+          <motion.div 
+            className="w-32 h-3 bg-neutral-300 mt-5 -rotate-1 border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)]" 
+            initial={{ width: 0 }} 
+            whileInView={{ width: "10rem" }} 
+            transition={{ duration: 0.8, delay: 0.3 }} 
+          />
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Certificate Grid - Enhanced Neobrutalism Style with Original Color Theme */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
           {certificates.map((cert, index) => (
-            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} className="group relative bg-neutral-800/20 rounded-lg p-6 border border-neutral-700/30 hover:border-neutral-600/50 transition-all h-[200px] hover:h-auto hover:min-h-[200px] hover:z-10 hover:shadow-xl">
+            <motion.div 
+              key={index} 
+              initial={{ opacity: 0, y: 20 }} 
+              whileInView={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.5, delay: index * 0.1 }} 
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              className={`group relative bg-neutral-800 ${index % 3 === 0 ? 'rotate-2' : index % 3 === 1 ? '-rotate-2' : 'rotate-0'} 
+                border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] 
+                h-[220px] hover:h-auto overflow-hidden 
+                hover:z-20 transition-all duration-300`}
+            >
               {/* Overlay Background for Extended Content */}
-              <div className="absolute inset-0 bg-neutral-800/95 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg" />
+              <div className="absolute inset-0 bg-neutral-800/95 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-              <div className="flex gap-4 h-full relative z-10">
-                {/* Icon Column */}
+              {/* Diagonal decorative corner */}
+              <div className={`absolute top-0 right-0 w-16 h-16 bg-neutral-700 opacity-60 -z-0`} style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }}></div>
+              
+              <div className={`flex gap-5 h-full relative z-10 p-6 ${index % 3 === 0 ? '-rotate-2' : index % 3 === 1 ? 'rotate-2' : 'rotate-0'}`}>
+                {/* Icon Column - Enhanced Neobrutalism Style */}
                 <div className="shrink-0">
-                  <div className="p-2 bg-neutral-700/30 rounded-lg">
-                    <cert.icon className="text-xl text-neutral-300" />
+                  <div className={`p-4 bg-neutral-700 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] -rotate-3`}>
+                    <cert.icon className="text-2xl text-neutral-300" />
                   </div>
                 </div>
 
@@ -34,17 +68,32 @@ const CertificatesSection = () => {
                 <div className="flex flex-col h-full w-full">
                   {/* Title Section */}
                   <div className="flex-grow">
-                    <h3 className="text-lg font-semibold text-neutral-300 line-clamp-2 group-hover:line-clamp-none transition-all">{cert.title}</h3>
-                    <p className="text-sm text-neutral-400 mt-1 line-clamp-1 group-hover:line-clamp-none transition-all">{cert.issuer}</p>
-                    <p className="text-xs text-neutral-500 mt-1">{cert.date}</p>
+                    <h3 className="text-lg font-extrabold text-neutral-300 line-clamp-2 group-hover:line-clamp-none transition-all uppercase text-shadow-small">
+                      {cert.title}
+                    </h3>
+                    <p className="text-sm text-neutral-400 mt-2 line-clamp-1 group-hover:line-clamp-none transition-all font-bold">
+                      {cert.issuer}
+                    </p>
+                    <p className="text-xs text-neutral-500 mt-3 inline-block px-3 py-1 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] bg-neutral-700 font-bold rotate-1">
+                      {cert.date}
+                    </p>
                   </div>
 
-                  {/* Credential Link - Always at Bottom */}
-                  <div className="mt-auto pt-3">
+                  {/* Credential Link - Enhanced Neobrutalism Style */}
+                  <div className="mt-auto pt-5 border-t-3 border-black opacity-0 group-hover:opacity-100 transition-opacity">
                     {cert.credential && (
-                      <a href={cert.credential} target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-sm text-neutral-400 hover:text-neutral-300 transition-colors">
+                      <a 
+                        href={cert.credential} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="inline-flex items-center text-sm font-bold text-neutral-300 
+                          px-4 py-2 mt-2
+                          bg-neutral-700 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
+                          hover:-translate-y-1 hover:translate-x-1 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.8)]
+                          transition-all duration-200 rotate-1"
+                      >
                         View Credential
-                        <HiExternalLink className="ml-1" />
+                        <HiExternalLink className="ml-2 text-lg" />
                       </a>
                     )}
                   </div>
@@ -54,13 +103,24 @@ const CertificatesSection = () => {
           ))}
         </div>
       </div>
+
+      {/* Styles for neobrutalism */}
+      <style jsx global>{`
+        .text-shadow-neo {
+          text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+        }
+        .text-shadow-small {
+          text-shadow: 3px 3px 0px rgba(0,0,0,0.8);
+        }
+        .border-3 {
+          border-width: 3px;
+        }
+      `}</style>
     </section>
   );
 };
 
 export default CertificatesSection;
-
-// Image Section Component
 
 // Data struktur untuk sertifikat
 const certificates = [

@@ -8,34 +8,99 @@ const Header = () => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d", { alpha: false }); // Optimize for non-transparent canvas
+    const ctx = canvas.getContext("2d", { alpha: false });
     let animationFrameId;
     let lastRender = 0;
 
     // Calculate responsive values
     const isMobile = window.innerWidth < 768;
-    const baseRadius = isMobile ? 180 : 220; // Slightly reduced desktop radius
-    const numPoints = isMobile ? 250 : 300; // Reduced desktop points
-    const baseFontSize = isMobile ? 10 : 12; // Optimized font size
-    const rotationSpeed = isMobile ? 0.008 : 0.01; // Slower rotation on desktop
+    const baseRadius = isMobile ? 170 : 200; // Radius sedikit lebih kecil
+    const numPoints = isMobile ? 200 : 250; // Mengurangi jumlah titik untuk efek lebih tegas
+    const baseFontSize = isMobile ? 12 : 16; // Ukuran font lebih besar untuk keterbacaan neobrutalism
+    const rotationSpeed = isMobile ? 0.005 : 0.007; // Rotasi lebih lambat untuk efek lebih berat
 
-    const NUMBERS = ["-.--", "..-", "..-", "-.", ".-", "--.", ".."];
+    // Menggunakan karakter yang lebih variatif dan tegas untuk gaya neobrutalism
+    const BRUTALISM_CHARS = ["▓", "▒", "░", "█", "▄", "▀", "■", "□", "▢", "▣", "+", "×"];
     const points = [];
     let angleX = 2;
     let angleY = 0;
 
-    // Generate sphere points
-    for (let i = 0; i < numPoints; i++) {
-      const phi = Math.acos(-1 + (2 * i) / numPoints);
-      const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+    // Generate cube points instead of sphere for brutalism effect
+    const createCubePoints = () => {
+      // Hapus array points yang ada
+      points.length = 0;
+      
+      // Buat titik-titik berbentuk kubus
+      const cubeSize = baseRadius * 0.8;
+      const halfSize = cubeSize / 2;
+      const sides = [-halfSize, halfSize]; // Koordinat sisi kubus
+      
+      // Tambahkan titik-titik random dalam bentuk kubus
+      for (let i = 0; i < numPoints; i++) {
+        // Acak posisi titik dalam batas kubus dengan sedikit variasi untuk efek tidak sempurna
+        const x = Math.random() * cubeSize - halfSize;
+        const y = Math.random() * cubeSize - halfSize;
+        
+        // Pastikan titik berada di sekitar permukaan kubus
+        // Pilih sisi mana yang ingin diletakkan titik
+        const side = Math.floor(Math.random() * 6);
+        let z;
+        
+        switch(side) {
+          case 0: 
+            z = -halfSize + (Math.random() * 10 - 5); // Depan
+            break;
+          case 1: 
+            z = halfSize + (Math.random() * 10 - 5); // Belakang
+            break;
+          case 2: 
+            // Atas (dengan y tetap)
+            points.push({
+              x: x,
+              y: -halfSize + (Math.random() * 10 - 5),
+              z: Math.random() * cubeSize - halfSize,
+              char: BRUTALISM_CHARS[Math.floor(Math.random() * BRUTALISM_CHARS.length)],
+            });
+            continue;
+          case 3: 
+            // Bawah (dengan y tetap)
+            points.push({
+              x: x,
+              y: halfSize + (Math.random() * 10 - 5),
+              z: Math.random() * cubeSize - halfSize,
+              char: BRUTALISM_CHARS[Math.floor(Math.random() * BRUTALISM_CHARS.length)],
+            });
+            continue;
+          case 4: 
+            // Kiri (dengan x tetap)
+            points.push({
+              x: -halfSize + (Math.random() * 10 - 5),
+              y: y,
+              z: Math.random() * cubeSize - halfSize,
+              char: BRUTALISM_CHARS[Math.floor(Math.random() * BRUTALISM_CHARS.length)],
+            });
+            continue;
+          case 5: 
+            // Kanan (dengan x tetap)
+            points.push({
+              x: halfSize + (Math.random() * 10 - 5),
+              y: y,
+              z: Math.random() * cubeSize - halfSize,
+              char: BRUTALISM_CHARS[Math.floor(Math.random() * BRUTALISM_CHARS.length)],
+            });
+            continue;
+        }
+        
+        points.push({
+          x: x,
+          y: y,
+          z: z,
+          char: BRUTALISM_CHARS[Math.floor(Math.random() * BRUTALISM_CHARS.length)],
+        });
+      }
+    };
 
-      points.push({
-        x: baseRadius * Math.cos(theta) * Math.sin(phi),
-        y: baseRadius * Math.sin(theta) * Math.sin(phi),
-        z: baseRadius * Math.cos(phi),
-        char: NUMBERS[Math.floor(Math.random() * NUMBERS.length)],
-      });
-    }
+    createCubePoints();
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
@@ -43,7 +108,7 @@ const Header = () => {
     };
 
     const animate = (timestamp) => {
-      // Limit frame rate more strictly on desktop
+      // Limit frame rate
       const frameInterval = isMobile ? 4 : 4;
       if (timestamp - lastRender < frameInterval) {
         animationFrameId = requestAnimationFrame(animate);
@@ -51,13 +116,14 @@ const Header = () => {
       }
       lastRender = timestamp;
 
-      ctx.fillStyle = "rgb(23, 23, 23, 0.2)"; // Solid color instead of rgba
+      // Warna background lebih kontras untuk neobrutalism
+      ctx.fillStyle = "rgb(23, 23, 23, 0.3)"; 
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       const centerX = canvas.width - baseRadius * (isMobile ? 0.3 : 0.5);
       const centerY = canvas.height - baseRadius * (isMobile ? 0.3 : 0.5);
 
-      // More aggressive culling for desktop
+      // Threshold untuk menyaring titik yang terlihat
       const visibilityThreshold = isMobile ? -baseRadius : -baseRadius * 0.7;
 
       // Pre-calculate sin and cos values
@@ -87,14 +153,42 @@ const Header = () => {
       let currentFontSize = 0;
 
       rotatedPoints.forEach((point) => {
+        // Tingkatkan ukuran dan kontras untuk efek neobrutalism
         const scale = (point.z + baseRadius) / (1 * baseRadius);
-        const intensity = Math.floor(scale * 255);
-        ctx.fillStyle = `rgb(${intensity}, ${intensity}, ${intensity})`;
+        
+        // Warna lebih kontras dengan hanya 3-4 level intensitas untuk neobrutalism
+        let intensity;
+        if (scale < 0.4) intensity = 100;
+        else if (scale < 0.7) intensity = 160;
+        else if (scale < 0.9) intensity = 210;
+        else intensity = 255;
+        
+        // Tambahkan sedikit variasi warna untuk neobrutalism
+        const r = intensity;
+        const g = intensity;
+        const b = intensity;
+        
+        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
 
-        const fontSize = Math.floor(baseFontSize * scale);
+        // Ukuran font yang lebih variatif untuk neobrutalism
+        const fontSize = Math.floor(baseFontSize * scale * 1.2);
         if (fontSize !== currentFontSize) {
-          ctx.font = `${fontSize}px "Courier New"`;
+          // Gunakan font dengan style lebih tegas/monospace untuk neobrutalism
+          ctx.font = `bold ${fontSize}px "Courier New"`;
           currentFontSize = fontSize;
+        }
+
+        // Tambahkan efek shadow untuk karakter neobrutalism
+        if (scale > 0.8) {
+          ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+          ctx.shadowBlur = 2;
+          ctx.shadowOffsetX = 1;
+          ctx.shadowOffsetY = 1;
+        } else {
+          ctx.shadowColor = 'transparent';
+          ctx.shadowBlur = 0;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 0;
         }
 
         ctx.fillText(point.char, centerX + point.x, centerY + point.y);
@@ -130,66 +224,106 @@ const Header = () => {
   return (
     <header className="relative h-screen font-Hanken tracking-wider overflow-hidden bg-neutral-900">
       <canvas ref={canvasRef} className="absolute inset-0" style={{ zIndex: 1, willChange: "transform", background: "transparent" }} />
+      
+      {/* Neo-brutalism content container */}
       <div className="relative h-full flex flex-col justify-center px-4 sm:px-8 md:px-16 z-10">
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} viewport={{ once: true, amount: 0.3 }} className="mb-4 sm:mb-6">
+        {/* Animated title with neo-brutalism style */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.8 }} 
+          viewport={{ once: true, amount: 0.3 }} 
+          className="mb-4 sm:mb-6 relative"
+        >
+          <div className="absolute -left-3 -top-3 w-16 h-16 bg-red-400 opacity-20 rotate-12 z-0"></div>
           <TypeAnimation
             sequence={["Hello there!", 1000, "How are you?", 1000, "Welcome to my world!", 1000]}
             wrapper="h1"
             speed={50}
             style={{
-              fontSize: "clamp(1.25rem, 5vw, 2.25rem)",
+              fontSize: "clamp(1.5rem, 5vw, 2.5rem)",
               color: "rgb(212 212 212)",
-              fontWeight: "600",
+              fontWeight: "800",
+              textTransform: "uppercase",
+              position: "relative",
+              zIndex: "1",
+              textShadow: "4px 4px 0px rgba(0,0,0,0.2)",
             }}
             repeat={Infinity}
           />
         </motion.div>
 
-        <motion.div className="w-16 h-0.5 bg-neutral-300" initial={{ width: 0 }} whileInView={{ width: "5rem" }} transition={{ duration: 1.5, ease: "easeOut" }} viewport={{ once: true, amount: 0.3 }} />
+        {/* Neo-brutalism divider */}
+        <motion.div 
+          className="w-24 h-2 bg-neutral-300 rotate-1 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]" 
+          initial={{ width: 0 }} 
+          whileInView={{ width: "7rem" }} 
+          transition={{ duration: 1.5, ease: "easeOut" }} 
+          viewport={{ once: true, amount: 0.3 }} 
+        />
 
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} viewport={{ once: true, amount: 0.3 }} className="max-w-3xl mt-6">
-          <p className="text-neutral-100  tracking-wider text-base sm:text-lg sm:leading-8">
-            I would love to introduce myself now! My name is <span className="text-neutral-200 font-medium border-b border-neutral-400">Handra Putratama Tanjung</span>
+        {/* Bio text with neo-brutalism styles */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          whileInView={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.8, delay: 0.3 }} 
+          viewport={{ once: true, amount: 0.3 }} 
+          className="max-w-3xl mt-8 bg-neutral-800 p-6 rounded-sm rotate-1 border-4 border-black shadow-[8px_8px_0px_rgb(0,0,0)]"
+        >
+          <p className="text-neutral-100 tracking-wider text-base sm:text-lg sm:leading-8 -rotate-1">
+            I would love to introduce myself now! My name is{" "}
+            <span className="text-neutral-200 font-extrabold bg-pink-400 px-2 py-1 shadow-[4px_4px_0px_rgba(0,0,0,0.8)] inline-block transform -rotate-2 mx-1">
+              Handra Putratama Tanjung
+            </span>
             .
             <br className="hidden sm:block" />
-            <span className="block mt-2 sm:mt-0 sm:inline">I&apos;m a final-year student majoring in Information Technology, having an interest in Web Development, Photography, Music and Art.</span>
+            <span className="block mt-4 sm:mt-2 sm:inline">
+              I&apos;m a final-year student majoring in Information Technology, having an interest in Web Development, Photography, Music and Art.
+            </span>
           </p>
         </motion.div>
 
-        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.6 }} viewport={{ once: true, amount: 0.3 }} className="flex space-x-8 mt-8 md:mt-12">
+        {/* Social media icons with neo-brutalism style */}
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          whileInView={{ opacity: 1 }} 
+          transition={{ duration: 0.8, delay: 0.6 }} 
+          viewport={{ once: true, amount: 0.3 }} 
+          className="flex flex-wrap gap-6 mt-10 md:mt-12"
+        >
           <a href="mailto:handraputratama@gmail.com" className="social-icon-wrapper group relative" aria-label="Email">
-            <div className="p-3 rounded-full bg-neutral-800/50 backdrop-blur-sm transition-all duration-300 group-hover:bg-neutral-700/50 group-hover:scale-110">
-              <AiOutlineMail className="w-6 h-6 text-red-400 group-hover:text-red-300" />
+            <div className="p-4 rounded-md bg-neutral-800 border-2 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,0.8)]">
+              <AiOutlineMail className="w-7 h-7 text-red-400" />
             </div>
-            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded transition-opacity duration-200">Email</span>
+            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] transition-opacity duration-200">Email</span>
           </a>
 
           <a href="https://www.instagram.com/nachthirsch/" className="social-icon-wrapper group relative" aria-label="Instagram">
-            <div className="p-3 rounded-full bg-neutral-800/50 backdrop-blur-sm transition-all duration-300 group-hover:bg-neutral-700/50 group-hover:scale-110">
-              <FaInstagram className="w-6 h-6 text-pink-400 group-hover:text-pink-300" />
+            <div className="p-4 rounded-md bg-neutral-800 border-2 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,0.8)]">
+              <FaInstagram className="w-7 h-7 text-pink-400" />
             </div>
-            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded transition-opacity duration-200">Instagram</span>
+            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] transition-opacity duration-200">Instagram</span>
           </a>
 
           <a href="https://github.com/Nachthirsch" className="social-icon-wrapper group relative" aria-label="GitHub">
-            <div className="p-3 rounded-full bg-neutral-800/50 backdrop-blur-sm transition-all duration-300 group-hover:bg-neutral-700/50 group-hover:scale-110">
-              <FaGithub className="w-6 h-6 text-gray-300 group-hover:text-white" />
+            <div className="p-4 rounded-md bg-neutral-800 border-2 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,0.8)]">
+              <FaGithub className="w-7 h-7 text-gray-300" />
             </div>
-            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded transition-opacity duration-200">GitHub</span>
+            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] transition-opacity duration-200">GitHub</span>
           </a>
 
           <a href="https://www.linkedin.com/in/handra-putratama-tanjung/" className="social-icon-wrapper group relative" aria-label="LinkedIn">
-            <div className="p-3 rounded-full bg-neutral-800/50 backdrop-blur-sm transition-all duration-300 group-hover:bg-neutral-700/50 group-hover:scale-110">
-              <FaLinkedin className="w-6 h-6 text-blue-400 group-hover:text-blue-300" />
+            <div className="p-4 rounded-md bg-neutral-800 border-2 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,0.8)]">
+              <FaLinkedin className="w-7 h-7 text-blue-400" />
             </div>
-            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded transition-opacity duration-200">LinkedIn</span>
+            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] transition-opacity duration-200">LinkedIn</span>
           </a>
 
           <a href="https://soundcloud.com/nachthirsch" className="social-icon-wrapper group relative" aria-label="SoundCloud">
-            <div className="p-3 rounded-full bg-neutral-800/50 backdrop-blur-sm transition-all duration-300 group-hover:bg-neutral-700/50 group-hover:scale-110">
-              <FaSoundcloud className="w-6 h-6 text-orange-400 group-hover:text-orange-300" />
+            <div className="p-4 rounded-md bg-neutral-800 border-2 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)] transition-all duration-200 hover:-translate-y-1 hover:translate-x-1 hover:shadow-[6px_6px_0px_rgba(0,0,0,0.8)]">
+              <FaSoundcloud className="w-7 h-7 text-orange-400" />
             </div>
-            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded transition-opacity duration-200">SoundCloud</span>
+            <span className="icon-tooltip opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-sm py-1 px-2 rounded border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] transition-opacity duration-200">SoundCloud</span>
           </a>
         </motion.div>
       </div>

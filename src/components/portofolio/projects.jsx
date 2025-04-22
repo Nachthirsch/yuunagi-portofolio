@@ -11,7 +11,12 @@ import yorushika from "../../assets/yorushika.gif";
 
 const ProjectSection = () => {
   const [selectedProject, setSelectedProject] = useState(0);
-  const [viewMode, setViewMode] = useState("carousel"); // 'carousel' or 'grid'
+  const [viewMode, setViewMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth < 768 ? "grid" : "carousel";
+    }
+    return "grid";
+  });
   const [filterStatus, setFilterStatus] = useState("all");
   const [filterTech, setFilterTech] = useState("all");
   const x = useMotionValue(0);
@@ -114,7 +119,19 @@ const ProjectSection = () => {
   });
 
   useEffect(() => {
-    // Add keyboard navigation
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setViewMode("grid");
+      }
+    };
+    
+    handleResize();
+    
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "ArrowLeft") handlePrev();
       if (e.key === "ArrowRight") handleNext();
@@ -151,7 +168,7 @@ const ProjectSection = () => {
     }
   };
 
-  // Enhanced card style calculation
+  // Modified card style calculation for neobrutalism
   const calculateCardStyle = (index, selectedIndex) => {
     const diff = index - selectedIndex;
     const distance = Math.abs(diff);
@@ -164,6 +181,7 @@ const ProjectSection = () => {
         x: "0%",
         rotateZ: 0,
         y: 0,
+        boxShadow: "8px 8px 0px rgba(0,0,0,0.8)"
       };
 
     if (diff < 0) {
@@ -190,43 +208,63 @@ const ProjectSection = () => {
   return (
     <section className="min-h-screen bg-neutral-900 font-Hanken overflow-hidden py-4 sm:py-8">
       <div className="max-w-7xl mx-auto flex flex-col px-3 sm:px-8 md:px-16">
-        {/* Featured Project Section */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="mb-16 mt-4">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-200 tracking-wider flex items-center gap-2 mb-8 sm:gap-3">
-              <Code2 className="text-neutral-400" />
+        {/* Featured Project Section - Neobrutalism Style */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.7 }} 
+          className="mb-16 mt-4"
+        >
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }}
+            className="relative"
+          >
+            <div className="absolute -left-3 -top-3 w-16 h-16 bg-green-400 opacity-20 rotate-12 z-0"></div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold uppercase text-neutral-200 tracking-wider flex items-center gap-2 mb-8 sm:gap-3 relative z-10 text-shadow-neo">
+              <div className="p-3 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]">
+                <Code2 className="text-neutral-300" />
+              </div>
               Featured Projects
             </h2>
           </motion.div>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-neutral-800/30 p-6 sm:p-8 rounded-2xl border border-neutral-700">
-            <div className="relative overflow-hidden rounded-xl aspect-video group">
-              <img src={featuredProject.image} alt={featuredProject.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-neutral-800 p-6 sm:p-8 rounded-none border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] rotate-1">
+            <div className="relative overflow-hidden aspect-video group -rotate-1">
+              <img 
+                src={featuredProject.image} 
+                alt={featuredProject.title} 
+                className="w-full h-full object-cover border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)]" 
+              />
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
                 <span
-                  className={`px-3 py-1 text-xs rounded-full inline-block
-                  ${featuredProject.status === "Completed" ? "bg-emerald-900/60 text-emerald-400" : "bg-amber-900/60 text-amber-400"}`}
+                  className={`px-3 py-1 text-xs font-extrabold inline-block border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
+                  ${featuredProject.status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
                 >
                   {featuredProject.status}
                 </span>
               </div>
             </div>
 
-            <div className="flex flex-col">
-              <h3 className="text-2xl sm:text-3xl font-bold text-neutral-100 mb-3">{featuredProject.title}</h3>
+            <div className="flex flex-col -rotate-1">
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-neutral-100 mb-3 uppercase text-shadow-neo">
+                {featuredProject.title}
+              </h3>
 
               <div className="flex flex-wrap gap-2 mb-4">
                 {featuredProject.tech.map((tech, i) => (
-                  <span key={i} className="px-3 py-1 bg-neutral-700/50 text-neutral-300 text-sm rounded-full">
+                  <span key={i} className="px-3 py-1 bg-neutral-700 text-neutral-300 text-sm font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] transform rotate-1">
                     {tech}
                   </span>
                 ))}
               </div>
 
-              <p className="text-neutral-400 mb-6 leading-relaxed">{featuredProject.longDescription || featuredProject.description}</p>
+              <p className="text-neutral-400 mb-6 leading-relaxed">
+                {featuredProject.longDescription || featuredProject.description}
+              </p>
 
               <div className="mt-auto flex items-center justify-between">
-                <div className="flex items-center gap-2 text-neutral-500">
+                <div className="flex items-center gap-2 text-neutral-400 font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] px-3 py-1 bg-neutral-800">
                   <Calendar size={16} />
                   {featuredProject.date}
                 </div>
@@ -238,10 +276,11 @@ const ProjectSection = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-4 py-2
-                        bg-neutral-700 hover:bg-neutral-600 
-                        text-neutral-300 hover:text-neutral-200 
-                        rounded-lg transition-all duration-300
-                        text-sm"
+                        bg-neutral-700 text-neutral-300
+                        border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
+                        hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
+                        transition-all duration-200
+                        font-bold text-sm"
                     >
                       <Github size={16} />
                       Source
@@ -252,8 +291,12 @@ const ProjectSection = () => {
                       href={featuredProject.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-2 hover:bg-neutral-700 rounded-lg transition-colors
-                                     flex items-center gap-1 text-neutral-400 hover:text-neutral-300"
+                      className="inline-flex items-center gap-2 px-4 py-2
+                        bg-neutral-700 text-neutral-300
+                        border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
+                        hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
+                        transition-all duration-200
+                        font-bold text-sm"
                     >
                       <ExternalLink size={16} />
                       Demo
@@ -265,27 +308,43 @@ const ProjectSection = () => {
           </div>
         </motion.div>
 
-        {/* Header with Controls */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-6 sm:mb-8">
-          <div className="flex flex-wrap gap-2 sm:gap-4">
-            {/* View Mode Toggle */}
-            <div className="bg-neutral-800 rounded-lg p-1 flex">
-              <button onClick={() => setViewMode("carousel")} className={`p-1.5 sm:p-2 rounded ${viewMode === "carousel" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}>
-                <Rows size={18} sm:size={20} />
+        {/* Header with Controls - Neobrutalism Style */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-10 sm:mb-12">
+          <div className="flex flex-wrap gap-4 sm:gap-5">
+            <div className="hidden md:flex bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] p-1">
+              <button 
+                onClick={() => setViewMode("carousel")} 
+                className={`p-2 font-bold ${viewMode === "carousel" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}
+              >
+                <Rows size={20} />
               </button>
-              <button onClick={() => setViewMode("grid")} className={`p-1.5 sm:p-2 rounded ${viewMode === "grid" ? "bg-neutral-700 text-white" : "text-neutral-400"}`}>
-                <LayoutGrid size={18} sm:size={20} />
+              <button 
+                onClick={() => setViewMode("grid")} 
+                className={`p-2 font-bold ${viewMode === "grid" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}
+              >
+                <LayoutGrid size={20} />
               </button>
             </div>
 
-            {/* Filters */}
-            <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="bg-neutral-800 text-neutral-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm">
+            <select 
+              value={filterStatus} 
+              onChange={(e) => setFilterStatus(e.target.value)} 
+              className="bg-neutral-800 text-neutral-200 px-3 py-2 text-sm font-bold
+                border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
+                appearance-none cursor-pointer transform rotate-1"
+            >
               <option value="all">All Status</option>
               <option value="Completed">Completed</option>
               <option value="In Development">In Development</option>
             </select>
 
-            <select value={filterTech} onChange={(e) => setFilterTech(e.target.value)} className="bg-neutral-800 text-neutral-200 rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 text-xs sm:text-sm">
+            <select 
+              value={filterTech} 
+              onChange={(e) => setFilterTech(e.target.value)} 
+              className="bg-neutral-800 text-neutral-200 px-3 py-2 text-sm font-bold
+                border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
+                appearance-none cursor-pointer transform -rotate-1"
+            >
               <option value="all">All Tech</option>
               {allTechStacks.map((tech) => (
                 <option key={tech} value={tech}>
@@ -298,9 +357,7 @@ const ProjectSection = () => {
 
         {/* Content */}
         {viewMode === "carousel" ? (
-          // Carousel view with responsive adjustments
           <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
-            {/* Left Column - Project Details */}
             <div className="flex-1 flex flex-col order-2 lg:order-1">
               <AnimatePresence mode="wait">
                 <motion.div
@@ -308,30 +365,35 @@ const ProjectSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="bg-neutral-800/50 backdrop-blur rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-neutral-700
-                          shadow-lg flex-1 flex flex-col"
+                  className="bg-neutral-800 rounded-none p-6 sm:p-8 
+                    border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)]
+                    transform rotate-1 flex-1 flex flex-col"
                 >
-                  <div className="flex flex-col h-full gap-4 sm:gap-8">
-                    {/* Project Info */}
+                  <div className="flex flex-col h-full gap-4 sm:gap-8 -rotate-1">
                     <div className="space-y-4 sm:space-y-6">
-                      <div className="flex flex-wrap gap-2 sm:gap-3">
+                      <div className="flex flex-wrap gap-3 sm:gap-4">
                         <span
-                          className="px-4 py-1.5 bg-neutral-800 text-neutral-300 text-sm rounded-full 
-                                    border border-neutral-600 flex items-center gap-2"
+                          className="px-4 py-1.5 bg-neutral-700 text-neutral-300 text-sm font-bold
+                            border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
+                            flex items-center gap-2 transform rotate-1"
                         >
                           <MonitorSmartphone size={14} />
                           {projects[selectedProject].type}
                         </span>
                         <span
-                          className={`px-4 py-1.5 text-sm rounded-full border
-                                    ${projects[selectedProject].status === "Completed" ? "bg-emerald-900/30 text-emerald-400 border-emerald-500/30" : "bg-amber-900/30 text-amber-400 border-amber-500/30"}`}
+                          className={`px-4 py-1.5 text-sm font-bold
+                            border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
+                            transform -rotate-1
+                            ${projects[selectedProject].status === "Completed" ? 
+                               "bg-emerald-600 text-white" : 
+                               "bg-amber-500 text-black"}`}
                         >
                           {projects[selectedProject].status}
                         </span>
                       </div>
 
                       <div>
-                        <h2 className="text-2xl font-bold text-neutral-100 mb-4">{projects[selectedProject].title}</h2>
+                        <h2 className="text-2xl font-extrabold text-neutral-100 mb-4 uppercase text-shadow-neo">{projects[selectedProject].title}</h2>
                         <p className="text-neutral-400 leading-relaxed">{projects[selectedProject].description}</p>
                       </div>
 
@@ -339,8 +401,9 @@ const ProjectSection = () => {
                         {projects[selectedProject].tech.map((tech, i) => (
                           <span
                             key={i}
-                            className="px-3 py-1 bg-neutral-700/50 text-neutral-300 
-                                              text-sm rounded-full hover:bg-neutral-700 transition-colors"
+                            className="px-3 py-1 bg-neutral-700 text-neutral-300 
+                              text-sm font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
+                              transform rotate-1"
                           >
                             {tech}
                           </span>
@@ -348,9 +411,8 @@ const ProjectSection = () => {
                       </div>
                     </div>
 
-                    {/* Bottom Actions */}
-                    <div className="mt-auto pt-6 border-t border-neutral-700 flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-neutral-500">
+                    <div className="mt-auto pt-6 border-t-4 border-black flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-neutral-400 font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] px-3 py-1 bg-neutral-800">
                         <Calendar size={16} />
                         {projects[selectedProject].date}
                       </div>
@@ -361,11 +423,12 @@ const ProjectSection = () => {
                             href={projects[selectedProject].github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-1.5
-                              bg-neutral-700 hover:bg-neutral-600 
-                              text-neutral-300 hover:text-neutral-200 
-                              rounded-lg transition-all duration-300
-                              text-sm"
+                            className="inline-flex items-center gap-2 px-4 py-2
+                              bg-neutral-700 text-neutral-300
+                              border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
+                              hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
+                              transition-all duration-200
+                              font-bold text-sm"
                           >
                             <Github size={16} />
                             Source
@@ -376,11 +439,12 @@ const ProjectSection = () => {
                             href={projects[selectedProject].website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-1.5
-                              bg-neutral-700 hover:bg-neutral-600
-                              text-neutral-300 hover:text-neutral-200 
-                              rounded-lg transition-all duration-300
-                              text-sm"
+                            className="inline-flex items-center gap-2 px-4 py-2
+                              bg-neutral-700 text-neutral-300
+                              border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
+                              hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
+                              transition-all duration-200
+                              font-bold text-sm"
                           >
                             <MonitorSmartphone size={16} />
                             Demo
@@ -393,10 +457,18 @@ const ProjectSection = () => {
               </AnimatePresence>
             </div>
 
-            {/* Right Column - Carousel */}
             <div className="lg:w-[450px] relative">
               <motion.div className="h-[500px] relative perspective-1000" style={{ touchAction: "none" }}>
-                <motion.div className="absolute inset-0 flex items-center justify-center" drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.2} onDragEnd={handleDragEnd} whileDrag={{ scale: 1.02 }} style={{ cursor: "grab" }} whileTap={{ cursor: "grabbing" }}>
+                <motion.div 
+                  className="absolute inset-0 flex items-center justify-center" 
+                  drag="x" 
+                  dragConstraints={{ left: 0, right: 0 }} 
+                  dragElastic={0.2} 
+                  onDragEnd={handleDragEnd} 
+                  whileDrag={{ scale: 1.02 }} 
+                  style={{ cursor: "grab" }} 
+                  whileTap={{ cursor: "grabbing" }}
+                >
                   {projects.map((project, index) => (
                     <motion.div
                       key={index}
@@ -411,20 +483,30 @@ const ProjectSection = () => {
                     >
                       <div
                         className={`
-                        bg-neutral-800 rounded-2xl overflow-hidden
-                        shadow-[0_0_20px_rgba(0,0,0,0.3)]
-                        border border-neutral-700
+                        bg-neutral-800 rounded-none overflow-hidden
+                        border-4 border-black
+                        ${selectedProject === index ? 
+                          "shadow-[8px_8px_0px_rgba(0,0,0,0.8)]" : 
+                          "shadow-[5px_5px_0px_rgba(0,0,0,0.6)]"}
                         transition-all duration-300
-                        ${selectedProject === index ? "ring-2 ring-neutral-500 shadow-xl" : ""}
-                        hover:border-neutral-600
+                        transform ${index % 2 === 0 ? "rotate-2" : "-rotate-2"}
                       `}
                       >
                         <div className="h-48 relative">
-                          <img src={project.image} alt={project.title} className="w-full h-full object-cover brightness-90" />
+                          <img 
+                            src={project.image} 
+                            alt={project.title} 
+                            className="w-full h-full object-cover" 
+                          />
                           <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/50 to-transparent" />
                           <div className="absolute bottom-4 left-4 right-4">
-                            <h3 className="text-xl font-semibold text-neutral-200 truncate">{project.title}</h3>
-                            <span className="text-sm text-neutral-400">{project.status}</span>
+                            <h3 className="text-xl font-extrabold text-neutral-200 truncate">{project.title}</h3>
+                            <span className={`text-sm px-2 py-0.5 font-bold
+                              ${project.status === "Completed" ? 
+                                "bg-emerald-600 text-white" : 
+                                "bg-amber-500 text-black"}`}>
+                              {project.status}
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -435,68 +517,78 @@ const ProjectSection = () => {
             </div>
           </div>
         ) : (
-          // Grid View
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-neutral-800/20 rounded-lg border border-neutral-700/30 
-                          hover:border-neutral-600/50 transition-all overflow-hidden
-                          flex flex-col"
+                className={`bg-neutral-800 rounded-none overflow-hidden
+                  border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)]
+                  flex flex-col transform ${index % 2 === 0 ? "rotate-1" : "-rotate-1"}
+                  hover:-translate-y-2 transition-all duration-200`}
               >
-                {/* Project Image */}
                 <div className="h-40 relative">
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover" 
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 to-transparent" />
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col">
-                  {/* Main Content */}
                   <div>
-                    <h3 className="text-lg font-semibold text-neutral-300 mb-2">{project.title}</h3>
+                    <h3 className="text-lg font-extrabold text-neutral-300 mb-2 uppercase text-shadow-small">{project.title}</h3>
                     <p className="text-sm text-neutral-400 mb-4 line-clamp-2">{project.description}</p>
                   </div>
 
-                  {/* Tech Stack */}
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tech.slice(0, 3).map((tech, i) => (
                       <span
                         key={i}
-                        className="px-2 py-1 bg-neutral-700/30 text-neutral-300 
-                                 text-xs rounded-full"
+                        className="px-2 py-1 bg-neutral-700 text-neutral-300 
+                                 text-xs font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]"
                       >
                         {tech}
                       </span>
                     ))}
-                    {project.tech.length > 3 && <span className="px-2 py-1 text-xs text-neutral-400">+{project.tech.length - 3}</span>}
+                    {project.tech.length > 3 && 
+                      <span className="px-2 py-1 text-xs font-bold text-neutral-400 border-2 border-dashed border-neutral-700">
+                        +{project.tech.length - 3}
+                      </span>
+                    }
                   </div>
 
-                  {/* Bottom Section - Always at bottom */}
-                  <div className="mt-auto pt-4 border-t border-neutral-700/30">
+                  <div className="mt-auto pt-4 border-t-2 border-black">
                     <div className="flex items-center justify-between">
-                      {/* Left side - Status */}
                       <span
-                        className={`px-3 py-1 text-xs rounded-full
-                        ${project.status === "Completed" ? "bg-emerald-900/30 text-emerald-400" : "bg-amber-900/30 text-amber-400"}`}
+                        className={`px-3 py-1 text-xs font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
+                        ${project.status === "Completed" ? 
+                          "bg-emerald-600 text-white" : 
+                          "bg-amber-500 text-black"}`}
                       >
                         {project.status}
                       </span>
 
-                      {/* Right side - Action Buttons */}
                       <div className="flex items-center gap-2">
                         {project.github && (
                           <a
                             href={project.github}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 hover:bg-neutral-700 rounded-lg transition-colors
-                                     flex items-center gap-1 text-neutral-400 hover:text-neutral-300"
+                            className="p-2 bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
+                              hover:-translate-y-1 hover:shadow-[2px_4px_0px_rgba(0,0,0,0.8)]
+                              transition-all duration-200
+                              flex items-center gap-1 text-neutral-300"
                           >
                             <Github size={16} />
-                            <span className="text-xs">Source</span>
+                            <span className="text-xs font-bold">Source</span>
                           </a>
                         )}
                         {project.website && (
@@ -504,11 +596,13 @@ const ProjectSection = () => {
                             href={project.website}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-2 hover:bg-neutral-700 rounded-lg transition-colors
-                                     flex items-center gap-1 text-neutral-400 hover:text-neutral-300"
+                            className="p-2 bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
+                              hover:-translate-y-1 hover:shadow-[2px_4px_0px_rgba(0,0,0,0.8)]
+                              transition-all duration-200
+                              flex items-center gap-1 text-neutral-300"
                           >
                             <MonitorSmartphone size={16} />
-                            <span className="text-xs">Demo</span>
+                            <span className="text-xs font-bold">Demo</span>
                           </a>
                         )}
                       </div>
@@ -520,6 +614,18 @@ const ProjectSection = () => {
           </motion.div>
         )}
       </div>
+
+      <style jsx global>{`
+        .text-shadow-neo {
+          text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+        }
+        .text-shadow-small {
+          text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+        }
+        .border-3 {
+          border-width: 3px;
+        }
+      `}</style>
     </section>
   );
 };
