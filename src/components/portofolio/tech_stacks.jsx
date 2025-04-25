@@ -1,16 +1,10 @@
 import { HiCode } from "react-icons/hi";
-import { SiAdobephotoshop, SiAdobelightroom, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress, SiFigma } from "react-icons/si";
+import { SiAdobephotoshop, SiAdobelightroom, SiVue, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress, SiFigma } from "react-icons/si";
 import { motion } from "framer-motion";
 
 const TechItem = ({ icon: Icon, name, delay = 0 }) => {
   return (
-    <motion.div 
-      initial={{ opacity: 0, x: -10 }} 
-      whileInView={{ opacity: 1, x: 0 }} 
-      transition={{ duration: 0.4, delay }}
-      whileHover={{ y: -2, x: -2 }}
-      className="flex items-center gap-3 p-2 group"
-    >
+    <motion.div initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay }} whileHover={{ y: -2, x: -2 }} className="flex items-center gap-3 p-2 group">
       <div className="p-2 bg-neutral-800 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1 group-hover:rotate-0 transition-all duration-300">
         <Icon className="text-xl text-neutral-300" />
       </div>
@@ -21,21 +15,13 @@ const TechItem = ({ icon: Icon, name, delay = 0 }) => {
 
 const TechGroup = ({ title, children, delay = 0 }) => {
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }} 
-      whileInView={{ opacity: 1, y: 0 }} 
-      transition={{ duration: 0.5, delay }} 
-      className="relative border-4 border-black bg-neutral-800 shadow-[6px_6px_0px_rgba(0,0,0,0.8)] p-5 hover:shadow-[8px_8px_0px_rgba(0,0,0,0.8)] transition-all duration-300"
-    >
+    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay }} className="relative border-4 border-black bg-neutral-800 shadow-[6px_6px_0px_rgba(0,0,0,0.8)] p-5 hover:shadow-[8px_8px_0px_rgba(0,0,0,0.8)] transition-all duration-300">
       {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-16 h-16 bg-neutral-700 opacity-20"
-           style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}></div>
-      
+      <div className="absolute top-0 right-0 w-16 h-16 bg-neutral-700 opacity-20" style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}></div>
+
       <h3 className="text-xl font-extrabold text-neutral-300 mb-4 text-shadow-small pb-2 border-b-2 border-neutral-700 rotate-[-1deg]">{title}</h3>
-      <div className="space-y-3 mt-4">
-        {children}
-      </div>
-      
+      <div className="space-y-3 mt-4">{children}</div>
+
       {/* Bottom decorative element */}
       <div className="absolute bottom-2 left-4 right-4 h-1 bg-neutral-700 opacity-30"></div>
     </motion.div>
@@ -65,6 +51,7 @@ const ClassicView = () => {
       <TechGroup title="Frameworks" delay={0.2}>
         <TechItem icon={SiCodeigniter} name="CodeIgniter 3" delay={0.1} />
         <TechItem icon={SiReact} name="React" delay={0.15} />
+        <TechItem icon={SiVue} name="React" delay={0.15} />
         <TechItem icon={SiTailwindcss} name="TailwindCSS" delay={0.2} />
         <TechItem icon={SiExpress} name="ExpressJS" delay={0.25} />
       </TechGroup>
@@ -86,11 +73,9 @@ const TechStack = () => {
   return (
     <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider relative overflow-hidden">
       {/* Background decorative elements */}
-      <div className="absolute top-40 left-20 w-48 h-48 bg-neutral-800 opacity-5 rotate-12"
-           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
-      <div className="absolute bottom-20 right-40 w-32 h-32 bg-neutral-800 opacity-5 -rotate-12"
-           style={{ clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)" }}></div>
-      
+      <div className="absolute top-40 left-20 w-48 h-48 bg-neutral-800 opacity-5 rotate-12" style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
+      <div className="absolute bottom-20 right-40 w-32 h-32 bg-neutral-800 opacity-5 -rotate-12" style={{ clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)" }}></div>
+
       <div className="max-w-6xl mx-auto relative z-10">
         <div className="mb-12">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
@@ -102,13 +87,8 @@ const TechStack = () => {
                 </div>
                 Tech Stack
               </h2>
-              <motion.div 
-                className="h-2 w-24 bg-neutral-300 mt-4 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1" 
-                initial={{ width: 0 }} 
-                whileInView={{ width: "6rem" }} 
-                transition={{ duration: 0.8, delay: 0.3 }} 
-              />
-            </div>  
+              <motion.div className="h-2 w-24 bg-neutral-300 mt-4 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1" initial={{ width: 0 }} whileInView={{ width: "6rem" }} transition={{ duration: 0.8, delay: 0.3 }} />
+            </div>
           </motion.div>
         </div>
 
@@ -116,7 +96,7 @@ const TechStack = () => {
           <ClassicView />
         </motion.div>
       </div>
-      
+
       {/* Styles for neobrutalism */}
       <style className="text-shadow-styles">
         {`
