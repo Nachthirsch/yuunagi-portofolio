@@ -104,6 +104,17 @@ const ProjectSection = () => {
       image: bee,
       status: "Completed",
     },
+    {
+      title: "Image Editor",
+      description: "A quick image editor Website to easily edit your pictures.",
+      date: "Apr 2025",
+      tech: ["Vue", "TailwindCSS", "Pinia"],
+      github: null,
+      website: "https://imditor.netlify.app/",
+      type: "Web App",
+      image: null,
+      status: "Completed",
+    },
   ];
 
   // Find featured project
