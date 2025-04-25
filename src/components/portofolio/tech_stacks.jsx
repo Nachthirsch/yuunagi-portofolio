@@ -1,6 +1,7 @@
 import { HiCode } from "react-icons/hi";
-import { SiAdobephotoshop, SiAdobelightroom, FaVuejs, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress, SiFigma } from "react-icons/si";
+import { SiAdobephotoshop, SiAdobelightroom, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress, SiFigma } from "react-icons/si";
 import { motion } from "framer-motion";
+import { FaVuejs } from "react-icons/fa";
 
 const TechItem = ({ icon: Icon, name, delay = 0 }) => {
   return (
@@ -51,7 +52,7 @@ const ClassicView = () => {
       <TechGroup title="Frameworks" delay={0.2}>
         <TechItem icon={SiCodeigniter} name="CodeIgniter 3" delay={0.1} />
         <TechItem icon={SiReact} name="React" delay={0.15} />
-        <TechItem icon={FaVuejs} name="React" delay={0.15} />
+        <TechItem icon={FaVuejs} name="Vue" delay={0.15} />
         <TechItem icon={SiTailwindcss} name="TailwindCSS" delay={0.2} />
         <TechItem icon={SiExpress} name="ExpressJS" delay={0.25} />
       </TechGroup>
