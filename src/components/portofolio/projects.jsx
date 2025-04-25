@@ -7,12 +7,13 @@ import portofolio from "../../assets/portofolio-app.jpg";
 import movie from "../../assets/movie-app.jpg";
 import news from "../../assets/news-app.png";
 import bee from "../../assets/bee.png";
+import imditor from "../../assets/imditor.png";
 import yorushika from "../../assets/yorushika.gif";
 
 const ProjectSection = () => {
   const [selectedProject, setSelectedProject] = useState(0);
   const [viewMode, setViewMode] = useState(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       return window.innerWidth < 768 ? "grid" : "carousel";
     }
     return "grid";
@@ -104,6 +105,17 @@ const ProjectSection = () => {
       image: bee,
       status: "Completed",
     },
+    {
+      title: "Image Editor",
+      description: "A quick image editor Website to easily edit your pictures.",
+      date: "Apr 2025",
+      tech: ["Vue", "TailwindCSS", "Pinia", "Vue Router", "vue-advanced-cropper", "html2canvas", "Vite"],
+      github: null,
+      website: "https://imditor.netlify.app/",
+      type: "Web App",
+      image: imditor,
+      status: "Completed",
+    },
   ];
 
   // Find featured project
@@ -124,9 +136,9 @@ const ProjectSection = () => {
         setViewMode("grid");
       }
     };
-    
+
     handleResize();
-    
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -181,7 +193,7 @@ const ProjectSection = () => {
         x: "0%",
         rotateZ: 0,
         y: 0,
-        boxShadow: "8px 8px 0px rgba(0,0,0,0.8)"
+        boxShadow: "8px 8px 0px rgba(0,0,0,0.8)",
       };
 
     if (diff < 0) {
@@ -209,17 +221,8 @@ const ProjectSection = () => {
     <section className="min-h-screen bg-neutral-900 font-Hanken overflow-hidden py-4 sm:py-8">
       <div className="max-w-7xl mx-auto flex flex-col px-3 sm:px-8 md:px-16">
         {/* Featured Project Section - Neobrutalism Style */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.7 }} 
-          className="mb-16 mt-4"
-        >
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            className="relative"
-          >
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="mb-16 mt-4">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative">
             <div className="absolute -left-3 -top-3 w-16 h-16 bg-green-400 opacity-20 rotate-12 z-0"></div>
             <h2 className="text-2xl sm:text-3xl font-extrabold uppercase text-neutral-200 tracking-wider flex items-center gap-2 mb-8 sm:gap-3 relative z-10 text-shadow-neo">
               <div className="p-3 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]">
@@ -228,14 +231,10 @@ const ProjectSection = () => {
               Featured Projects
             </h2>
           </motion.div>
-          
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-neutral-800 p-6 sm:p-8 rounded-none border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] rotate-1">
             <div className="relative overflow-hidden aspect-video group -rotate-1">
-              <img 
-                src={featuredProject.image} 
-                alt={featuredProject.title} 
-                className="w-full h-full object-cover border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)]" 
-              />
+              <img src={featuredProject.image} alt={featuredProject.title} className="w-full h-full object-cover border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)]" />
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
                 <span
                   className={`px-3 py-1 text-xs font-extrabold inline-block border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
@@ -247,9 +246,7 @@ const ProjectSection = () => {
             </div>
 
             <div className="flex flex-col -rotate-1">
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-neutral-100 mb-3 uppercase text-shadow-neo">
-                {featuredProject.title}
-              </h3>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-neutral-100 mb-3 uppercase text-shadow-neo">{featuredProject.title}</h3>
 
               <div className="flex flex-wrap gap-2 mb-4">
                 {featuredProject.tech.map((tech, i) => (
@@ -259,9 +256,7 @@ const ProjectSection = () => {
                 ))}
               </div>
 
-              <p className="text-neutral-400 mb-6 leading-relaxed">
-                {featuredProject.longDescription || featuredProject.description}
-              </p>
+              <p className="text-neutral-400 mb-6 leading-relaxed">{featuredProject.longDescription || featuredProject.description}</p>
 
               <div className="mt-auto flex items-center justify-between">
                 <div className="flex items-center gap-2 text-neutral-400 font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] px-3 py-1 bg-neutral-800">
@@ -312,23 +307,17 @@ const ProjectSection = () => {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-10 sm:mb-12">
           <div className="flex flex-wrap gap-4 sm:gap-5">
             <div className="hidden md:flex bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] p-1">
-              <button 
-                onClick={() => setViewMode("carousel")} 
-                className={`p-2 font-bold ${viewMode === "carousel" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}
-              >
+              <button onClick={() => setViewMode("carousel")} className={`p-2 font-bold ${viewMode === "carousel" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}>
                 <Rows size={20} />
               </button>
-              <button 
-                onClick={() => setViewMode("grid")} 
-                className={`p-2 font-bold ${viewMode === "grid" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}
-              >
+              <button onClick={() => setViewMode("grid")} className={`p-2 font-bold ${viewMode === "grid" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}>
                 <LayoutGrid size={20} />
               </button>
             </div>
 
-            <select 
-              value={filterStatus} 
-              onChange={(e) => setFilterStatus(e.target.value)} 
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
               className="bg-neutral-800 text-neutral-200 px-3 py-2 text-sm font-bold
                 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
                 appearance-none cursor-pointer transform rotate-1"
@@ -338,9 +327,9 @@ const ProjectSection = () => {
               <option value="In Development">In Development</option>
             </select>
 
-            <select 
-              value={filterTech} 
-              onChange={(e) => setFilterTech(e.target.value)} 
+            <select
+              value={filterTech}
+              onChange={(e) => setFilterTech(e.target.value)}
               className="bg-neutral-800 text-neutral-200 px-3 py-2 text-sm font-bold
                 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
                 appearance-none cursor-pointer transform -rotate-1"
@@ -384,9 +373,7 @@ const ProjectSection = () => {
                           className={`px-4 py-1.5 text-sm font-bold
                             border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
                             transform -rotate-1
-                            ${projects[selectedProject].status === "Completed" ? 
-                               "bg-emerald-600 text-white" : 
-                               "bg-amber-500 text-black"}`}
+                            ${projects[selectedProject].status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
                         >
                           {projects[selectedProject].status}
                         </span>
@@ -459,16 +446,7 @@ const ProjectSection = () => {
 
             <div className="lg:w-[450px] relative">
               <motion.div className="h-[500px] relative perspective-1000" style={{ touchAction: "none" }}>
-                <motion.div 
-                  className="absolute inset-0 flex items-center justify-center" 
-                  drag="x" 
-                  dragConstraints={{ left: 0, right: 0 }} 
-                  dragElastic={0.2} 
-                  onDragEnd={handleDragEnd} 
-                  whileDrag={{ scale: 1.02 }} 
-                  style={{ cursor: "grab" }} 
-                  whileTap={{ cursor: "grabbing" }}
-                >
+                <motion.div className="absolute inset-0 flex items-center justify-center" drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.2} onDragEnd={handleDragEnd} whileDrag={{ scale: 1.02 }} style={{ cursor: "grab" }} whileTap={{ cursor: "grabbing" }}>
                   {projects.map((project, index) => (
                     <motion.div
                       key={index}
@@ -485,26 +463,20 @@ const ProjectSection = () => {
                         className={`
                         bg-neutral-800 rounded-none overflow-hidden
                         border-4 border-black
-                        ${selectedProject === index ? 
-                          "shadow-[8px_8px_0px_rgba(0,0,0,0.8)]" : 
-                          "shadow-[5px_5px_0px_rgba(0,0,0,0.6)]"}
+                        ${selectedProject === index ? "shadow-[8px_8px_0px_rgba(0,0,0,0.8)]" : "shadow-[5px_5px_0px_rgba(0,0,0,0.6)]"}
                         transition-all duration-300
                         transform ${index % 2 === 0 ? "rotate-2" : "-rotate-2"}
                       `}
                       >
                         <div className="h-48 relative">
-                          <img 
-                            src={project.image} 
-                            alt={project.title} 
-                            className="w-full h-full object-cover" 
-                          />
+                          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                           <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/50 to-transparent" />
                           <div className="absolute bottom-4 left-4 right-4">
                             <h3 className="text-xl font-extrabold text-neutral-200 truncate">{project.title}</h3>
-                            <span className={`text-sm px-2 py-0.5 font-bold
-                              ${project.status === "Completed" ? 
-                                "bg-emerald-600 text-white" : 
-                                "bg-amber-500 text-black"}`}>
+                            <span
+                              className={`text-sm px-2 py-0.5 font-bold
+                              ${project.status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
+                            >
                               {project.status}
                             </span>
                           </div>
@@ -517,11 +489,7 @@ const ProjectSection = () => {
             </div>
           </div>
         ) : (
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.title}
@@ -534,11 +502,7 @@ const ProjectSection = () => {
                   hover:-translate-y-2 transition-all duration-200`}
               >
                 <div className="h-40 relative">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="w-full h-full object-cover" 
-                  />
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 to-transparent" />
                 </div>
 
@@ -558,20 +522,14 @@ const ProjectSection = () => {
                         {tech}
                       </span>
                     ))}
-                    {project.tech.length > 3 && 
-                      <span className="px-2 py-1 text-xs font-bold text-neutral-400 border-2 border-dashed border-neutral-700">
-                        +{project.tech.length - 3}
-                      </span>
-                    }
+                    {project.tech.length > 3 && <span className="px-2 py-1 text-xs font-bold text-neutral-400 border-2 border-dashed border-neutral-700">+{project.tech.length - 3}</span>}
                   </div>
 
                   <div className="mt-auto pt-4 border-t-2 border-black">
                     <div className="flex items-center justify-between">
                       <span
                         className={`px-3 py-1 text-xs font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
-                        ${project.status === "Completed" ? 
-                          "bg-emerald-600 text-white" : 
-                          "bg-amber-500 text-black"}`}
+                        ${project.status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
                       >
                         {project.status}
                       </span>
@@ -617,10 +575,10 @@ const ProjectSection = () => {
 
       <style jsx global>{`
         .text-shadow-neo {
-          text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
+          text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
         }
         .text-shadow-small {
-          text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
+          text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
         }
         .border-3 {
           border-width: 3px;
