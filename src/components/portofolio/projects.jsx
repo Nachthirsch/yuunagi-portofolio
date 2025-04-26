@@ -8,6 +8,7 @@ import movie from "../../assets/movie-app.jpg";
 import news from "../../assets/news-app.png";
 import bee from "../../assets/bee.png";
 import imditor from "../../assets/imditor.png";
+import lastSongs from "../../assets/LastSongs.png";
 import yorushika from "../../assets/yorushika.gif";
 
 const ProjectSection = () => {
@@ -36,6 +37,41 @@ const ProjectSection = () => {
       featured: true,
       longDescription: "Yorushika Fanzone is an immersive and interactive platform dedicated to celebrating the artistry of Yorushika, the acclaimed Japanese indie rock duo. This passion project serves as a comprehensive portal for fans to explore the band's musical journey, artistic evolution, and lyrical depth.\n\nThe site features a meticulous discography section with album analyses, interactive lyrics with translations, and audio previews. Users can explore the artistic themes that define Yorushika's work through visual timelines and thematic explorations. The community forum encourages fans to share interpretations, artwork, and covers, creating a vibrant space for cultural exchange.",
     },
+    {
+      title: "Last Songs",
+      description: "Last Songs is a modern web application that allows you to visualize and share your music listening history from Last.fm. Create beautiful, customizable charts showing your top artists, albums, tracks, and music tags across different time periods.",
+      date: "Apr 2025",
+      tech: ["Vue", "TailwindCSS", "Pinia", "htmltoimage", "Vite", "Last.fm API", "Spotify API"],
+      github: null,
+      website: "https://lastsongs.netlify.app/",
+      type: "Web App",
+      image: lastSongs,
+      status: "Completed",
+    },
+    {
+      title: "Image Editor",
+      description: "A quick image editor Website to easily edit your pictures.",
+      date: "Apr 2025",
+      tech: ["Vue", "TailwindCSS", "Pinia", "Vue Router", "vue-advanced-cropper", "html2canvas", "Vite"],
+      github: null,
+      website: "https://imditor.netlify.app/",
+      type: "Web App",
+      image: imditor,
+      status: "Completed",
+    },
+    {
+      title: "Bee Telematic Solutions Portofolio",
+      description: "A Company's Portofolio Website to showcase their projects and services.",
+      date: "Dec 2024",
+      tech: ["React", "TailwindCSS", "Framer Motion"],
+      github: null,
+      website: "https://beetelematicsolutions.netlify.app/",
+      type: "Web App",
+      image: bee,
+      status: "Completed",
+    },
+
+
     {
       title: "Weather Dashboard",
       description: "Simple Real-time weather application with detailed forecasts. Built with React and OpenWeather API for live weather data. Features include current weather conditions, hourly forecasts, and location-based weather updates.",
