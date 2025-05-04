@@ -69,7 +69,7 @@ const Header = () => {
     const rotationSpeed = isMobile ? 0.005 : 0.007; // Rotasi lebih lambat untuk efek lebih berat
 
     // Menggunakan karakter yang lebih variatif dan tegas untuk gaya neobrutalism
-    const BRUTALISM_CHARS = ["▓", "▒", "░", "█", "▄", "▀", "■", "□", "▢", "▣", "+", "×"];
+    const BRUTALISM_CHARS = [". ."];
     const points = [];
     let angleX = 2;
     let angleY = 0;
@@ -272,7 +272,7 @@ const Header = () => {
   }, []);
   return (
     <header className="relative h-screen font-Hanken tracking-wider overflow-hidden bg-neutral-900">
-      <canvas ref={canvasRef} className="absolute inset-0" style={{ zIndex: 1, willChange: "transform", background: "transparent" }} />
+      <canvas ref={canvasRef} className="absolute inset-0" style={{ zIndex: 10, willChange: "transform", background: "transparent" }} />
       
       {/* Neo-brutalism content container */}
       <div className="relative h-full flex flex-col justify-center px-4 sm:px-6 md:px-12 z-10">
@@ -321,7 +321,7 @@ const Header = () => {
         >
           <p className="text-neutral-100 tracking-wider text-sm sm:text-base sm:leading-7">
             I would love to introduce myself now! My name is{" "}
-            <span className="text-neutral-200 font-extrabold bg-pink-400 px-2 py-0.5 shadow-[3px_3px_0px_rgba(0,0,0,0.8)] inline-block mx-1">
+            <span className="text-neutral-200 font-extrabold bg-red-800 px-2 py-0.5 shadow-[3px_3px_0px_rgba(0,0,0,0.8)] inline-block mx-1">
               Handra Putratama Tanjung
             </span>
             .
