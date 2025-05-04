@@ -1,0 +1,29 @@
+/* Custom scrollbar for recent tracks */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #262626;
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #e74c3c;
+  border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #c0392b;
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #e74c3c #262626;
+}
+
+/* Hide scrollbar when not hovering for a cleaner look */
+.custom-scrollbar:not(:hover)::-webkit-scrollbar-thumb {
+  background: rgba(231, 76, 60, 0.5);
+} 
