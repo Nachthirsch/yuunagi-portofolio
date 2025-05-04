@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaInstagram, FaGithub, FaLinkedin, FaSoundcloud, FaLastfmSquare, FaHistory } from "react-icons/fa";
+import { FaInstagram, FaGithub, FaLinkedin, FaSoundcloud, FaLastfmSquare, FaHistory, FaExchangeAlt } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
 import { TypeAnimation } from "react-type-animation";
 import { useEffect, useRef, useState } from "react";
@@ -10,6 +10,12 @@ const Header = () => {
   const [lastTrack, setLastTrack] = useState(null);
   const [recentTracks, setRecentTracks] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [viewMode, setViewMode] = useState('lastTrack'); // 'lastTrack' or 'recentTracks'
+
+  // Toggle between Last Track and Recent Tracks view
+  const toggleViewMode = () => {
+    setViewMode(viewMode === 'lastTrack' ? 'recentTracks' : 'lastTrack');
+  };
 
   // Fetch last.fm recent tracks
   useEffect(() => {
@@ -326,7 +332,7 @@ const Header = () => {
           </p>
         </motion.div>
 
-        {/* Last Track Listened and Recent Tracks Container */}
+        {/* Last Track Listened / Recent Tracks Combined Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }} 
           whileInView={{ opacity: 1, y: 0 }} 
@@ -334,7 +340,7 @@ const Header = () => {
           viewport={{ once: true, amount: 0.3 }} 
           className="mt-6 mb-6 flex flex-col md:flex-row gap-4"
         >
-          {/* Last Track Listened */}
+          {/* Last Track Listened / Recent Tracks Combined */}
           <div className="bg-neutral-800 py-3 px-4 rounded-sm border-2 border-black shadow-[4px_4px_0px_rgb(0,0,0)] md:w-1/2 max-w-sm relative overflow-hidden group">
             {/* Background pattern for visual interest */}
             <div className="absolute top-0 right-0 w-20 h-20 opacity-5">
@@ -342,106 +348,107 @@ const Header = () => {
               <div className="absolute -top-4 -right-4 w-8 h-8 rotate-45 bg-red-600"></div>
             </div>
             
-            <div className="flex items-center mb-3 relative">
-              <FaLastfmSquare className="text-red-600 mr-2 text-sm" />
-              <h3 className="text-neutral-200 text-sm font-bold">
-                {lastTrack && lastTrack['@attr']?.nowplaying ? "Scrobbling Now" : "Last Track Listened"}
-              </h3>
-              {lastTrack && lastTrack['@attr']?.nowplaying && (
-                <span className="ml-2 text-[10px] bg-red-600 text-white px-1.5 py-0.5 rounded-sm animate-pulse">
-                  LIVE
-                </span>
-              )}
+            <div className="flex items-center mb-3 relative justify-between">
+              <div className="flex items-center">
+                {viewMode === 'lastTrack' ? (
+                  <>
+                    <FaLastfmSquare className="text-red-600 mr-2 text-sm" />
+                    <h3 className="text-neutral-200 text-sm font-bold">
+                      {lastTrack && lastTrack['@attr']?.nowplaying ? "Scrobbling Now" : "Last Track Listened"}
+                    </h3>
+                    {lastTrack && lastTrack['@attr']?.nowplaying && (
+                      <span className="ml-2 text-[10px] bg-red-600 text-white px-1.5 py-0.5 rounded-sm animate-pulse">
+                        LIVE
+                      </span>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <FaHistory className="text-red-600 mr-2 text-sm" />
+                    <h3 className="text-neutral-200 text-sm font-bold">
+                      Recent Tracks
+                    </h3>
+                    <span className="ml-2 text-[10px] bg-neutral-700 text-white px-1.5 py-0.5 rounded-sm">
+                      {recentTracks.length}
+                    </span>
+                  </>
+                )}
+              </div>
+              
+              {/* Toggle Button */}
+              <button 
+                onClick={toggleViewMode} 
+                className="bg-neutral-700 p-1 rounded-sm hover:bg-neutral-600 transition-colors duration-200 border border-black"
+                aria-label={viewMode === 'lastTrack' ? "View recent tracks" : "View last track"}
+              >
+                <FaExchangeAlt className="text-neutral-300 text-xs" />
+              </button>
             </div>
             
             {isLoading ? (
               <div className="py-2 text-neutral-300 text-xs flex items-center">
                 <div className="w-3 h-3 border-t-2 border-r-2 border-red-600 rounded-full animate-spin mr-2"></div>
-                Loading track data...
+                Loading {viewMode === 'lastTrack' ? 'track data' : 'history'}...
               </div>
-            ) : lastTrack ? (
-              <div className="flex items-start">
-                {lastTrack.image && lastTrack.image.length > 0 ? (
-                  <div className="mr-3 flex-shrink-0 w-12 h-12 bg-neutral-700 border border-black overflow-hidden shadow-[2px_2px_0px_rgba(0,0,0,0.3)] group-hover:shadow-[3px_3px_0px_rgba(0,0,0,0.3)] transition-shadow duration-300">
-                    <img 
-                      src={lastTrack.image[2]?.['#text'] || lastTrack.image[1]?.['#text'] || lastTrack.image[0]?.['#text']} 
-                      alt={`${lastTrack.name} cover`} 
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.style.display = 'none';
-                        e.target.parentNode.innerHTML = '<span class="text-orange-400 text-xl flex items-center justify-center h-full">♪</span>';
-                      }}
-                    />
-                  </div>
-                ) : (
-                  <div className="mr-3 flex-shrink-0 w-12 h-12 bg-neutral-700 border border-black flex items-center justify-center shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
-                    <span className="text-orange-400 text-xl">♪</span>
-                  </div>
-                )}
-                <div className="flex-1">
-                  <p className="text-neutral-100 font-bold text-sm truncate pr-2 group-hover:text-red-200 transition-colors duration-300">
-                    {lastTrack.name}
-                  </p>
-                  <p className="text-neutral-100 text-xs mt-0.5 truncate">
-                    by <span className="text-neutral-300">{lastTrack.artist['#text']}</span>
-                  </p>
-                  
-                  <div className="mt-2 flex items-center text-xs">
-                    {lastTrack['@attr']?.nowplaying ? (
-                      <div className="flex items-center bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">
-                        <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse mr-1.5"></span>
-                        <span className="text-red-500">Scrobbling Now</span>
-                      </div>
-                    ) : lastTrack.date ? (
-                      <div className="text-neutral-400 bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">
-                        {new Date(parseInt(lastTrack.date.uts) * 1000).toLocaleString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          hour: 'numeric',
-                          minute: 'numeric',
-                          hour12: true
-                        })}
-                      </div>
-                    ) : (
-                      <span className="text-neutral-400 bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">Last Played</span>
-                    )}
+            ) : viewMode === 'lastTrack' ? (
+              lastTrack ? (
+                <div className="flex items-start">
+                  {lastTrack.image && lastTrack.image.length > 0 ? (
+                    <div className="mr-3 flex-shrink-0 w-12 h-12 bg-neutral-700 border border-black overflow-hidden shadow-[2px_2px_0px_rgba(0,0,0,0.3)] group-hover:shadow-[3px_3px_0px_rgba(0,0,0,0.3)] transition-shadow duration-300">
+                      <img 
+                        src={lastTrack.image[2]?.['#text'] || lastTrack.image[1]?.['#text'] || lastTrack.image[0]?.['#text']} 
+                        alt={`${lastTrack.name} cover`} 
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.onerror = null;
+                          e.target.style.display = 'none';
+                          e.target.parentNode.innerHTML = '<span class="text-orange-400 text-xl flex items-center justify-center h-full">♪</span>';
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="mr-3 flex-shrink-0 w-12 h-12 bg-neutral-700 border border-black flex items-center justify-center shadow-[2px_2px_0px_rgba(0,0,0,0.3)]">
+                      <span className="text-orange-400 text-xl">♪</span>
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <p className="text-neutral-100 font-bold text-sm truncate pr-2 group-hover:text-red-200 transition-colors duration-300">
+                      {lastTrack.name}
+                    </p>
+                    <p className="text-neutral-100 text-xs mt-0.5 truncate">
+                      by <span className="text-neutral-300">{lastTrack.artist['#text']}</span>
+                    </p>
+                    
+                    <div className="mt-2 flex items-center text-xs">
+                      {lastTrack['@attr']?.nowplaying ? (
+                        <div className="flex items-center bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">
+                          <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse mr-1.5"></span>
+                          <span className="text-red-500">Scrobbling Now</span>
+                        </div>
+                      ) : lastTrack.date ? (
+                        <div className="text-neutral-400 bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">
+                          {new Date(parseInt(lastTrack.date.uts) * 1000).toLocaleString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true
+                          })}
+                        </div>
+                      ) : (
+                        <span className="text-neutral-400 bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">Last Played</span>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ) : (
-              <p className="text-neutral-300 text-xs py-2 flex items-center">
-                <span className="w-3 h-3 text-red-600 mr-2">⚠</span>
-                No recent tracks found
-              </p>
-            )}
-          </div>
-
-          {/* Recent Tracks */}
-          <div className="bg-neutral-800 py-3 px-4 rounded-sm border-2 border-black shadow-[4px_4px_0px_rgb(0,0,0)] md:w-1/2 max-w-sm relative overflow-hidden group">
-            {/* Background pattern for visual interest */}
-            <div className="absolute top-0 right-0 w-20 h-20 opacity-5">
-              <div className="absolute -top-8 -right-8 w-16 h-16 rotate-12 bg-red-600"></div>
-              <div className="absolute -top-4 -right-4 w-8 h-8 rotate-45 bg-red-600"></div>
-            </div>
-            
-            <div className="flex items-center mb-3 relative">
-              <FaHistory className="text-red-600 mr-2 text-sm" />
-              <h3 className="text-neutral-200 text-sm font-bold">
-                Recent Tracks
-              </h3>
-              <span className="ml-2 text-[10px] bg-neutral-700 text-white px-1.5 py-0.5 rounded-sm">
-                {recentTracks.length}
-              </span>
-            </div>
-            
-            {isLoading ? (
-              <div className="py-2 text-neutral-300 text-xs flex items-center">
-                <div className="w-3 h-3 border-t-2 border-r-2 border-red-600 rounded-full animate-spin mr-2"></div>
-                Loading history...
-              </div>
+              ) : (
+                <p className="text-neutral-300 text-xs py-2 flex items-center">
+                  <span className="w-3 h-3 text-red-600 mr-2">⚠</span>
+                  No recent tracks found
+                </p>
+              )
             ) : recentTracks.length > 0 ? (
-              <div className="h-[90px] overflow-y-auto custom-scrollbar pr-1">
+              <div className="h-[70px] overflow-y-auto custom-scrollbar pr-1">
                 {recentTracks.map((track, index) => (
                   <div key={index} className={`flex items-center mb-1 ${track['@attr']?.nowplaying ? 'opacity-100' : 'opacity-80 hover:opacity-100'} transition-opacity duration-200`}>
                     <div className="mr-2 flex-shrink-0 w-8 h-8 bg-neutral-700 border border-black overflow-hidden">
