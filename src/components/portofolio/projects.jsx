@@ -130,28 +130,6 @@ const ProjectSection = () => {
       image: news,
       status: "Completed",
     },
-    {
-      title: "Bee Telematic Solutions Portofolio",
-      description: "A Company's Portofolio Website to showcase their projects and services.",
-      date: "Dec 2024",
-      tech: ["React", "TailwindCSS", "Framer Motion"],
-      github: null,
-      website: "https://beetelematicsolutions.netlify.app/",
-      type: "Web App",
-      image: bee,
-      status: "Completed",
-    },
-    {
-      title: "Image Editor",
-      description: "A quick image editor Website to easily edit your pictures.",
-      date: "Apr 2025",
-      tech: ["Vue", "TailwindCSS", "Pinia", "Vue Router", "vue-advanced-cropper", "html2canvas", "Vite"],
-      github: null,
-      website: "https://imditor.netlify.app/",
-      type: "Web App",
-      image: imditor,
-      status: "Completed",
-    },
   ];
 
   // Find featured project
