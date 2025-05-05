@@ -1,5 +1,5 @@
 import { Code2 } from "lucide-react";
-import { SiVite, SiTailwindcss, SiAnthropic } from "react-icons/si";
+import { SiVite, SiTailwindcss, SiAnthropic, SiReact } from "react-icons/si";
 import { motion } from "framer-motion";
 
 const Footer = () => {
@@ -27,6 +27,8 @@ const Footer = () => {
             <SiVite className="text-lg hover:text-neutral-300 transition-colors" />
             <span>+</span>
             <SiTailwindcss className="text-lg hover:text-neutral-300 transition-colors" />
+            <span>+</span>
+            <SiReact className="text-lg hover:text-neutral-300 transition-colors" />
           </div>
 
           {/* Credits */}
