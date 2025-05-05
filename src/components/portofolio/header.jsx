@@ -421,10 +421,16 @@ const Header = () => {
                     
                     <div className="mt-2 flex items-center text-xs">
                       {lastTrack['@attr']?.nowplaying ? (
-                        <div className="flex items-center bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">
-                          <span className="w-1.5 h-1.5 bg-red-600 rounded-full animate-pulse mr-1.5"></span>
-                          <span className="text-red-500">Scrobbling Now</span>
-                        </div>
+                        <a 
+                          href="https://www.last.fm/user/yuunaagi" 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="flex items-center bg-neutral-800 hover:bg-neutral-700 rounded-sm px-3 py-1.5 inline-block transition-all duration-200 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] hover:shadow-[4px_4px_0px_rgba(0,0,0,0.8)] hover:-translate-y-0.5 hover:rotate-[0.5deg] relative overflow-hidden group"
+                        >
+                          <div className="absolute -right-6 -top-6 w-10 h-10 bg-red-600 opacity-10 rotate-12 z-0"></div>
+                          <span className="text-red-500 text-xs font-bold uppercase tracking-wide z-10 relative">Visit Profile</span>
+                          <span className="ml-1 text-xs font-bold z-10 relative">→</span>
+                        </a>
                       ) : lastTrack.date ? (
                         <div className="text-neutral-400 bg-neutral-900 rounded-sm px-1.5 py-1 inline-block">
                           {new Date(parseInt(lastTrack.date.uts) * 1000).toLocaleString('en-US', {
