@@ -1,131 +1,250 @@
-/* eslint-disable react/prop-types */
-import { motion } from "framer-motion";
-import { HiOutlineUserGroup, HiOutlineClock, HiOutlineBriefcase } from "react-icons/hi";
-
-const ActivityCard = ({ title, role, date, details }) => {
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }} 
-      whileInView={{ opacity: 1, y: 0 }} 
-      transition={{ duration: 0.5 }} 
-      className="group relative bg-neutral-800 border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,0.8)] p-5
-                hover:translate-y-[-4px] hover:shadow-[6px_10px_0px_rgba(0,0,0,0.8)]
-                transition-all duration-300 overflow-hidden"
-    >
-      {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-12 h-12 bg-neutral-700 opacity-20"
-           style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}></div>
-      
-      <div className="relative z-10">
-        {/* Title area with role badge */}
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-lg font-extrabold text-neutral-300 text-shadow-small pr-2">{title}</h3>
-          <div className="px-2 py-1 bg-neutral-700 text-neutral-300 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] rotate-2 text-xs font-bold">
-            {role}
-          </div>
-        </div>
-        
-        {/* Date with icon */}
-        <div className="flex items-center gap-2 text-xs text-neutral-500 mt-1 mb-4 border-b-2 border-neutral-700 pb-3">
-          <div className="p-1 bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">
-            <HiOutlineClock className="text-neutral-300" />
-          </div>
-          <span className="font-medium">{date}</span>
-        </div>
-        
-        {/* Details with improved styling */}
-        <ul className="mt-4 space-y-3">
-          {details.map((detail, idx) => (
-            <li key={idx} className="text-sm text-neutral-400 tracking-wide flex items-start">
-              <div className="w-1.5 h-1.5 bg-neutral-600 mt-1.5 mr-3 flex-shrink-0 border-1 border-black transform rotate-45"></div>
-              <span className="group-hover:text-neutral-300 transition-colors">{detail}</span>
-            </li>
-          ))}
-        </ul>
-        
-        {/* Decorative bottom element - replacing button */}
-        <div className="h-1 w-full bg-neutral-700 mt-6 border-t-1 border-b-1 border-black opacity-50"></div>
-      </div>
-    </motion.div>
-  );
-};
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback } from "react";
+import { X } from "lucide-react";
 
 const ActivitiesSection = () => {
+  const [selectedActivity, setSelectedActivity] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const activities = [
     {
       title: "Karang Taruna Mutiara Bogor City",
       role: "Leader",
       date: "Aug 2022 – Nov 2022",
+      type: "Youth Organization",
       details: ["Led youth organization in organizing Indonesian Independence Day celebration", "Managed event planning and proposal drafting", "Coordinated community outreach initiatives"],
     },
     {
       title: "Training and Workshop Committee",
       role: "Member",
       date: "July 2024",
+      type: "Community Service",
       details: ["Served as a committee member for digital marketing training", "Facilitated Canva workshops for KWT Pancasona", "Supported participant engagement and learning outcomes"],
     },
   ];
 
+  const handleActivityClick = useCallback((activity) => {
+    setSelectedActivity(activity);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setTimeout(() => {
+      setSelectedActivity(null);
+    }, 200);
+  }, []);
+
+  const handleBackdropClick = useCallback(
+    (e) => {
+      if (e.target === e.currentTarget) {
+        handleCloseModal();
+      }
+    },
+    [handleCloseModal]
+  );
+
   return (
-    <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider relative overflow-hidden">
-      {/* Decorative background elements for neobrutalism style */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-neutral-800 opacity-5 rotate-12"
-           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
-      <div className="absolute bottom-40 right-10 w-24 h-24 bg-neutral-800 opacity-5 -rotate-6"
-           style={{ clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)" }}></div>
-      
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.6 }} 
-          className="mb-12"
-        >
-          <div className="relative mb-6">
-            <div className="absolute -left-3 -top-3 w-16 h-16 bg-neutral-700 opacity-10 rotate-12 z-0"></div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-300 tracking-wider flex items-center gap-3 relative z-10 text-shadow-neo">
-              <div className="p-3 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] rotate-2">
-                <HiOutlineUserGroup className="text-neutral-400" />
-              </div>
-              Activities
-            </h2>
-            <motion.div 
-              className="h-2 w-24 bg-neutral-300 mt-4 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1" 
-              initial={{ width: 0 }} 
-              whileInView={{ width: "6rem" }} 
-              transition={{ duration: 0.8, delay: 0.3 }} 
-            />
-          </div>
-          
-          <p className="text-neutral-400 max-w-2xl ml-8 text-sm sm:text-base border-l-4 border-neutral-700 pl-4">
-            Organizations and activities that have shaped my leadership skills and community involvement.
-          </p>
+    <section className="h-screen flex flex-col justify-center px-4 sm:px-6 md:px-12 py-16 bg-neutral-900 font-Hanken tracking-wider overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">ACTIVITIES</h2>
+          <p className="text-neutral-300 text-base sm:text-lg">Organizations and community involvement</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {activities.map((activity, index) => (
-            <ActivityCard key={index} {...activity} />
-          ))}
+        {/* Content area */}
+        <div className="h-[calc(100vh-300px)] overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+            {/* Activities Column */}
+            <div className="flex flex-col h-full lg:col-span-2">
+              <h3 className="text-base font-medium text-neutral-200 mb-4 border-b border-neutral-700 pb-2 flex-shrink-0">All Activities</h3>
+              <div className="flex-1 overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-y-auto h-full pr-2 scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-600">
+                  {activities.map((activity, index) => (
+                    <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }} className="group cursor-pointer py-4 px-4 rounded-lg hover:bg-neutral-800/20 transition-all duration-300" onClick={() => handleActivityClick(activity)}>
+                      {/* Compact View */}
+                      <div className="flex flex-col gap-3">
+                        {/* Title and role */}
+                        <div className="flex flex-col gap-2">
+                          <h4 className="text-white font-medium text-sm group-hover:text-neutral-100 transition-colors line-clamp-2 leading-tight">{activity.title}</h4>
+                          <div className="flex items-center justify-between">
+                            <span className="text-neutral-300 text-xs">{activity.type}</span>
+                            <span className="px-2 py-1 text-xs text-neutral-400 bg-neutral-800 rounded">{activity.role}</span>
+                          </div>
+                        </div>
+
+                        {/* Date */}
+                        <span className="text-neutral-400 text-xs font-mono">{activity.date}</span>
+
+                        {/* Brief preview */}
+                        <p className="text-neutral-500 text-xs leading-relaxed line-clamp-2">{activity.details[0]}</p>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      
-      {/* Styles for neobrutalism */}
-      <style className="text-shadow-styles">
-        {`
-          .text-shadow-neo {
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-          }
-          .text-shadow-small {
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
-          }
-          .border-3 {
-            border-width: 3px;
-          }
-          .border-1 {
-            border-width: 1px;
-          }
-        `}
-      </style>
+
+      {/* Activity Detail Modal */}
+      <AnimatePresence mode="wait">
+        {selectedActivity && isModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: [0.4, 0.0, 0.2, 1],
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={handleBackdropClick}
+          >
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: 0.4,
+                ease: "easeInOut",
+              }}
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            />
+
+            {/* Modal */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+                y: 50,
+                rotateX: -15,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                rotateX: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.9,
+                y: -20,
+                rotateX: 5,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 25,
+                mass: 0.8,
+                duration: 0.5,
+              }}
+              className="relative bg-neutral-800/95 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 max-w-md w-full mx-4 shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{
+                  delay: 0.1,
+                  duration: 0.2,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 90,
+                  transition: { duration: 0.2 },
+                }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleCloseModal}
+                className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
+              >
+                <X size={20} />
+              </motion.button>
+
+              {/* Modal Header */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.1,
+                  duration: 0.4,
+                  ease: "easeOut",
+                }}
+                className="mb-4 pr-8"
+              >
+                <h4 className="text-white font-medium text-lg mb-2 leading-tight">{selectedActivity.title}</h4>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-neutral-200 text-sm">{selectedActivity.type}</span>
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: 0.2,
+                      duration: 0.3,
+                      ease: "backOut",
+                    }}
+                    className="px-2 py-1 text-xs text-neutral-400 bg-neutral-700 rounded"
+                  >
+                    {selectedActivity.role}
+                  </motion.span>
+                </div>
+                <span className="text-neutral-400 text-sm font-mono">{selectedActivity.date}</span>
+              </motion.div>
+
+              {/* Modal Content */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.2,
+                  duration: 0.4,
+                  ease: "easeOut",
+                }}
+                className="border-t border-neutral-700 pt-4"
+              >
+                <h5 className="text-neutral-200 text-sm font-medium mb-3">Responsibilities & Achievements</h5>
+                <ul className="space-y-3 text-neutral-300 text-sm">
+                  {selectedActivity.details.map((detail, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: 0.3 + idx * 0.1,
+                        duration: 0.4,
+                        ease: "easeOut",
+                      }}
+                      className="leading-relaxed pl-4 relative before:absolute before:content-['•'] before:text-neutral-500 before:left-0 before:top-1"
+                    >
+                      {detail}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Close hint */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  delay: 0.5,
+                  duration: 0.3,
+                  ease: "easeOut",
+                }}
+                className="mt-4 pt-3 border-t border-neutral-700/50"
+              >
+                <p className="text-neutral-500 text-xs text-center">Click outside or X to close</p>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

@@ -1,126 +1,100 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-undef */
-/* eslint-disable react/no-unescaped-entities */
-/* eslint-disable react/no-unknown-property */
 import { motion } from "framer-motion";
 import me from "../../assets/me_1.jpg";
 
 const ImageSec = () => {
   return (
-    <section className="relative py-8 sm:py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 overflow-hidden">
-      {/* Decorative background elements for neobrutalism style - replacing particles */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-neutral-800 opacity-10 rotate-12"
-           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
-      <div className="absolute bottom-40 right-10 w-24 h-24 bg-neutral-800 opacity-10 -rotate-6"
-           style={{ clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)" }}></div>
-      <div className="absolute top-40 right-1/4 w-16 h-16 bg-neutral-800 opacity-5 rotate-45"
-           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
-      <div className="absolute bottom-20 left-1/3 w-12 h-12 bg-neutral-800 opacity-5 -rotate-12"
-           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
+    <section className="h-screen flex flex-col justify-center px-4 sm:px-6 md:px-12 py-16 bg-neutral-900 font-Hanken tracking-wider overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
+        {/* Simple header */}
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-8">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">ABOUT</h2>
+          <p className="text-neutral-300 text-base sm:text-lg">A little bit more about me</p>
+        </motion.div>
 
-      <div className="relative z-10 max-w-6xl mx-auto">
-        <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-10 lg:gap-12">
-          {/* Description Section - Neobrutalism Style */}
-          <motion.div 
-            initial={{ opacity: 0, x: -20 }} 
-            whileInView={{ opacity: 1, x: 0 }} 
-            transition={{ duration: 0.7 }} 
-            className="flex-1 w-full lg:w-auto"
-          >
-            <motion.div className="relative mb-6">
-              <div className="absolute -left-3 -top-3 w-16 h-16 bg-neutral-700 opacity-20 rotate-12 z-0"></div>
-              <motion.h1
-                className="text-2xl sm:text-3xl text-neutral-100 font-extrabold relative z-10 uppercase text-shadow-neo"
-                initial={{ y: 20, opacity: 0 }}
-                whileInView={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                A little bit more info about me!
-              </motion.h1>
-              <motion.div 
-                className="w-28 h-2 bg-neutral-300 mt-4 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] rotate-1" 
-                initial={{ width: 0 }} 
-                whileInView={{ width: "7rem" }} 
-                transition={{ duration: 0.8, delay: 0.3 }}
-              />
-            </motion.div>
-            
-            <div className="bg-neutral-800 border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] p-6 rotate-1">
-              <div className="-rotate-1">
-                <p className="text-base sm:text-lg text-neutral-100 font-medium mb-4 sm:mb-6 leading-relaxed">
-                  I love language exchange! I can hold daily conversations in{" "}
-                  <span className="text-white font-extrabold bg-neutral-700 px-2 py-0.5 shadow-[2px_2px_0px_rgba(0,0,0,0.8)] inline-block transform -rotate-1 border-2 border-black mx-1">
-                    English
-                  </span>, although I&apos;m still working on my grammar. I also know a little{" "}
-                  <span className="text-white font-extrabold bg-neutral-700 px-2 py-0.5 shadow-[2px_2px_0px_rgba(0,0,0,0.8)] inline-block transform rotate-1 border-2 border-black mx-1">
-                    Japanese
-                  </span>, even if it&apos;s at a beginner level!
+        {/* Content area - compact layout */}
+        <div className="h-[calc(100vh-300px)] overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full items-center">
+            {/* Image section - compact */}
+            <div className="lg:col-span-1 flex flex-col items-center">
+              <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.8 }} viewport={{ once: true }} className="relative w-full max-w-[240px]">
+                <img src={me} alt="Profile" className="w-full h-auto aspect-[3/4] object-cover filter grayscale hover:grayscale-0 transition-all duration-700 ease-out" />
+              </motion.div>
+
+              {/* Simple quote below image */}
+              <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.7 }} viewport={{ once: true }} className="mt-4 text-center max-w-[240px]">
+                <p className="text-xs text-neutral-400 italic leading-relaxed">
+                  "<span className="text-neutral-200 font-medium not-italic">Terang</span> yang kau dambakan, hilanglah semua yang kau <span className="text-neutral-200 font-medium not-italic">tanya</span>."
                 </p>
-                <p className="text-base sm:text-lg text-neutral-100 mb-4 sm:mb-6 leading-relaxed">
-                  I'm always exploring how I can use{" "}
-                  <span className="text-white font-extrabold border-b-2 border-neutral-500">
-                    Al tools
-                  </span>{" "}
-                  to make my projects smarter and more efficient. Whether it's automating boring tasks or improving user experiences, I'm eager to try new things and push boundaries. Creativity and tech-savviness keep me motivated and ready for the next challenge.
-                </p>
-              </div>
+              </motion.div>
             </div>
-          </motion.div>
 
-          {/* Card Section - Neobrutalism Style */}
-          <div className="flex flex-col items-center w-full lg:w-auto p-4 sm:p-6 lg:p-10">
-            {/* Image Container with Neobrutalism Effects */}
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }} 
-              whileInView={{ opacity: 1, x: 0 }} 
-              transition={{ duration: 0.7 }} 
-              className="relative group w-full max-w-[280px] sm:max-w-xs rotate-3"
-            >
-              {/* Main Image */}
-              <div className="relative z-10">
-                <img 
-                  src={me} 
-                  alt="Profile" 
-                  className="w-full h-auto aspect-[4/5] object-cover border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] transition-all duration-300 hover:-translate-y-2 hover:translate-x-2 hover:shadow-[10px_10px_0px_rgba(0,0,0,0.8)]" 
-                />
-                
-                {/* Decorative elements - neobrutalism style */}
-                <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-neutral-700 z-0 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] -rotate-6"></div>
-                <div className="absolute -top-3 -left-3 w-8 h-8 bg-neutral-600 z-0 rotate-12"></div>
-              </div>
-            </motion.div>
+            {/* Content section - enhanced typography only here */}
+            <div className="lg:col-span-2 flex flex-col justify-center">
+              <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true }} className="space-y-8">
+                {/* Opening statement with typography */}
+                <div className="space-y-6">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-light text-white leading-relaxed tracking-wide">I love language exchange and exploring new technologies</h3>
 
-            {/* Name Tag - Neobrutalism Style */}
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              transition={{ delay: 0.3, duration: 0.7 }} 
-              className="mt-8 text-center group bg-neutral-800 border-3 border-black shadow-[6px_6px_0px_rgba(0,0,0,0.8)] p-4 -rotate-2 transform hover:rotate-0 transition-transform duration-300"
-            >
-              <p className="text-sm sm:text-base text-neutral-400 mt-1 pl-1 font-bold rotate-2">i see you in every poem i read</p>
-              <p className="text-sm sm:text-base text-neutral-400 pl-2.5 font-bold rotate-2">i see you in every word i speak</p>
-              <p className="text-sm sm:text-base text-neutral-400 pl-2.5 italic font-semibold rotate-2">
-                To you who always turns toward the sun, like a{" "}
-                <span className="text-amber-200 font-extrabold border-b-2 border-amber-200/50">
-                  sunflower
-                </span>—.
-              </p>
-            </motion.div>
+                  {/* Enhanced description paragraphs */}
+                  <div className="space-y-6 text-neutral-300">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <p className="text-sm leading-loose font-light">
+                          I can hold daily conversations in{" "}
+                          <span className="relative text-white font-medium">
+                            English
+                            <span className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-white to-transparent opacity-40"></span>
+                          </span>
+                          , although I'm still working on my grammar. I also know a little{" "}
+                          <span className="relative text-white font-medium">
+                            Japanese
+                            <span className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-white to-transparent opacity-40"></span>
+                          </span>
+                          , even if it's at a beginner level.
+                        </p>
+                      </div>
+
+                      <div>
+                        <p className="text-sm leading-loose font-light">
+                          I'm always exploring how I can use{" "}
+                          <span className="relative text-white font-medium">
+                            AI tools
+                            <span className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-white to-transparent opacity-40"></span>
+                          </span>{" "}
+                          to make my projects smarter and more efficient. Whether it's automating tasks or improving user experiences.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Simple interests section */}
+                <div className="pt-2">
+                  <div className="text-neutral-500 text-xs uppercase tracking-widest mb-4 font-medium">Current Interests</div>
+                  <div className="flex flex-wrap gap-2">
+                    {["Web Development", "Photography", "Music Production", "AI Integration", "Language Exchange"].map((interest, index) => (
+                      <motion.span
+                        key={interest}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay: 0.1 + index * 0.05,
+                          duration: 0.3,
+                          ease: "easeOut",
+                        }}
+                        viewport={{ once: true }}
+                        className="text-xs text-neutral-400 font-light tracking-wide hover:text-neutral-200 transition-colors duration-300 border-b border-transparent hover:border-neutral-600 pb-1"
+                      >
+                        {interest}
+                      </motion.span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Styles untuk neobrutalism */}
-      <style className="text-shadow-styles">
-        {`
-          .text-shadow-neo {
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-          }
-          .border-3 {
-            border-width: 3px;
-          }
-        `}
-      </style>
     </section>
   );
 };

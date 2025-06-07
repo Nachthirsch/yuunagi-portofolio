@@ -1,117 +1,170 @@
-import { HiCode } from "react-icons/hi";
-import { SiAdobephotoshop, SiAdobelightroom, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress, SiFigma } from "react-icons/si";
 import { motion } from "framer-motion";
+import { SiAdobephotoshop, SiAdobelightroom, SiPostgresql, SiQgis, SiPython, SiHtml5, SiCss3, SiPhp, SiJavascript, SiCodeigniter, SiReact, SiTailwindcss, SiExpress, SiFigma, SiNodedotjs, SiMysql } from "react-icons/si";
 import { FaVuejs } from "react-icons/fa";
 
-const TechItem = ({ icon: Icon, name, delay = 0 }) => {
-  return (
-    <motion.div initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay }} whileHover={{ y: -2, x: -2 }} className="flex items-center gap-3 p-2 group">
-      <div className="p-2 bg-neutral-800 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1 group-hover:rotate-0 transition-all duration-300">
-        <Icon className="text-xl text-neutral-300" />
-      </div>
-      <span className="text-neutral-300 font-medium group-hover:translate-x-1 transition-transform duration-200">{name}</span>
-    </motion.div>
-  );
-};
-
-const TechGroup = ({ title, children, delay = 0 }) => {
-  return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay }} className="relative border-4 border-black bg-neutral-800 shadow-[6px_6px_0px_rgba(0,0,0,0.8)] p-5 hover:shadow-[8px_8px_0px_rgba(0,0,0,0.8)] transition-all duration-300">
-      {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-16 h-16 bg-neutral-700 opacity-20" style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}></div>
-
-      <h3 className="text-xl font-extrabold text-neutral-300 mb-4 text-shadow-small pb-2 border-b-2 border-neutral-700 rotate-[-1deg]">{title}</h3>
-      <div className="space-y-3 mt-4">{children}</div>
-
-      {/* Bottom decorative element */}
-      <div className="absolute bottom-2 left-4 right-4 h-1 bg-neutral-700 opacity-30"></div>
-    </motion.div>
-  );
-};
-
-const ClassicView = () => {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* Design Tools */}
-      <TechGroup title="Design Tools" delay={0}>
-        <TechItem icon={SiAdobephotoshop} name="Adobe Photoshop" delay={0.1} />
-        <TechItem icon={SiAdobelightroom} name="Adobe Lightroom" delay={0.15} />
-        <TechItem icon={SiFigma} name="Figma" delay={0.2} />
-      </TechGroup>
-
-      {/* Programming Languages */}
-      <TechGroup title="Programming Languages" delay={0.1}>
-        <TechItem icon={SiPython} name="Python" delay={0.1} />
-        <TechItem icon={SiHtml5} name="HTML" delay={0.15} />
-        <TechItem icon={SiCss3} name="CSS" delay={0.2} />
-        <TechItem icon={SiPhp} name="PHP" delay={0.25} />
-        <TechItem icon={SiJavascript} name="Javascript" delay={0.3} />
-      </TechGroup>
-
-      {/* Frameworks */}
-      <TechGroup title="Frameworks" delay={0.2}>
-        <TechItem icon={SiCodeigniter} name="CodeIgniter 3" delay={0.1} />
-        <TechItem icon={SiReact} name="React" delay={0.15} />
-        <TechItem icon={FaVuejs} name="Vue" delay={0.15} />
-        <TechItem icon={SiTailwindcss} name="TailwindCSS" delay={0.2} />
-        <TechItem icon={SiExpress} name="ExpressJS" delay={0.25} />
-      </TechGroup>
-
-      {/* Database */}
-      <TechGroup title="Database" delay={0.3}>
-        <TechItem icon={SiPostgresql} name="PostgreSql" delay={0.1} />
-      </TechGroup>
-
-      {/* Other Tools */}
-      <TechGroup title="Other Tools" delay={0.4}>
-        <TechItem icon={SiQgis} name="QGIS" delay={0.1} />
-      </TechGroup>
-    </div>
-  );
-};
-
 const TechStack = () => {
+  const techCategories = [
+    {
+      category: "Frontend",
+      techs: [
+        { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
+        { name: "CSS3", icon: SiCss3, color: "#1572B6" },
+        { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+        { name: "React", icon: SiReact, color: "#61DAFB" },
+        { name: "Vue.js", icon: FaVuejs, color: "#4FC08D" },
+        { name: "TailwindCSS", icon: SiTailwindcss, color: "#06B6D4" },
+      ],
+    },
+    {
+      category: "Backend",
+      techs: [
+        { name: "Node.js", icon: SiNodedotjs, color: "#339933" },
+        { name: "Express.js", icon: SiExpress, color: "#000000" },
+        { name: "PHP", icon: SiPhp, color: "#777BB4" },
+        { name: "CodeIgniter", icon: SiCodeigniter, color: "#EF4223" },
+      ],
+    },
+    {
+      category: "Database",
+      techs: [
+        { name: "PostgreSQL", icon: SiPostgresql, color: "#336791" },
+        { name: "MySQL", icon: SiMysql, color: "#4479A1" },
+      ],
+    },
+    {
+      category: "Design & Tools",
+      techs: [
+        { name: "Figma", icon: SiFigma, color: "#F24E1E" },
+        { name: "Photoshop", icon: SiAdobephotoshop, color: "#31A8FF" },
+        { name: "Lightroom", icon: SiAdobelightroom, color: "#31A8FF" },
+        { name: "Python", icon: SiPython, color: "#3776AB" },
+        { name: "QGIS", icon: SiQgis, color: "#589632" },
+      ],
+    },
+  ];
+
   return (
-    <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-40 left-20 w-48 h-48 bg-neutral-800 opacity-5 rotate-12" style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
-      <div className="absolute bottom-20 right-40 w-32 h-32 bg-neutral-800 opacity-5 -rotate-12" style={{ clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)" }}></div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="mb-12">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="relative mb-6">
-              <div className="absolute -left-3 -top-3 w-16 h-16 bg-neutral-700 opacity-10 rotate-12 z-0"></div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-300 tracking-wider flex items-center gap-3 relative z-10 text-shadow-neo">
-                <div className="p-3 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] rotate-2">
-                  <HiCode className="text-neutral-400" />
-                </div>
-                Tech Stack
-              </h2>
-              <motion.div className="h-2 w-24 bg-neutral-300 mt-4 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1" initial={{ width: 0 }} whileInView={{ width: "6rem" }} transition={{ duration: 0.8, delay: 0.3 }} />
-            </div>
-          </motion.div>
-        </div>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <ClassicView />
+    <section className="h-screen flex flex-col justify-center px-4 sm:px-6 md:px-12 py-16 bg-neutral-900 font-Hanken tracking-wider overflow-hidden">
+      <div className="max-w-6xl mx-auto w-full">
+        {/* Header with enhanced animations */}
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={{
+            initial: {},
+            animate: { transition: { staggerChildren: 0.15 } },
+            exit: { transition: { staggerChildren: 0.08 } },
+          }}
+          className="mb-8"
+        >
+          <motion.h2
+            variants={{
+              initial: { y: -40, x: -30, opacity: 0, filter: "blur(10px)" },
+              animate: {
+                y: 0,
+                x: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 20,
+                  duration: 0.8,
+                },
+              },
+              exit: {
+                y: 40,
+                x: 30,
+                opacity: 0,
+                filter: "blur(8px)",
+                transition: { duration: 0.4, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight"
+          >
+            TECH STACK
+          </motion.h2>
+          <motion.p
+            variants={{
+              initial: { y: 40, x: 30, opacity: 0, filter: "blur(10px)" },
+              animate: {
+                y: 0,
+                x: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 20,
+                  duration: 0.8,
+                  delay: 0.1,
+                },
+              },
+              exit: {
+                y: -40,
+                x: -30,
+                opacity: 0,
+                filter: "blur(8px)",
+                transition: { duration: 0.4, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            className="text-neutral-300 text-base sm:text-lg"
+          >
+            Technologies and tools I work with
+          </motion.p>
         </motion.div>
-      </div>
 
-      {/* Styles for neobrutalism */}
-      <style className="text-shadow-styles">
-        {`
-          .text-shadow-neo {
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-          }
-          .text-shadow-small {
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
-          }
-          .border-3 {
-            border-width: 3px;
-          }
-        `}
-      </style>
+        {/* Content area */}
+        <div className="h-[calc(100vh-300px)] overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+            {/* Tech Categories */}
+            <div className="flex flex-col h-full lg:col-span-2">
+              <div className="flex-1 overflow-hidden">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-y-auto h-full pr-2 scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-600">
+                  {techCategories.map((category, categoryIndex) => (
+                    <motion.div key={category.category} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: categoryIndex * 0.1 }} viewport={{ once: true }} className="space-y-4">
+                      {/* Category Header */}
+                      <div className="border-b border-neutral-700 pb-3">
+                        <h3 className="text-base font-medium text-neutral-200">{category.category}</h3>
+                      </div>
+
+                      {/* Tech Items Grid */}
+                      <div className="space-y-2">
+                        {category.techs.map((tech, techIndex) => (
+                          <motion.div
+                            key={tech.name}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{
+                              duration: 0.4,
+                              delay: categoryIndex * 0.1 + techIndex * 0.05,
+                              type: "spring",
+                              stiffness: 100,
+                            }}
+                            viewport={{ once: true }}
+                            whileHover={{
+                              scale: 1.02,
+                              transition: { duration: 0.2 },
+                            }}
+                            className="group flex items-center gap-2 py-1 transition-all duration-300"
+                          >
+                            {/* Icon */}
+                            <tech.icon className="text-lg transition-all duration-300 group-hover:scale-110" style={{ color: tech.color }} />
+
+                            {/* Tech Name */}
+                            <span className="text-white font-medium text-sm group-hover:text-neutral-100 transition-colors">{tech.name}</span>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

@@ -20,7 +20,6 @@ const Portfolio = () => {
     { id: "mbti", component: <MBTI /> },
     { id: "activities", component: <ActivitiesTimeline /> },
     { id: "techStacks", component: <TechStack /> },
-    { id: "footer", component: <Footer /> },
   ];
 
   return (

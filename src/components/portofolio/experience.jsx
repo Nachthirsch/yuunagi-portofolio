@@ -1,6 +1,11 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useCallback } from "react";
+import { X } from "lucide-react";
 
 const Experience = () => {
+  const [selectedExp, setSelectedExp] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const experiences = [
     {
       title: "Frontend Developer",
@@ -42,78 +47,304 @@ const Experience = () => {
     },
   ];
 
+  const handleExpClick = useCallback((exp) => {
+    setSelectedExp(exp);
+    setIsModalOpen(true);
+  }, []);
+
+  const handleCloseModal = useCallback(() => {
+    setIsModalOpen(false);
+    setTimeout(() => {
+      setSelectedExp(null);
+    }, 200);
+  }, []);
+
+  const handleBackdropClick = useCallback(
+    (e) => {
+      if (e.target === e.currentTarget) {
+        handleCloseModal();
+      }
+    },
+    [handleCloseModal]
+  );
+
   return (
-    <section className="h-screen flex flex-col justify-center px-4 sm:px-6 md:px-12 bg-transparent font-Hanken tracking-wider overflow-hidden">
+    <section className="h-screen flex flex-col justify-center px-4 sm:px-6 md:px-12 py-16 bg-neutral-900 font-Hanken tracking-wider overflow-hidden">
       <div className="max-w-6xl mx-auto w-full">
-        {/* Header */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="mb-6">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">EXPERIENCE</h2>
-          <p className="text-neutral-300 text-base sm:text-lg">Professional journey and educational background</p>
+        {/* Header with enhanced animations */}
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={{
+            initial: {},
+            animate: { transition: { staggerChildren: 0.15 } },
+            exit: { transition: { staggerChildren: 0.08 } },
+          }}
+          className="mb-8"
+        >
+          <motion.h2
+            variants={{
+              initial: { x: -80, opacity: 0, filter: "blur(8px)" },
+              animate: {
+                x: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 25,
+                  duration: 0.7,
+                },
+              },
+              exit: {
+                x: 120,
+                opacity: 0,
+                filter: "blur(6px)",
+                transition: { duration: 0.35, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight"
+          >
+            EXPERIENCE
+          </motion.h2>
+          <motion.p
+            variants={{
+              initial: { x: 80, opacity: 0, filter: "blur(8px)" },
+              animate: {
+                x: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 25,
+                  duration: 0.7,
+                  delay: 0.1,
+                },
+              },
+              exit: {
+                x: -120,
+                opacity: 0,
+                filter: "blur(6px)",
+                transition: { duration: 0.35, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            className="text-neutral-300 text-base sm:text-lg"
+          >
+            Professional journey and educational background
+          </motion.p>
         </motion.div>
 
-        {/* Filters placeholder to match Projects structure */}
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-neutral-600">
-          <span className="text-neutral-400 text-sm">Work Experience & Education</span>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[calc(100vh-280px)] overflow-hidden">
-          {/* Work Experience Column */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-neutral-100 mb-4">Work Experience</h3>
-            <div className="space-y-6 overflow-y-auto h-full pr-2 scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-600">
-              {experiences.map((exp, index) => (
-                <motion.div key={index} initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }} className="group border-l-2 border-neutral-600 pl-4 hover:border-neutral-400 transition-colors duration-300">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                    <div className="flex-1">
-                      <h4 className="text-white font-medium text-base group-hover:text-neutral-100 transition-colors duration-300">{exp.title}</h4>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-neutral-200 text-sm">{exp.company}</span>
-                        <span className="px-2 py-0.5 text-xs bg-neutral-700 text-neutral-200 rounded border border-neutral-600">{exp.label}</span>
+        {/* Content area - More compact */}
+        <div className="h-[calc(100vh-300px)] overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-full">
+            {/* Work Experience Column */}
+            <div className="flex flex-col h-full">
+              <h3 className="text-base font-medium text-neutral-200 mb-4 border-b border-neutral-700 pb-2 flex-shrink-0">Work Experience</h3>
+              <div className="flex-1 overflow-hidden">
+                <div className="space-y-2 overflow-y-auto h-full pr-2 scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-600">
+                  {experiences.map((exp, index) => (
+                    <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: index * 0.1 }} viewport={{ once: true }} className="group cursor-pointer py-2 px-3 rounded-lg hover:bg-neutral-800/20 transition-all duration-300" onClick={() => handleExpClick(exp)}>
+                      {/* Compact View */}
+                      <div className="flex flex-col gap-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                          <h4 className="text-white font-medium text-sm group-hover:text-neutral-100 transition-colors">{exp.title}</h4>
+                          <span className="text-neutral-400 text-xs font-mono whitespace-nowrap">{exp.date}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-neutral-300 text-xs">{exp.company}</span>
+                          <span className="px-1.5 py-0.5 text-xs text-neutral-400 bg-neutral-800 rounded">{exp.label}</span>
+                        </div>
                       </div>
-                    </div>
-                    <span className="text-neutral-300 text-xs whitespace-nowrap">{exp.date}</span>
-                  </div>
-                  <ul className="space-y-1 text-neutral-300 text-sm">
-                    {exp.description.map((item, idx) => (
-                      <li key={idx} className="leading-relaxed pl-4 relative before:absolute before:content-['•'] before:text-neutral-500 before:left-0">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
 
-          {/* Education Column */}
-          <div className="space-y-4">
-            <h3 className="text-xl font-semibold text-neutral-100 mb-4">Education & Training</h3>
-            <div className="space-y-6 overflow-y-auto h-full pr-2 scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-600">
-              {education.map((edu, index) => (
-                <motion.div key={index} initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }} className="group border-l-2 border-neutral-600 pl-4 hover:border-neutral-400 transition-colors duration-300">
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
-                    <div className="flex-1">
-                      <h4 className="text-white font-medium text-base group-hover:text-neutral-100 transition-colors duration-300">{edu.title}</h4>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-neutral-200 text-sm">{edu.company}</span>
-                        <span className="px-2 py-0.5 text-xs bg-neutral-700 text-neutral-200 rounded border border-neutral-600">{edu.label}</span>
+            {/* Education Column */}
+            <div className="flex flex-col h-full">
+              <h3 className="text-base font-medium text-neutral-200 mb-4 border-b border-neutral-700 pb-2 flex-shrink-0">Education & Training</h3>
+              <div className="flex-1 overflow-hidden">
+                <div className="space-y-2 overflow-y-auto h-full pr-2 scrollbar-thin scrollbar-track-neutral-800 scrollbar-thumb-neutral-600">
+                  {education.map((edu, index) => (
+                    <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }} viewport={{ once: true }} className="group cursor-pointer py-2 px-3 rounded-lg hover:bg-neutral-800/20 transition-all duration-300" onClick={() => handleExpClick(edu)}>
+                      {/* Compact View */}
+                      <div className="flex flex-col gap-1">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1">
+                          <h4 className="text-white font-medium text-sm group-hover:text-neutral-100 transition-colors">{edu.title}</h4>
+                          <span className="text-neutral-400 text-xs font-mono whitespace-nowrap">{edu.date}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-neutral-300 text-xs">{edu.company}</span>
+                          <span className="px-1.5 py-0.5 text-xs text-neutral-400 bg-neutral-800 rounded">{edu.label}</span>
+                        </div>
                       </div>
-                    </div>
-                    <span className="text-neutral-300 text-xs whitespace-nowrap">{edu.date}</span>
-                  </div>
-                  <ul className="space-y-1 text-neutral-300 text-sm">
-                    {edu.description.map((item, idx) => (
-                      <li key={idx} className="leading-relaxed pl-4 relative before:absolute before:content-['•'] before:text-neutral-500 before:left-0">
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Click Modal with Backdrop */}
+      <AnimatePresence mode="wait">
+        {selectedExp && isModalOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{
+              duration: 0.3,
+              ease: [0.4, 0.0, 0.2, 1],
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            onClick={handleBackdropClick}
+          >
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: 0.4,
+                ease: "easeInOut",
+              }}
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+            />
+
+            {/* Modal */}
+            <motion.div
+              initial={{
+                opacity: 0,
+                scale: 0.8,
+                y: 50,
+                rotateX: -15,
+              }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                rotateX: 0,
+              }}
+              exit={{
+                opacity: 0,
+                scale: 0.9,
+                y: -20,
+                rotateX: 5,
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 25,
+                mass: 0.8,
+                duration: 0.5,
+              }}
+              className="relative bg-neutral-800/95 backdrop-blur-sm border border-neutral-600 rounded-lg p-6 max-w-md w-full mx-4 shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Close Button */}
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{
+                  delay: 0.1,
+                  duration: 0.2,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 90,
+                  transition: { duration: 0.2 },
+                }}
+                whileTap={{ scale: 0.9 }}
+                onClick={handleCloseModal}
+                className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-200 transition-colors duration-200"
+              >
+                <X size={20} />
+              </motion.button>
+
+              {/* Modal Header */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.1,
+                  duration: 0.4,
+                  ease: "easeOut",
+                }}
+                className="mb-4 pr-8"
+              >
+                <h4 className="text-white font-medium text-lg mb-2">{selectedExp.title}</h4>
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-neutral-200 text-sm">{selectedExp.company}</span>
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: 0.2,
+                      duration: 0.3,
+                      ease: "backOut",
+                    }}
+                    className="px-2 py-1 text-xs text-neutral-400 bg-neutral-700 rounded"
+                  >
+                    {selectedExp.label}
+                  </motion.span>
+                </div>
+                <span className="text-neutral-400 text-sm font-mono">{selectedExp.date}</span>
+              </motion.div>
+
+              {/* Modal Content */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.2,
+                  duration: 0.4,
+                  ease: "easeOut",
+                }}
+                className="border-t border-neutral-700 pt-4"
+              >
+                <ul className="space-y-3 text-neutral-300 text-sm">
+                  {selectedExp.description.map((item, idx) => (
+                    <motion.li
+                      key={idx}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{
+                        delay: 0.3 + idx * 0.1,
+                        duration: 0.4,
+                        ease: "easeOut",
+                      }}
+                      className="leading-relaxed pl-4 relative before:absolute before:content-['•'] before:text-neutral-500 before:left-0 before:top-1"
+                    >
+                      {item}
+                    </motion.li>
+                  ))}
+                </ul>
+              </motion.div>
+
+              {/* Close hint */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  delay: 0.5,
+                  duration: 0.3,
+                  ease: "easeOut",
+                }}
+                className="mt-4 pt-3 border-t border-neutral-700/50"
+              >
+                <p className="text-neutral-500 text-xs text-center">Click outside or X to close</p>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

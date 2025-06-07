@@ -25,10 +25,10 @@ const TableOfContents = ({ currentSection, onSectionChange, totalSections }) => 
 
   return (
     <>
-      {/* Desktop version - Minimalistic horizontal bottom-right */}
-      <motion.nav initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="fixed bottom-6 right-6 z-40 hidden lg:block">
-        <div className="bg-neutral-800/70 backdrop-blur-sm rounded-lg px-3 py-2 border border-neutral-600">
-          <ul className="flex items-center space-x-2">
+      {/* Desktop version - Moved to left side to avoid overlap */}
+      <motion.nav initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="fixed left-4 top-1/2 -translate-y-1/2 z-40 hidden lg:block">
+        <div className="bg-neutral-800/70 backdrop-blur-sm rounded-lg py-3 px-2 border border-neutral-600">
+          <ul className="flex flex-col items-center space-y-2">
             {sections.slice(0, totalSections).map(({ id, label, icon: Icon }, index) => (
               <motion.li key={id} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: index * 0.05 }}>
                 <button
@@ -39,18 +39,17 @@ const TableOfContents = ({ currentSection, onSectionChange, totalSections }) => 
                 >
                   <Icon size={16} className="flex-shrink-0" />
 
-                  {/* Minimalistic tooltip */}
+                  {/* Tooltip moved to right side */}
                   <span
-                    className="absolute bottom-full mb-2 px-2 py-1 bg-neutral-700 text-white
+                    className="absolute left-full ml-3 px-2 py-1 bg-neutral-700 text-white
                               text-xs whitespace-nowrap pointer-events-none border border-neutral-600
-                              rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                              left-1/2 -translate-x-1/2"
+                              rounded opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                   >
                     {label}
                   </span>
 
-                  {/* Active indicator */}
-                  {currentSection === id && <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-neutral-300 rounded-full" />}
+                  {/* Active indicator on left */}
+                  {currentSection === id && <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-1 h-4 bg-neutral-300 rounded-full" />}
                 </button>
               </motion.li>
             ))}
@@ -58,22 +57,22 @@ const TableOfContents = ({ currentSection, onSectionChange, totalSections }) => 
         </div>
       </motion.nav>
 
-      {/* Mobile version - Minimalistic bottom center */}
-      <motion.nav initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="fixed bottom-3 left-1/2 -translate-x-1/2 z-40 w-auto max-w-[90%] lg:hidden">
-        <div className="bg-neutral-800/80 backdrop-blur-sm rounded-full px-3 py-2 border border-neutral-600">
+      {/* Mobile version - Keep at top center */}
+      <motion.nav initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="fixed top-4 left-1/2 -translate-x-1/2 z-40 w-auto max-w-[90%] lg:hidden">
+        <div className="bg-neutral-800/80 backdrop-blur-sm rounded-full px-3 py-1.5 border border-neutral-600">
           <ul className="flex items-center space-x-1">
             {sections.slice(0, totalSections).map(({ id, label, icon: Icon }, index) => (
               <motion.li key={id} initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.3, delay: index * 0.05 }} className="flex-shrink-0">
                 <button
                   onClick={() => handleSectionClick(id)}
                   aria-label={label}
-                  className={`relative p-2 rounded-full transition-all duration-300
+                  className={`relative p-1.5 rounded-full transition-all duration-300
                             ${currentSection === id ? "text-neutral-100 bg-neutral-600" : "text-neutral-400 hover:text-neutral-200"}`}
                 >
-                  <Icon size={14} className="flex-shrink-0" />
+                  <Icon size={12} className="flex-shrink-0" />
 
                   {/* Mobile active indicator */}
-                  {currentSection === id && <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-neutral-300 rounded-full" />}
+                  {currentSection === id && <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-neutral-300 rounded-full" />}
                 </button>
               </motion.li>
             ))}

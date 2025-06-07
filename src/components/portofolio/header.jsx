@@ -43,9 +43,9 @@ const Header = () => {
   }, []);
 
   return (
-    <header className="relative h-screen font-Hanken tracking-wider overflow-hidden bg-transparent film-grain">
-      {/* Last.fm section - positioned at bottom right */}
-      <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} viewport={{ once: true, amount: 0.3 }} className="absolute bottom-6 right-6 z-20 max-w-xs">
+    <header className="relative h-screen font-Hanken tracking-wider overflow-hidden bg-neutral-900 film-grain">
+      {/* Last.fm section - positioned with more space from edge */}
+      <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.3 }} viewport={{ once: true, amount: 0.3 }} className="absolute bottom-6 right-8 z-20 max-w-xs">
         {isLoading ? (
           <div className="flex items-center text-neutral-500 text-xs">
             <div className="w-2 h-2 border-t border-neutral-500 rounded-full animate-spin mr-2"></div>
@@ -89,45 +89,216 @@ const Header = () => {
 
       {/* Main content - centered */}
       <div className="relative h-full flex flex-col justify-center px-4 sm:px-6 md:px-12 z-20 max-w-4xl mx-auto">
-        {/* Main name/title */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} viewport={{ once: true, amount: 0.3 }} className="mb-8">
-          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-neutral-100 mb-2 tracking-tight">HANDRA</h1>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-neutral-300 tracking-widest">PUTRATAMA TANJUNG</h2>
+        {/* Main name/title with enhanced animations */}
+        <motion.div
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={{
+            initial: {},
+            animate: { transition: { staggerChildren: 0.2 } },
+            exit: { transition: { staggerChildren: 0.1 } },
+          }}
+          className="mb-8"
+        >
+          <motion.h1
+            custom={0}
+            variants={{
+              initial: { x: -100, opacity: 0, filter: "blur(10px)" },
+              animate: {
+                x: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 20,
+                  duration: 0.8,
+                },
+              },
+              exit: {
+                x: 100,
+                opacity: 0,
+                filter: "blur(5px)",
+                transition: { duration: 0.4, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-neutral-100 mb-2 tracking-tight"
+          >
+            HANDRA
+          </motion.h1>
+          <motion.h2
+            custom={1}
+            variants={{
+              initial: { x: 100, opacity: 0, filter: "blur(10px)" },
+              animate: {
+                x: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 20,
+                  duration: 0.8,
+                  delay: 0.1,
+                },
+              },
+              exit: {
+                x: -100,
+                opacity: 0,
+                filter: "blur(5px)",
+                transition: { duration: 0.4, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light text-neutral-300 tracking-widest"
+          >
+            PUTRATAMA TANJUNG
+          </motion.h2>
         </motion.div>
 
-        {/* Bio description */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }} viewport={{ once: true, amount: 0.3 }} className="mb-8 max-w-2xl">
+        {/* Bio description with aesthetic animation */}
+        <motion.div
+          custom={2}
+          variants={{
+            initial: { y: -30, x: -50, opacity: 0, filter: "blur(10px)" },
+            animate: {
+              y: 0,
+              x: 0,
+              opacity: 1,
+              filter: "blur(0px)",
+              transition: {
+                type: "spring",
+                stiffness: 100,
+                damping: 20,
+                duration: 0.8,
+                delay: 0.2,
+              },
+            },
+            exit: {
+              y: 30,
+              x: 50,
+              opacity: 0,
+              filter: "blur(5px)",
+              transition: { duration: 0.4, ease: [0.4, 0.0, 0.6, 1] },
+            },
+          }}
+          className="mb-8 max-w-2xl"
+        >
           <p className="text-neutral-400 text-base sm:text-lg leading-relaxed">Final-year Information Technology student with interests in Web Development, Photography, Music and Art.</p>
         </motion.div>
 
-        {/* Social links - horizontal minimal layout */}
-        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }} viewport={{ once: true, amount: 0.3 }} className="flex flex-wrap items-center gap-6">
-          <a href="mailto:handraputratama@gmail.com" className="flex items-center text-neutral-400 hover:text-neutral-100 text-sm transition-colors duration-300">
+        {/* Social links with staggered animations */}
+        <motion.div
+          variants={{
+            initial: {},
+            animate: { transition: { staggerChildren: 0.1 } },
+            exit: { transition: { staggerChildren: 0.05 } },
+          }}
+          className="flex flex-wrap items-center gap-6"
+        >
+          <motion.a
+            custom={3}
+            variants={{
+              initial: { x: 30, y: 20, opacity: 0, filter: "blur(10px)" },
+              animate: {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 20,
+                  duration: 0.8,
+                },
+              },
+              exit: {
+                x: -30,
+                y: -20,
+                opacity: 0,
+                filter: "blur(5px)",
+                transition: { duration: 0.4, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            href="mailto:handraputratama@gmail.com"
+            className="flex items-center text-neutral-400 hover:text-neutral-100 text-sm transition-colors duration-300"
+          >
             <AiOutlineMail className="mr-2" />
             handraputratama@gmail.com
-          </a>
+          </motion.a>
 
-          <div className="flex items-center gap-4">
-            <a href="https://www.instagram.com/nachthirsch/" className="text-neutral-500 hover:text-neutral-300 transition-colors duration-300" aria-label="Instagram">
-              <FaInstagram className="w-4 h-4" />
-            </a>
-
-            <a href="https://github.com/Nachthirsch" className="text-neutral-500 hover:text-neutral-300 transition-colors duration-300" aria-label="GitHub">
-              <FaGithub className="w-4 h-4" />
-            </a>
-
-            <a href="https://www.linkedin.com/in/handra-putratama-tanjung/" className="text-neutral-500 hover:text-neutral-300 transition-colors duration-300" aria-label="LinkedIn">
-              <FaLinkedin className="w-4 h-4" />
-            </a>
-
-            <a href="https://soundcloud.com/nachthirsch" className="text-neutral-500 hover:text-neutral-300 transition-colors duration-300" aria-label="SoundCloud">
-              <FaSoundcloud className="w-4 h-4" />
-            </a>
-
-            <a href="https://discordapp.com/users/745101954174287943" className="text-neutral-500 hover:text-neutral-300 transition-colors duration-300" aria-label="Discord">
-              <FaDiscord className="w-4 h-4" />
-            </a>
-          </div>
+          <motion.div
+            custom={4}
+            variants={{
+              initial: { x: -30, y: 20, opacity: 0, filter: "blur(10px)" },
+              animate: {
+                x: 0,
+                y: 0,
+                opacity: 1,
+                filter: "blur(0px)",
+                transition: {
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 20,
+                  duration: 0.8,
+                },
+              },
+              exit: {
+                x: 30,
+                y: -20,
+                opacity: 0,
+                filter: "blur(5px)",
+                transition: { duration: 0.4, ease: [0.4, 0.0, 0.6, 1] },
+              },
+            }}
+            className="flex items-center gap-4"
+          >
+            {/* Social icons with individual animations */}
+            {[
+              { icon: FaInstagram, href: "https://www.instagram.com/nachthirsch/", label: "Instagram" },
+              { icon: FaGithub, href: "https://github.com/Nachthirsch", label: "GitHub" },
+              { icon: FaLinkedin, href: "https://www.linkedin.com/in/handra-putratama-tanjung/", label: "LinkedIn" },
+              { icon: FaSoundcloud, href: "https://soundcloud.com/nachthirsch", label: "SoundCloud" },
+              { icon: FaDiscord, href: "https://discordapp.com/users/745101954174287943", label: "Discord" },
+            ].map(({ icon: Icon, href, label }, index) => (
+              <motion.a
+                key={label}
+                custom={5 + index}
+                variants={{
+                  initial: {
+                    scale: 0.8,
+                    opacity: 0,
+                    y: index % 2 === 0 ? -10 : 10,
+                    filter: "blur(5px)",
+                  },
+                  animate: {
+                    scale: 1,
+                    opacity: 1,
+                    y: 0,
+                    filter: "blur(0px)",
+                    transition: {
+                      type: "spring",
+                      stiffness: 150,
+                      damping: 25,
+                      delay: index * 0.1,
+                    },
+                  },
+                  exit: {
+                    scale: 0.8,
+                    opacity: 0,
+                    y: index % 2 === 0 ? 10 : -10,
+                    filter: "blur(5px)",
+                    transition: { duration: 0.3 },
+                  },
+                }}
+                href={href}
+                className="text-neutral-500 hover:text-neutral-300 transition-colors duration-300"
+                aria-label={label}
+              >
+                <Icon className="w-4 h-4" />
+              </motion.a>
+            ))}
+          </motion.div>
         </motion.div>
       </div>
     </header>
