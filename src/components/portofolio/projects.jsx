@@ -71,7 +71,6 @@ const ProjectSection = () => {
       status: "Completed",
     },
 
-
     {
       title: "Weather Dashboard",
       description: "Simple Real-time weather application with detailed forecasts. Built with React and OpenWeather API for live weather data. Features include current weather conditions, hourly forecasts, and location-based weather updates.",
@@ -232,66 +231,55 @@ const ProjectSection = () => {
   };
 
   return (
-    <section className="min-h-screen bg-neutral-900 font-Hanken overflow-hidden py-4 sm:py-8">
-      <div className="max-w-7xl mx-auto flex flex-col px-3 sm:px-8 md:px-16">
-        {/* Featured Project Section - Neobrutalism Style */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }} className="mb-16 mt-4">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative">
-            <div className="absolute -left-3 -top-3 w-16 h-16 bg-green-400 opacity-20 rotate-12 z-0"></div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold uppercase text-neutral-200 tracking-wider flex items-center gap-2 mb-8 sm:gap-3 relative z-10 text-shadow-neo">
-              <div className="p-3 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]">
-                <Code2 className="text-neutral-300" />
-              </div>
-              Featured Projects
-            </h2>
-          </motion.div>
+    <section className="min-h-screen bg-gray-50 font-light overflow-hidden py-20 px-4 sm:px-8">
+      <div className="max-w-6xl mx-auto flex flex-col">
+        {/* Featured Project Section - Editorial Style */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-32">
+          <div className="flex items-baseline gap-6 mb-16">
+            <Code2 className="text-gray-400 text-lg mt-1 flex-shrink-0" />
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-light text-gray-900 tracking-wide">Featured Project</h2>
+          </div>
+          <div className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent mb-16" />
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 bg-neutral-800 p-6 sm:p-8 rounded-none border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] rotate-1">
-            <div className="relative overflow-hidden aspect-video group -rotate-1">
-              <img src={featuredProject.image} alt={featuredProject.title} className="w-full h-full object-cover border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)]" />
-              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
-                <span
-                  className={`px-3 py-1 text-xs font-extrabold inline-block border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
-                  ${featuredProject.status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
-                >
-                  {featuredProject.status}
-                </span>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="relative overflow-hidden aspect-video group">
+              <img src={featuredProject.image} alt={featuredProject.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute top-4 left-4">
+                <span className={`px-3 py-1 text-xs font-medium backdrop-blur-sm ${featuredProject.status === "Completed" ? "bg-green-100/80 text-green-800" : "bg-yellow-100/80 text-yellow-800"}`}>{featuredProject.status}</span>
               </div>
             </div>
 
-            <div className="flex flex-col -rotate-1">
-              <h3 className="text-2xl sm:text-3xl font-extrabold text-neutral-100 mb-3 uppercase text-shadow-neo">{featuredProject.title}</h3>
+            <div className="space-y-8">
+              <div>
+                <h3 className="text-3xl sm:text-4xl font-light text-gray-900 mb-4 leading-tight">{featuredProject.title}</h3>
+                <p className="text-gray-600 leading-relaxed text-lg">{featuredProject.longDescription || featuredProject.description}</p>
+              </div>
 
-              <div className="flex flex-wrap gap-2 mb-4">
+              <div className="flex flex-wrap gap-3">
                 {featuredProject.tech.map((tech, i) => (
-                  <span key={i} className="px-3 py-1 bg-neutral-700 text-neutral-300 text-sm font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] transform rotate-1">
+                  <span key={i} className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                     {tech}
+                    {i < featuredProject.tech.length - 1 && <span className="ml-3 text-gray-300">•</span>}
                   </span>
                 ))}
               </div>
 
-              <p className="text-neutral-400 mb-6 leading-relaxed">{featuredProject.longDescription || featuredProject.description}</p>
-
-              <div className="mt-auto flex items-center justify-between">
-                <div className="flex items-center gap-2 text-neutral-400 font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] px-3 py-1 bg-neutral-800">
+              <div className="flex items-center justify-between pt-8">
+                <div className="flex items-center gap-2 text-gray-400 text-sm">
                   <Calendar size={16} />
                   {featuredProject.date}
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex gap-6">
                   {featuredProject.github && (
                     <a
                       href={featuredProject.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2
-                        bg-neutral-700 text-neutral-300
-                        border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                        hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
-                        transition-all duration-200
-                        font-bold text-sm"
+                      className="inline-flex items-center gap-2 text-sm font-medium
+                        text-gray-700 hover:text-gray-900 transition-colors duration-200"
                     >
-                      <Github size={16} />
+                      <Github size={18} />
                       Source
                     </a>
                   )}
@@ -300,15 +288,11 @@ const ProjectSection = () => {
                       href={featuredProject.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2
-                        bg-neutral-700 text-neutral-300
-                        border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                        hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
-                        transition-all duration-200
-                        font-bold text-sm"
+                      className="inline-flex items-center gap-2 text-sm font-medium
+                        text-gray-900 hover:text-black transition-colors duration-200"
                     >
-                      <ExternalLink size={16} />
-                      Demo
+                      <ExternalLink size={18} />
+                      Live Demo
                     </a>
                   )}
                 </div>
@@ -317,24 +301,32 @@ const ProjectSection = () => {
           </div>
         </motion.div>
 
-        {/* Header with Controls - Neobrutalism Style */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0 mb-10 sm:mb-12">
-          <div className="flex flex-wrap gap-4 sm:gap-5">
-            <div className="hidden md:flex bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] p-1">
-              <button onClick={() => setViewMode("carousel")} className={`p-2 font-bold ${viewMode === "carousel" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}>
-                <Rows size={20} />
+        {/* All Projects Header */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="mb-20">
+          <div className="flex items-baseline gap-6 mb-8">
+            <LayoutGrid className="text-gray-400 text-lg mt-1 flex-shrink-0" />
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900 tracking-wide">All Projects</h2>
+          </div>
+          <div className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent" />
+        </motion.div>
+
+        {/* Controls - Clean Style */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-16">
+          <div className="flex flex-wrap gap-6">
+            <div className="hidden md:flex gap-8">
+              <button onClick={() => setViewMode("carousel")} className={`text-sm font-medium transition-colors duration-200 ${viewMode === "carousel" ? "text-gray-900" : "text-gray-400 hover:text-gray-600"}`}>
+                Carousel View
               </button>
-              <button onClick={() => setViewMode("grid")} className={`p-2 font-bold ${viewMode === "grid" ? "bg-neutral-700 text-white rotate-2" : "text-neutral-400"}`}>
-                <LayoutGrid size={20} />
+              <button onClick={() => setViewMode("grid")} className={`text-sm font-medium transition-colors duration-200 ${viewMode === "grid" ? "text-gray-900" : "text-gray-400 hover:text-gray-600"}`}>
+                Grid View
               </button>
             </div>
 
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value)}
-              className="bg-neutral-800 text-neutral-200 px-3 py-2 text-sm font-bold
-                border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                appearance-none cursor-pointer transform rotate-1"
+              className="bg-transparent text-gray-700 text-sm font-medium
+                focus:outline-none cursor-pointer"
             >
               <option value="all">All Status</option>
               <option value="Completed">Completed</option>
@@ -344,11 +336,10 @@ const ProjectSection = () => {
             <select
               value={filterTech}
               onChange={(e) => setFilterTech(e.target.value)}
-              className="bg-neutral-800 text-neutral-200 px-3 py-2 text-sm font-bold
-                border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                appearance-none cursor-pointer transform -rotate-1"
+              className="bg-transparent text-gray-700 text-sm font-medium
+                focus:outline-none cursor-pointer"
             >
-              <option value="all">All Tech</option>
+              <option value="all">All Technologies</option>
               {allTechStacks.map((tech) => (
                 <option key={tech} value={tech}>
                   {tech}
@@ -360,98 +351,65 @@ const ProjectSection = () => {
 
         {/* Content */}
         {viewMode === "carousel" ? (
-          <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
+          <div className="flex flex-col lg:flex-row gap-12">
             <div className="flex-1 flex flex-col order-2 lg:order-1">
               <AnimatePresence mode="wait">
-                <motion.div
-                  key={selectedProject}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 20 }}
-                  className="bg-neutral-800 rounded-none p-6 sm:p-8 
-                    border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)]
-                    transform rotate-1 flex-1 flex flex-col"
-                >
-                  <div className="flex flex-col h-full gap-4 sm:gap-8 -rotate-1">
-                    <div className="space-y-4 sm:space-y-6">
-                      <div className="flex flex-wrap gap-3 sm:gap-4">
-                        <span
-                          className="px-4 py-1.5 bg-neutral-700 text-neutral-300 text-sm font-bold
-                            border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
-                            flex items-center gap-2 transform rotate-1"
-                        >
-                          <MonitorSmartphone size={14} />
-                          {projects[selectedProject].type}
-                        </span>
-                        <span
-                          className={`px-4 py-1.5 text-sm font-bold
-                            border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
-                            transform -rotate-1
-                            ${projects[selectedProject].status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
-                        >
-                          {projects[selectedProject].status}
-                        </span>
-                      </div>
-
-                      <div>
-                        <h2 className="text-2xl font-extrabold text-neutral-100 mb-4 uppercase text-shadow-neo">{projects[selectedProject].title}</h2>
-                        <p className="text-neutral-400 leading-relaxed">{projects[selectedProject].description}</p>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {projects[selectedProject].tech.map((tech, i) => (
-                          <span
-                            key={i}
-                            className="px-3 py-1 bg-neutral-700 text-neutral-300 
-                              text-sm font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
-                              transform rotate-1"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
+                <motion.div key={selectedProject} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }} className="flex-1 flex flex-col space-y-8">
+                  <div className="space-y-6">
+                    <div className="flex flex-wrap gap-4">
+                      <span className="flex items-center gap-2 text-sm text-gray-500">
+                        <MonitorSmartphone size={14} />
+                        {projects[selectedProject].type}
+                      </span>
+                      <span className={`text-sm font-medium ${projects[selectedProject].status === "Completed" ? "text-green-700" : "text-yellow-700"}`}>{projects[selectedProject].status}</span>
                     </div>
 
-                    <div className="mt-auto pt-6 border-t-4 border-black flex items-center justify-between">
-                      <div className="flex items-center gap-2 text-neutral-400 font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] px-3 py-1 bg-neutral-800">
-                        <Calendar size={16} />
-                        {projects[selectedProject].date}
-                      </div>
+                    <div>
+                      <h2 className="text-3xl font-light text-gray-900 mb-4 leading-tight">{projects[selectedProject].title}</h2>
+                      <p className="text-gray-600 leading-relaxed text-lg">{projects[selectedProject].description}</p>
+                    </div>
 
-                      <div className="flex gap-3">
-                        {projects[selectedProject].github && (
-                          <a
-                            href={projects[selectedProject].github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-2
-                              bg-neutral-700 text-neutral-300
-                              border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                              hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
-                              transition-all duration-200
-                              font-bold text-sm"
-                          >
-                            <Github size={16} />
-                            Source
-                          </a>
-                        )}
-                        {projects[selectedProject].website && (
-                          <a
-                            href={projects[selectedProject].website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 px-4 py-2
-                              bg-neutral-700 text-neutral-300
-                              border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                              hover:-translate-y-1 hover:shadow-[4px_6px_0px_rgba(0,0,0,0.8)]
-                              transition-all duration-200
-                              font-bold text-sm"
-                          >
-                            <MonitorSmartphone size={16} />
-                            Demo
-                          </a>
-                        )}
-                      </div>
+                    <div className="flex flex-wrap gap-3">
+                      {projects[selectedProject].tech.map((tech, i) => (
+                        <span key={i} className="text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          {tech}
+                          {i < projects[selectedProject].tech.length - 1 && <span className="ml-3 text-gray-300">•</span>}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="mt-auto pt-8 flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-gray-400 text-sm">
+                      <Calendar size={16} />
+                      {projects[selectedProject].date}
+                    </div>
+
+                    <div className="flex gap-6">
+                      {projects[selectedProject].github && (
+                        <a
+                          href={projects[selectedProject].github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm font-medium
+                            text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                        >
+                          <Github size={16} />
+                          Source
+                        </a>
+                      )}
+                      {projects[selectedProject].website && (
+                        <a
+                          href={projects[selectedProject].website}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm font-medium
+                            text-gray-900 hover:text-black transition-colors duration-200"
+                        >
+                          <ExternalLink size={16} />
+                          Demo
+                        </a>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -459,40 +417,31 @@ const ProjectSection = () => {
             </div>
 
             <div className="lg:w-[450px] relative">
-              <motion.div className="h-[500px] relative perspective-1000" style={{ touchAction: "none" }}>
+              <motion.div className="h-[500px] relative" style={{ touchAction: "none" }}>
                 <motion.div className="absolute inset-0 flex items-center justify-center" drag="x" dragConstraints={{ left: 0, right: 0 }} dragElastic={0.2} onDragEnd={handleDragEnd} whileDrag={{ scale: 1.02 }} style={{ cursor: "grab" }} whileTap={{ cursor: "grabbing" }}>
                   {projects.map((project, index) => (
                     <motion.div
                       key={index}
                       className="absolute w-[320px]"
-                      animate={calculateCardStyle(index, selectedProject)}
+                      animate={{
+                        ...calculateCardStyle(index, selectedProject),
+                        filter: selectedProject === index ? "none" : "grayscale(50%)",
+                      }}
                       whileHover={{
-                        scale: selectedProject === index ? 1.05 : 0.9,
+                        scale: selectedProject === index ? 1.02 : 0.92,
+                        filter: "none",
                         transition: { duration: 0.2 },
                       }}
                       onClick={() => setSelectedProject(index)}
                       style={{ transformOrigin: "center" }}
                     >
-                      <div
-                        className={`
-                        bg-neutral-800 rounded-none overflow-hidden
-                        border-4 border-black
-                        ${selectedProject === index ? "shadow-[8px_8px_0px_rgba(0,0,0,0.8)]" : "shadow-[5px_5px_0px_rgba(0,0,0,0.6)]"}
-                        transition-all duration-300
-                        transform ${index % 2 === 0 ? "rotate-2" : "-rotate-2"}
-                      `}
-                      >
+                      <div className="overflow-hidden transition-all duration-300">
                         <div className="h-48 relative">
-                          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 via-neutral-900/50 to-transparent" />
+                          <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-300 hover:scale-105" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
                           <div className="absolute bottom-4 left-4 right-4">
-                            <h3 className="text-xl font-extrabold text-neutral-200 truncate">{project.title}</h3>
-                            <span
-                              className={`text-sm px-2 py-0.5 font-bold
-                              ${project.status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
-                            >
-                              {project.status}
-                            </span>
+                            <h3 className="text-lg font-medium text-white truncate mb-2">{project.title}</h3>
+                            <span className={`text-xs px-2 py-1 backdrop-blur-sm font-medium ${project.status === "Completed" ? "bg-green-100/80 text-green-800" : "bg-yellow-100/80 text-yellow-800"}`}>{project.status}</span>
                           </div>
                         </div>
                       </div>
@@ -503,81 +452,53 @@ const ProjectSection = () => {
             </div>
           </div>
         ) : (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-16">
             {filteredProjects.map((project, index) => (
               <motion.div
                 key={project.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
-                className={`bg-neutral-800 rounded-none overflow-hidden
-                  border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)]
-                  flex flex-col transform ${index % 2 === 0 ? "rotate-1" : "-rotate-1"}
-                  hover:-translate-y-2 transition-all duration-200`}
+                className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center group hover:bg-gray-100/50 
+                  transition-colors duration-300 p-6 -m-6 rounded-sm"
               >
-                <div className="h-40 relative">
-                  <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/90 to-transparent" />
+                <div className="md:col-span-1 relative overflow-hidden aspect-video">
+                  <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                  <div className="absolute top-3 left-3">
+                    <span className={`text-xs px-2 py-1 backdrop-blur-sm font-medium ${project.status === "Completed" ? "bg-green-100/80 text-green-800" : "bg-yellow-100/80 text-yellow-800"}`}>{project.status}</span>
+                  </div>
                 </div>
 
-                <div className="p-6 flex-1 flex flex-col">
+                <div className="md:col-span-2 space-y-4">
                   <div>
-                    <h3 className="text-lg font-extrabold text-neutral-300 mb-2 uppercase text-shadow-small">{project.title}</h3>
-                    <p className="text-sm text-neutral-400 mb-4 line-clamp-2">{project.description}</p>
+                    <h3 className="text-xl font-medium text-gray-900 mb-2">{project.title}</h3>
+                    <p className="text-gray-600 leading-relaxed">{project.description}</p>
                   </div>
 
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tech.slice(0, 3).map((tech, i) => (
-                      <span
-                        key={i}
-                        className="px-2 py-1 bg-neutral-700 text-neutral-300 
-                                 text-xs font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]"
-                      >
+                  <div className="flex flex-wrap gap-3">
+                    {project.tech.slice(0, 4).map((tech, i) => (
+                      <span key={i} className="text-xs font-medium text-gray-500 uppercase tracking-wider">
                         {tech}
+                        {i < Math.min(project.tech.length, 4) - 1 && <span className="ml-3 text-gray-300">•</span>}
                       </span>
                     ))}
-                    {project.tech.length > 3 && <span className="px-2 py-1 text-xs font-bold text-neutral-400 border-2 border-dashed border-neutral-700">+{project.tech.length - 3}</span>}
+                    {project.tech.length > 4 && <span className="text-xs font-medium text-gray-400">+{project.tech.length - 4} more</span>}
                   </div>
 
-                  <div className="mt-auto pt-4 border-t-2 border-black">
-                    <div className="flex items-center justify-between">
-                      <span
-                        className={`px-3 py-1 text-xs font-bold border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
-                        ${project.status === "Completed" ? "bg-emerald-600 text-white" : "bg-amber-500 text-black"}`}
-                      >
-                        {project.status}
-                      </span>
+                  <div className="flex items-center justify-between pt-4">
+                    <span className="text-sm text-gray-400">{project.date}</span>
 
-                      <div className="flex items-center gap-2">
-                        {project.github && (
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
-                              hover:-translate-y-1 hover:shadow-[2px_4px_0px_rgba(0,0,0,0.8)]
-                              transition-all duration-200
-                              flex items-center gap-1 text-neutral-300"
-                          >
-                            <Github size={16} />
-                            <span className="text-xs font-bold">Source</span>
-                          </a>
-                        )}
-                        {project.website && (
-                          <a
-                            href={project.website}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="p-2 bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]
-                              hover:-translate-y-1 hover:shadow-[2px_4px_0px_rgba(0,0,0,0.8)]
-                              transition-all duration-200
-                              flex items-center gap-1 text-neutral-300"
-                          >
-                            <MonitorSmartphone size={16} />
-                            <span className="text-xs font-bold">Demo</span>
-                          </a>
-                        )}
-                      </div>
+                    <div className="flex items-center gap-6">
+                      {project.github && (
+                        <a href={project.github} target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-700 transition-colors duration-200" title="Source Code">
+                          <Github size={18} />
+                        </a>
+                      )}
+                      {project.website && (
+                        <a href={project.website} target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-gray-900 transition-colors duration-200" title="Live Demo">
+                          <ExternalLink size={18} />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -586,18 +507,6 @@ const ProjectSection = () => {
           </motion.div>
         )}
       </div>
-
-      <style jsx global>{`
-        .text-shadow-neo {
-          text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8);
-        }
-        .text-shadow-small {
-          text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.8);
-        }
-        .border-3 {
-          border-width: 3px;
-        }
-      `}</style>
     </section>
   );
 };

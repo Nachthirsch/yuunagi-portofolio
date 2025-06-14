@@ -2,8 +2,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { TypeAnimation } from "react-type-animation";
 
-const IntroToExperience = () => {
+const IntroToProjects = () => {
   const [hasEntered, setHasEntered] = useState(false);
+  const [showSecondTitle, setShowSecondTitle] = useState(false);
   const [showParagraph, setShowParagraph] = useState(false);
 
   // Generate random animation directions
@@ -16,10 +17,15 @@ const IntroToExperience = () => {
     if (!hasEntered) {
       setHasEntered(true);
 
-      // Show paragraph after typewriter completes (reduced from 4.5 to 2.5 seconds)
+      // Show second title after first typewriter completes (approximately 6 seconds)
       setTimeout(() => {
-        setShowParagraph(true);
-      }, 2500);
+        setShowSecondTitle(true);
+
+        // Show paragraph after second typewriter completes (approximately 4 more seconds)
+        setTimeout(() => {
+          setShowParagraph(true);
+        }, 4500);
+      }, 6000);
     }
   };
 
@@ -41,30 +47,37 @@ const IntroToExperience = () => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center", // Always keep centered
+            alignItems: "center",
           }}
         >
           <motion.div
-            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center"
+            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center min-h-[200px] sm:min-h-[250px] lg:min-h-[300px]"
             animate={{
-              y: showParagraph ? -60 : 0, // Move up slightly when paragraph appears
+              y: showParagraph ? -60 : 0,
             }}
             transition={{
               y: { duration: 1.5, ease: [0.25, 0.1, 0.25, 1] },
             }}
           >
-            {hasEntered && (
+            {hasEntered && !showSecondTitle && (
               <TypeAnimation
-                sequence={[
-                  "You're about to enter",
-                  500, // Reduced from 1000
-                  "You're about to enter\nmy working",
-                  500, // Reduced from 1000
-                  "You're about to enter\nmy working\njourney",
-                  500, // Reduced from 1000
-                ]}
+                sequence={["If you see this,", 1000, "If you see this,\nthat means you read", 1000, "If you see this,\nthat means you read\nall of my experiences!", 1500, "If you see this,\nthat means you've read\nall of my experiences!\nI really appreciate it!", 2000]}
                 wrapper="h1"
-                speed={70} // Increased from 50
+                speed={50}
+                style={{
+                  whiteSpace: "pre-line",
+                  display: "block",
+                }}
+                cursor={true}
+                repeat={0}
+              />
+            )}
+
+            {showSecondTitle && (
+              <TypeAnimation
+                sequence={["", 500, "Now, you're going", 1000, "Now, you're going\nto see my projects", 1000, "Now, you're going\nto see my projects\nthat I have developed", 1500]}
+                wrapper="h1"
+                speed={50}
                 style={{
                   whiteSpace: "pre-line",
                   display: "block",
@@ -91,7 +104,7 @@ const IntroToExperience = () => {
           }}
           className="w-full flex justify-center"
         >
-          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-600 max-w-2xl font-light text-center">I might don't have a lot of experiences but I'm a hardworking person who's passionate about learning and growing. Each opportunity has taught me valuable lessons that shaped my approach to work and collaboration. I believe that dedication, curiosity, and the willingness to adapt are more important than just having years of experience.</p>
+          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-600 max-w-2xl font-light text-center">The projects that I have worked on are the results of assignments I received during my college learning period and personal hobbies. Most of my projects are websites with a focus on front-end development. Each project represents my journey in mastering modern web technologies, from basic HTML and CSS to advanced frameworks like React and Vue.js. These experiences have shaped my understanding of user experience design and responsive web development.</p>
         </motion.div>
 
         {/* Simple decorative element - centered */}
@@ -116,4 +129,4 @@ const IntroToExperience = () => {
   );
 };
 
-export default IntroToExperience;
+export default IntroToProjects;

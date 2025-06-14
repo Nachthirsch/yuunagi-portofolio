@@ -9,6 +9,7 @@ import TechStack from "../../portofolio/tech_stacks";
 import Footer from "../../portofolio/footer";
 import TableOfContents from "../../portofolio/TableOfContents";
 import IntroToExperience from "../../portofolio/introToExperience";
+import IntroToProjects from "../../portofolio/introToProjects";
 import MBTI from "../../portofolio/mbti";
 
 const Portfolio = () => {
@@ -21,6 +22,9 @@ const Portfolio = () => {
       </div>
       <div id="experience">
         <Experience />
+      </div>
+      <div id="introToProjects">
+        <IntroToProjects />
       </div>
       <div id="projects">
         <ProjectSection />
@@ -39,9 +43,6 @@ const Portfolio = () => {
       </div>
       <div id="techStacks">
         <TechStack />
-      </div>
-      <div id="footer">
-        <Footer />
       </div>
     </div>
   );

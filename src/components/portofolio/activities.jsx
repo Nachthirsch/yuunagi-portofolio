@@ -1,50 +1,73 @@
 /* eslint-disable react/prop-types */
 import { motion } from "framer-motion";
-import { HiOutlineUserGroup, HiOutlineClock, HiOutlineBriefcase } from "react-icons/hi";
+import { HiOutlineUserGroup, HiOutlineClock } from "react-icons/hi";
 
-const ActivityCard = ({ title, role, date, details }) => {
+const ActivityCard = ({ title, role, date, details, index }) => {
+  // Generate random animation direction
+  const getRandomDirection = () => (Math.random() > 0.5 ? 30 : -30);
+
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }} 
-      whileInView={{ opacity: 1, y: 0 }} 
-      transition={{ duration: 0.5 }} 
-      className="group relative bg-neutral-800 border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,0.8)] p-5
-                hover:translate-y-[-4px] hover:shadow-[6px_10px_0px_rgba(0,0,0,0.8)]
-                transition-all duration-300 overflow-hidden"
-    >
-      {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-12 h-12 bg-neutral-700 opacity-20"
-           style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}></div>
-      
-      <div className="relative z-10">
-        {/* Title area with role badge */}
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-lg font-extrabold text-neutral-300 text-shadow-small pr-2">{title}</h3>
-          <div className="px-2 py-1 bg-neutral-700 text-neutral-300 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] rotate-2 text-xs font-bold">
-            {role}
+    <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: index * 0.2 }} className="group relative">
+      {/* Activity Number - Niche Touch */}
+      <div className="absolute -left-16 top-0 hidden lg:block">
+        <motion.span initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }} className="text-6xl font-extralight text-gray-200 select-none">
+          {String(index + 1).padStart(2, "0")}
+        </motion.span>
+      </div>
+
+      {/* Main Content */}
+      <div className="relative">
+        {/* Header Section - Editorial Style */}
+        <div className="mb-8">
+          <div className="flex items-start justify-between mb-4">
+            <div className="flex-1">
+              <motion.h3
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 + 0.1 }}
+                className="text-xl sm:text-2xl font-light text-gray-900 leading-tight mb-3
+                  hover:text-gray-600 transition-colors duration-500"
+              >
+                {title}
+              </motion.h3>
+
+              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: index * 0.2 + 0.2 }} className="flex items-center gap-4 text-sm">
+                <span className="text-gray-600 font-medium">{role}</span>
+                <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+                <div className="flex items-center gap-2 text-gray-500">
+                  <HiOutlineClock className="text-xs" />
+                  <span className="text-xs tracking-wider uppercase">{date}</span>
+                </div>
+              </motion.div>
+            </div>
           </div>
+
+          {/* Subtle divider */}
+          <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 0.8, delay: index * 0.2 + 0.4 }} className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent origin-left" />
         </div>
-        
-        {/* Date with icon */}
-        <div className="flex items-center gap-2 text-xs text-neutral-500 mt-1 mb-4 border-b-2 border-neutral-700 pb-3">
-          <div className="p-1 bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">
-            <HiOutlineClock className="text-neutral-300" />
-          </div>
-          <span className="font-medium">{date}</span>
-        </div>
-        
-        {/* Details with improved styling */}
-        <ul className="mt-4 space-y-3">
+
+        {/* Details - Niche Typography */}
+        <div className="space-y-6 pl-8 border-l border-gray-200">
           {details.map((detail, idx) => (
-            <li key={idx} className="text-sm text-neutral-400 tracking-wide flex items-start">
-              <div className="w-1.5 h-1.5 bg-neutral-600 mt-1.5 mr-3 flex-shrink-0 border-1 border-black transform rotate-45"></div>
-              <span className="group-hover:text-neutral-300 transition-colors">{detail}</span>
-            </li>
+            <motion.div key={idx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.2 + 0.5 + idx * 0.1 }} className="relative group/detail">
+              {/* Custom bullet */}
+              <div className="absolute -left-10 top-2">
+                <div
+                  className="w-2 h-2 border border-gray-300 rotate-45 
+                  group-hover/detail:border-gray-500 group-hover/detail:bg-gray-100 
+                  transition-all duration-300"
+                ></div>
+              </div>
+
+              <p
+                className="text-gray-600 leading-relaxed font-light text-sm sm:text-base
+                group-hover/detail:text-gray-800 transition-colors duration-300"
+              >
+                {detail}
+              </p>
+            </motion.div>
           ))}
-        </ul>
-        
-        {/* Decorative bottom element - replacing button */}
-        <div className="h-1 w-full bg-neutral-700 mt-6 border-t-1 border-b-1 border-black opacity-50"></div>
+        </div>
       </div>
     </motion.div>
   );
@@ -66,66 +89,87 @@ const ActivitiesSection = () => {
     },
   ];
 
+  // Generate random animation direction for header
+  const getRandomDirection = () => (Math.random() > 0.5 ? 40 : -40);
+
   return (
-    <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider relative overflow-hidden">
-      {/* Decorative background elements for neobrutalism style */}
-      <div className="absolute top-20 left-10 w-20 h-20 bg-neutral-800 opacity-5 rotate-12"
-           style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
-      <div className="absolute bottom-40 right-10 w-24 h-24 bg-neutral-800 opacity-5 -rotate-6"
-           style={{ clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)" }}></div>
-      
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.6 }} 
-          className="mb-12"
-        >
-          <div className="relative mb-6">
-            <div className="absolute -left-3 -top-3 w-16 h-16 bg-neutral-700 opacity-10 rotate-12 z-0"></div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-300 tracking-wider flex items-center gap-3 relative z-10 text-shadow-neo">
-              <div className="p-3 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] rotate-2">
-                <HiOutlineUserGroup className="text-neutral-400" />
-              </div>
-              Activities
+    <section className="py-32 px-4 sm:px-8 md:px-16 bg-gray-50 font-light relative overflow-hidden">
+      {/* Subtle background texture */}
+      <div className="absolute inset-0 opacity-30">
+        <div className="absolute top-1/4 right-1/6 w-96 h-96 bg-gray-100 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/3 left-1/6 w-80 h-80 bg-gray-100 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-5xl mx-auto relative z-10">
+        {/* Header - Niche Editorial Style */}
+        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }} className="mb-40">
+          {/* Overline */}
+          <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex items-center gap-6 mb-8">
+            <div className="flex items-center gap-4">
+              <HiOutlineUserGroup className="text-gray-400 text-lg" />
+              <span className="text-xs tracking-[0.3em] text-gray-400 font-medium uppercase">Community & Leadership</span>
+            </div>
+            <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent" />
+          </motion.div>
+
+          {/* Main Title */}
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}>
+            <h2
+              className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-gray-900 
+              tracking-tight leading-[1.1] mb-8"
+            >
+              Activities &<br />
+              <span className="text-gray-600">Engagements</span>
             </h2>
-            <motion.div 
-              className="h-2 w-24 bg-neutral-300 mt-4 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1" 
-              initial={{ width: 0 }} 
-              whileInView={{ width: "6rem" }} 
-              transition={{ duration: 0.8, delay: 0.3 }} 
-            />
-          </div>
-          
-          <p className="text-neutral-400 max-w-2xl ml-8 text-sm sm:text-base border-l-4 border-neutral-700 pl-4">
-            Organizations and activities that have shaped my leadership skills and community involvement.
-          </p>
+          </motion.div>
+
+          {/* Subtitle */}
+          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="text-gray-600 max-w-2xl text-base leading-relaxed font-light">
+            Organizations and activities that have shaped my leadership skills and community involvement. Each experience represents a step in understanding collaboration, responsibility, and the art of bringing people together.
+          </motion.p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {activities.map((activity, index) => (
-            <ActivityCard key={index} {...activity} />
-          ))}
+        {/* Activities Grid - Niche Layout */}
+        <div className="relative">
+          {/* Background grid pattern - subtle */}
+          <div className="absolute inset-0 opacity-5">
+            <div className="grid grid-cols-12 gap-4 h-full">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div key={i} className="border-r border-gray-300 last:border-r-0" />
+              ))}
+            </div>
+          </div>
+
+          {/* Activities List */}
+          <div className="space-y-32 relative pl-16">
+            {activities.map((activity, index) => (
+              <div key={index} className="relative">
+                <ActivityCard {...activity} index={index} />
+
+                {/* Connecting line between activities */}
+                {index < activities.length - 1 && (
+                  <motion.div
+                    initial={{ scaleY: 0 }}
+                    whileInView={{ scaleY: 1 }}
+                    transition={{ duration: 1, delay: index * 0.2 + 1 }}
+                    className="absolute left-0 bottom-[-16rem] w-px h-32 bg-gradient-to-b 
+                      from-gray-300 to-transparent origin-top hidden lg:block"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* Footer Element - Niche Touch */}
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="mt-40 text-center">
+          <div className="flex items-center justify-center gap-8">
+            <div className="w-16 h-px bg-gray-300" />
+            <span className="text-xs tracking-[0.2em] text-gray-400 font-light uppercase">End of Activities</span>
+            <div className="w-16 h-px bg-gray-300" />
+          </div>
+        </motion.div>
       </div>
-      
-      {/* Styles for neobrutalism */}
-      <style className="text-shadow-styles">
-        {`
-          .text-shadow-neo {
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-          }
-          .text-shadow-small {
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
-          }
-          .border-3 {
-            border-width: 3px;
-          }
-          .border-1 {
-            border-width: 1px;
-          }
-        `}
-      </style>
     </section>
   );
 };

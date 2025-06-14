@@ -3,115 +3,110 @@ import { SiAdobephotoshop, SiAdobelightroom, SiPostgresql, SiQgis, SiPython, SiH
 import { motion } from "framer-motion";
 import { FaVuejs } from "react-icons/fa";
 
-const TechItem = ({ icon: Icon, name, delay = 0 }) => {
+const TechCategory = ({ title, items, index }) => {
+  // Generate random animation direction
+  const getRandomDirection = () => (Math.random() > 0.5 ? 30 : -30);
+
   return (
-    <motion.div initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay }} whileHover={{ y: -2, x: -2 }} className="flex items-center gap-3 p-2 group">
-      <div className="p-2 bg-neutral-800 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1 group-hover:rotate-0 transition-all duration-300">
-        <Icon className="text-xl text-neutral-300" />
+    <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} className="group py-8 hover:bg-gray-100/30 transition-colors duration-300">
+      <div className="space-y-6">
+        {/* Header */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-medium text-gray-900">{title}</h3>
+          <p className="text-xs text-gray-500 tracking-wider uppercase">{items.length} Technologies</p>
+        </div>
+
+        {/* Tech Items */}
+        <div className="space-y-4 pl-6">
+          {items.map((item, idx) => (
+            <motion.div key={idx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.4, delay: index * 0.1 + idx * 0.05 }} className="group/detail">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 mt-1">
+                  <div className="w-1 h-1 bg-gray-400 rounded-full" />
+                </div>
+                <div className="flex items-center gap-4 group-hover/detail:translate-x-1 transition-transform duration-300">
+                  <div className="p-2 bg-gray-100 text-gray-600 rounded-sm group-hover/detail:bg-gray-200 transition-colors duration-300">
+                    <item.icon className="text-lg" />
+                  </div>
+                  <span className="text-gray-600 font-light text-sm sm:text-base group-hover/detail:text-gray-800 transition-colors duration-300">{item.name}</span>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </div>
-      <span className="text-neutral-300 font-medium group-hover:translate-x-1 transition-transform duration-200">{name}</span>
     </motion.div>
-  );
-};
-
-const TechGroup = ({ title, children, delay = 0 }) => {
-  return (
-    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay }} className="relative border-4 border-black bg-neutral-800 shadow-[6px_6px_0px_rgba(0,0,0,0.8)] p-5 hover:shadow-[8px_8px_0px_rgba(0,0,0,0.8)] transition-all duration-300">
-      {/* Decorative corner */}
-      <div className="absolute top-0 right-0 w-16 h-16 bg-neutral-700 opacity-20" style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}></div>
-
-      <h3 className="text-xl font-extrabold text-neutral-300 mb-4 text-shadow-small pb-2 border-b-2 border-neutral-700 rotate-[-1deg]">{title}</h3>
-      <div className="space-y-3 mt-4">{children}</div>
-
-      {/* Bottom decorative element */}
-      <div className="absolute bottom-2 left-4 right-4 h-1 bg-neutral-700 opacity-30"></div>
-    </motion.div>
-  );
-};
-
-const ClassicView = () => {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {/* Design Tools */}
-      <TechGroup title="Design Tools" delay={0}>
-        <TechItem icon={SiAdobephotoshop} name="Adobe Photoshop" delay={0.1} />
-        <TechItem icon={SiAdobelightroom} name="Adobe Lightroom" delay={0.15} />
-        <TechItem icon={SiFigma} name="Figma" delay={0.2} />
-      </TechGroup>
-
-      {/* Programming Languages */}
-      <TechGroup title="Programming Languages" delay={0.1}>
-        <TechItem icon={SiPython} name="Python" delay={0.1} />
-        <TechItem icon={SiHtml5} name="HTML" delay={0.15} />
-        <TechItem icon={SiCss3} name="CSS" delay={0.2} />
-        <TechItem icon={SiPhp} name="PHP" delay={0.25} />
-        <TechItem icon={SiJavascript} name="Javascript" delay={0.3} />
-      </TechGroup>
-
-      {/* Frameworks */}
-      <TechGroup title="Frameworks" delay={0.2}>
-        <TechItem icon={SiCodeigniter} name="CodeIgniter 3" delay={0.1} />
-        <TechItem icon={SiReact} name="React" delay={0.15} />
-        <TechItem icon={FaVuejs} name="Vue" delay={0.15} />
-        <TechItem icon={SiTailwindcss} name="TailwindCSS" delay={0.2} />
-        <TechItem icon={SiExpress} name="ExpressJS" delay={0.25} />
-      </TechGroup>
-
-      {/* Database */}
-      <TechGroup title="Database" delay={0.3}>
-        <TechItem icon={SiPostgresql} name="PostgreSql" delay={0.1} />
-      </TechGroup>
-
-      {/* Other Tools */}
-      <TechGroup title="Other Tools" delay={0.4}>
-        <TechItem icon={SiQgis} name="QGIS" delay={0.1} />
-      </TechGroup>
-    </div>
   );
 };
 
 const TechStack = () => {
+  const techCategories = [
+    {
+      title: "Design Tools",
+      items: [
+        { icon: SiAdobephotoshop, name: "Adobe Photoshop" },
+        { icon: SiAdobelightroom, name: "Adobe Lightroom" },
+        { icon: SiFigma, name: "Figma" },
+      ],
+    },
+    {
+      title: "Programming Languages",
+      items: [
+        { icon: SiPython, name: "Python" },
+        { icon: SiHtml5, name: "HTML" },
+        { icon: SiCss3, name: "CSS" },
+        { icon: SiPhp, name: "PHP" },
+        { icon: SiJavascript, name: "Javascript" },
+      ],
+    },
+    {
+      title: "Frameworks & Libraries",
+      items: [
+        { icon: SiCodeigniter, name: "CodeIgniter 3" },
+        { icon: SiReact, name: "React" },
+        { icon: FaVuejs, name: "Vue" },
+        { icon: SiTailwindcss, name: "TailwindCSS" },
+        { icon: SiExpress, name: "ExpressJS" },
+      ],
+    },
+    {
+      title: "Database & Tools",
+      items: [
+        { icon: SiPostgresql, name: "PostgreSQL" },
+        { icon: SiQgis, name: "QGIS" },
+      ],
+    },
+  ];
+
+  // Generate random animation direction for header
+  const getRandomDirection = () => (Math.random() > 0.5 ? 40 : -40);
+
   return (
-    <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute top-40 left-20 w-48 h-48 bg-neutral-800 opacity-5 rotate-12" style={{ clipPath: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)" }}></div>
-      <div className="absolute bottom-20 right-40 w-32 h-32 bg-neutral-800 opacity-5 -rotate-12" style={{ clipPath: "polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)" }}></div>
+    <section className="py-32 px-4 sm:px-8 md:px-16 bg-gray-50 font-light">
+      <div className="max-w-4xl mx-auto">
+        {/* Header */}
+        <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8, delay: 0.2 }} className="mb-32">
+          <div className="flex items-baseline gap-8 mb-8">
+            <HiCode className="text-gray-400 text-lg mt-1 flex-shrink-0" />
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900 tracking-wide">Tech Stack</h2>
+          </div>
+          <div className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent mb-8" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        <div className="mb-12">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <div className="relative mb-6">
-              <div className="absolute -left-3 -top-3 w-16 h-16 bg-neutral-700 opacity-10 rotate-12 z-0"></div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-neutral-300 tracking-wider flex items-center gap-3 relative z-10 text-shadow-neo">
-                <div className="p-3 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] rotate-2">
-                  <HiCode className="text-neutral-400" />
-                </div>
-                Tech Stack
-              </h2>
-              <motion.div className="h-2 w-24 bg-neutral-300 mt-4 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] rotate-1" initial={{ width: 0 }} whileInView={{ width: "6rem" }} transition={{ duration: 0.8, delay: 0.3 }} />
-            </div>
-          </motion.div>
-        </div>
-
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-          <ClassicView />
+          <p className="text-gray-600 max-w-2xl text-sm leading-relaxed font-light">The technologies and tools that form the foundation of my development work.</p>
         </motion.div>
-      </div>
 
-      {/* Styles for neobrutalism */}
-      <style className="text-shadow-styles">
-        {`
-          .text-shadow-neo {
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-          }
-          .text-shadow-small {
-            text-shadow: 2px 2px 0px rgba(0,0,0,0.8);
-          }
-          .border-3 {
-            border-width: 3px;
-          }
-        `}
-      </style>
+        {/* Categories List */}
+        <div className="space-y-16">
+          {techCategories.map((category, index) => (
+            <div key={index} className="relative">
+              <TechCategory {...category} index={index} />
+
+              {/* Divider - except for last item */}
+              {index < techCategories.length - 1 && <div className="absolute bottom-0 left-0 right-0 h-px bg-gray-200" />}
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 };

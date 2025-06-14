@@ -4,93 +4,79 @@ import { HiAcademicCap, HiCode, HiExternalLink, HiOutlineCloudUpload, HiOutlineM
 import { PiNetworkLight } from "react-icons/pi";
 import { SiCanva } from "react-icons/si";
 // Import Swiper components and styles
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
-import { useRef, useState } from 'react';
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { useRef, useState } from "react";
 import { MdOutlineViewCarousel } from "react-icons/md";
 
 const CertificatesSection = () => {
   const swiperRef = useRef(null);
-  const [viewMode, setViewMode] = useState('slider'); // 'slider' or 'list'
+  const [viewMode, setViewMode] = useState("slider");
 
   const toggleViewMode = () => {
-    setViewMode(viewMode === 'slider' ? 'list' : 'slider');
+    setViewMode(viewMode === "slider" ? "list" : "slider");
   };
 
   return (
-    <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider">
+    <section className="py-20 px-4 sm:px-8 md:px-16 bg-gray-50 font-light">
       <div className="max-w-6xl mx-auto">
-        {/* Header - Enhanced Neobrutalism Style with Original Color Theme */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          whileInView={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.6 }} 
-          className="mb-8 sm:mb-16 relative"
-        >
-          <div className="absolute -left-5 -top-5 w-20 h-20 bg-neutral-400 opacity-20 rotate-12 z-0"></div>
-          <div className="absolute -left-2 -top-2 w-12 h-12 bg-neutral-500 opacity-20 -rotate-6 z-0"></div>
-          
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl sm:text-3xl font-extrabold uppercase text-neutral-300 tracking-wider flex items-center gap-3 relative z-10">
-              <div className="p-3 bg-neutral-800 border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)] rotate-2">
-                <HiAcademicCap className="text-neutral-300 text-2xl" />
-              </div>
-              <span className="text-shadow-neo relative">
-                Certificates & Badges
-                <span className="absolute -bottom-1 left-0 w-full h-1 bg-neutral-400"></span>
-              </span>
-            </h2>
-            
+        {/* Header - Minimalist Style */}
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-20">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-baseline gap-6">
+              <HiAcademicCap className="text-gray-400 text-lg mt-1 flex-shrink-0" />
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900 tracking-wide">Certificates & Badges</h2>
+            </div>
+
             {/* View Mode Toggle Button */}
-            <button 
+            <button
               onClick={toggleViewMode}
-              className="flex items-center gap-2 py-2 px-4 bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all duration-200 rotate-1"
-              aria-label={`Switch to ${viewMode === 'slider' ? 'list' : 'slider'} view`}
+              className="text-sm font-medium transition-colors duration-200
+                text-gray-700 hover:text-gray-900"
+              aria-label={`Switch to ${viewMode === "slider" ? "list" : "slider"} view`}
             >
-              {viewMode === 'slider' ? (
-                <>
-                  <HiViewList className="text-lg text-neutral-300" />
-                  <span className="text-sm font-bold text-neutral-300 hidden sm:block">List View</span>
-                </>
+              {viewMode === "slider" ? (
+                <span className="flex items-center gap-2">
+                  <HiViewList className="text-base" />
+                  <span className="hidden sm:block">List View</span>
+                </span>
               ) : (
-                <>
-                  <MdOutlineViewCarousel className="text-lg text-neutral-300" />
-                  <span className="text-sm font-bold text-neutral-300 hidden sm:block">Slider View</span>
-                </>
+                <span className="flex items-center gap-2">
+                  <MdOutlineViewCarousel className="text-base" />
+                  <span className="hidden sm:block">Slider View</span>
+                </span>
               )}
             </button>
           </div>
-          
-          <motion.div 
-            className="w-32 h-3 bg-neutral-300 mt-5 -rotate-1 border-3 border-black shadow-[5px_5px_0px_rgba(0,0,0,0.8)]" 
-            initial={{ width: 0 }} 
-            whileInView={{ width: "10rem" }} 
-            transition={{ duration: 0.8, delay: 0.3 }} 
-          />
+          <div className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent" />
         </motion.div>
 
-        {viewMode === 'slider' ? (
-          // Certificate Slider - Swiper Implementation with Neo-brutalism Navigation
-          <div className="relative cert-slider-container">
+        {viewMode === "slider" ? (
+          // Certificate Slider - Clean Implementation
+          <div className="relative">
             {/* Custom Navigation Buttons */}
-            <div className="slider-navigation flex justify-between absolute top-1/2 -translate-y-1/2 w-full z-30 px-2 sm:px-6 pointer-events-none">
-              <button 
-                onClick={() => swiperRef.current?.slidePrev()} 
-                className="nav-btn-prev bg-neutral-800 p-2 sm:p-3 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all duration-200 rotate-2 pointer-events-auto"
+            <div className="absolute top-1/2 -translate-y-1/2 -left-4 z-20">
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="p-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-sm shadow-sm
+                  hover:bg-white hover:shadow-md transition-all duration-200"
                 aria-label="Previous slide"
               >
-                <IoIosArrowBack className="text-lg sm:text-xl text-neutral-300" />
+                <IoIosArrowBack className="text-lg" />
               </button>
-              <button 
-                onClick={() => swiperRef.current?.slideNext()} 
-                className="nav-btn-next bg-neutral-800 p-2 sm:p-3 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] hover:-translate-y-1 transition-all duration-200 -rotate-2 pointer-events-auto"
+            </div>
+            <div className="absolute top-1/2 -translate-y-1/2 -right-4 z-20">
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className="p-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-sm shadow-sm
+                  hover:bg-white hover:shadow-md transition-all duration-200"
                 aria-label="Next slide"
               >
-                <IoIosArrowForward className="text-lg sm:text-xl text-neutral-300" />
+                <IoIosArrowForward className="text-lg" />
               </button>
             </div>
 
@@ -100,90 +86,68 @@ const CertificatesSection = () => {
                 swiperRef.current = swiper;
               }}
               modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={30}
+              spaceBetween={40}
               slidesPerView={1}
-              centeredSlides={false}
-              loop={true}
+              loop={false}
               autoplay={{
                 delay: 5000,
                 disableOnInteraction: false,
+                pauseOnMouseEnter: true,
               }}
               pagination={{
                 clickable: true,
-                el: '.cert-pagination',
-                bulletClass: 'swiper-pagination-bullet cert-bullet',
-                bulletActiveClass: 'swiper-pagination-bullet-active cert-bullet-active',
+                el: ".custom-pagination",
               }}
               breakpoints={{
                 640: {
                   slidesPerView: 2,
+                  spaceBetween: 32,
                 },
                 1024: {
                   slidesPerView: 3,
+                  spaceBetween: 40,
                 },
               }}
-              className="cert-swiper pb-14"
+              className="certificates-swiper"
             >
               {certificates.map((cert, index) => (
-                <SwiperSlide key={index} className="py-4">
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }} 
-                    whileInView={{ opacity: 1, y: 0 }} 
-                    transition={{ duration: 0.5, delay: index * 0.1 }} 
-                    whileHover={{ y: -8, transition: { duration: 0.2 } }}
-                    className={`group relative bg-neutral-800 ${index % 3 === 0 ? 'rotate-2' : index % 3 === 1 ? '-rotate-2' : 'rotate-0'} 
-                      border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] 
-                      h-[220px] hover:h-auto overflow-hidden 
-                      hover:z-20 transition-all duration-300`}
+                <SwiperSlide key={index}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="p-6 hover:bg-gray-100/50 transition-colors duration-300 rounded-sm
+                      h-full flex flex-col group"
                   >
-                    {/* Overlay Background for Extended Content */}
-                    <div className="absolute inset-0 bg-neutral-800/95 opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                    {/* Diagonal decorative corner */}
-                    <div className={`absolute top-0 right-0 w-16 h-16 bg-neutral-700 opacity-60 -z-0`} style={{ clipPath: 'polygon(100% 0, 0 0, 100% 100%)' }}></div>
-                    
-                    <div className={`flex gap-5 h-full relative z-10 p-6 ${index % 3 === 0 ? '-rotate-2' : index % 3 === 1 ? 'rotate-2' : 'rotate-0'}`}>
-                      {/* Icon Column - Enhanced Neobrutalism Style */}
-                      <div className="shrink-0">
-                        <div className={`p-4 bg-neutral-700 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] -rotate-3`}>
-                          <cert.icon className="text-2xl text-neutral-300" />
-                        </div>
+                    {/* Icon and Header */}
+                    <div className="flex items-start gap-4 mb-6">
+                      <div
+                        className="p-3 bg-gray-100 text-gray-600 rounded-sm flex-shrink-0
+                        group-hover:bg-gray-200 transition-colors duration-300"
+                      >
+                        <cert.icon className="text-xl" />
                       </div>
-
-                      {/* Content Column */}
-                      <div className="flex flex-col h-full w-full">
-                        {/* Title Section */}
-                        <div className="flex-grow">
-                          <h3 className="text-lg font-extrabold text-neutral-300 line-clamp-2 group-hover:line-clamp-none transition-all uppercase text-shadow-small">
-                            {cert.title}
-                          </h3>
-                          <p className="text-sm text-neutral-400 mt-2 line-clamp-1 group-hover:line-clamp-none transition-all font-bold">
-                            {cert.issuer}
-                          </p>
-                          <p className="text-xs text-neutral-500 mt-3 inline-block px-3 py-1 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] bg-neutral-700 font-bold rotate-1">
-                            {cert.date}
-                          </p>
-                        </div>
-
-                        {/* Credential Link - Enhanced Neobrutalism Style */}
-                        <div className="mt-auto pt-5 border-t-3 border-black opacity-0 group-hover:opacity-100 transition-opacity">
-                          {cert.credential && (
-                            <a 
-                              href={cert.credential} 
-                              target="_blank" 
-                              rel="noopener noreferrer" 
-                              className="inline-flex items-center text-sm font-bold text-neutral-300 
-                                px-4 py-2 mt-2
-                                bg-neutral-700 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                                hover:-translate-y-1 hover:translate-x-1 hover:shadow-[5px_5px_0px_rgba(0,0,0,0.8)]
-                                transition-all duration-200 rotate-1"
-                            >
-                              View Credential
-                              <HiExternalLink className="ml-2 text-lg" />
-                            </a>
-                          )}
-                        </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-medium text-gray-900 leading-tight mb-3">{cert.title}</h3>
+                        <p className="text-sm text-gray-600 mb-2">{cert.issuer}</p>
+                        <p className="text-xs text-gray-500 uppercase tracking-wider">{cert.date}</p>
                       </div>
+                    </div>
+
+                    {/* Credential Link */}
+                    <div className="mt-auto pt-6">
+                      {cert.credential && (
+                        <a
+                          href={cert.credential}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm font-medium
+                            text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                        >
+                          <HiExternalLink className="text-base flex-shrink-0" />
+                          <span>View Credential</span>
+                        </a>
+                      )}
                     </div>
                   </motion.div>
                 </SwiperSlide>
@@ -191,142 +155,84 @@ const CertificatesSection = () => {
             </Swiper>
 
             {/* Custom Pagination */}
-            <div className="cert-pagination flex justify-center mt-8 space-x-2"></div>
+            <div className="custom-pagination flex justify-center mt-12 space-x-2"></div>
           </div>
         ) : (
-          // List View - Simplified table-like layout
-          <motion.div 
-            initial={{ opacity: 0 }} 
-            animate={{ opacity: 1 }} 
-            transition={{ duration: 0.5 }}
-            className="cert-list-container"
-          >
-            <div className="border-4 border-black shadow-[8px_8px_0px_rgba(0,0,0,0.8)] bg-neutral-800 overflow-hidden">
-              {/* Table Header */}
-              <div className="grid grid-cols-12 gap-4 p-4 border-b-3 border-black bg-neutral-700">
-                <div className="col-span-7 sm:col-span-8">
-                  <h3 className="text-sm sm:text-base font-extrabold text-neutral-200 uppercase">Certificate Title</h3>
-                </div>
-                <div className="col-span-3 sm:col-span-2 text-center">
-                  <h3 className="text-sm sm:text-base font-extrabold text-neutral-200 uppercase">Date</h3>
-                </div>
-                <div className="col-span-2 text-center">
-                  <h3 className="text-sm sm:text-base font-extrabold text-neutral-200 uppercase">Link</h3>
-                </div>
-              </div>
-              
-              {/* Certificate List */}
-              <div className="max-h-[500px] overflow-y-auto cert-list-scrollbar">
-                {certificates.map((cert, index) => (
-                  <motion.div 
-                    key={index}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className={`grid grid-cols-12 gap-4 p-4 items-center border-b-2 border-neutral-700 hover:bg-neutral-700/30 transition-colors duration-200 ${index % 2 === 0 ? 'bg-neutral-800' : 'bg-neutral-800/70'}`}
+          // List View - Editorial Style
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="space-y-12">
+            {certificates.map((cert, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+                className="grid grid-cols-1 md:grid-cols-4 gap-6 items-start group 
+                  hover:bg-gray-100/50 transition-colors duration-300 p-6 -m-6 rounded-sm"
+              >
+                {/* Icon */}
+                <div className="md:col-span-1 flex md:justify-center">
+                  <div
+                    className="p-3 bg-gray-100 text-gray-600 rounded-sm
+                    group-hover:bg-gray-200 transition-colors duration-300"
                   >
-                    <div className="col-span-7 sm:col-span-8 flex items-center gap-3">
-                      <div className="hidden sm:block p-2 bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">
-                        <cert.icon className="text-sm text-neutral-300" />
-                      </div>
-                      <h3 className="text-sm font-bold text-neutral-300 line-clamp-1">
-                        {cert.title}
-                      </h3>
-                    </div>
-                    <div className="col-span-3 sm:col-span-2 text-center">
-                      <p className="text-xs text-neutral-400 inline-block px-2 py-1 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] bg-neutral-700 font-bold">
-                        {cert.date}
-                      </p>
-                    </div>
-                    <div className="col-span-2 text-center">
-                      {cert.credential && (
-                        <a 
-                          href={cert.credential} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="inline-flex items-center justify-center text-neutral-300 
-                            p-2
-                            bg-neutral-700 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)]
-                            hover:-translate-y-1 hover:shadow-[4px_4px_0px_rgba(0,0,0,0.8)]
-                            transition-all duration-200"
-                          aria-label={`View credential for ${cert.title}`}
-                        >
-                          <HiExternalLink className="text-base" />
-                        </a>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
+                    <cert.icon className="text-xl" />
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="md:col-span-2 space-y-2">
+                  <h3 className="text-lg font-medium text-gray-900">{cert.title}</h3>
+                  <p className="text-sm text-gray-600">{cert.issuer}</p>
+                  <p className="text-xs text-gray-500 uppercase tracking-wider">{cert.date}</p>
+                </div>
+
+                {/* Link */}
+                <div className="md:col-span-1 flex md:justify-end">
+                  {cert.credential && (
+                    <a
+                      href={cert.credential}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-medium
+                        text-gray-700 hover:text-gray-900 transition-colors duration-200"
+                      aria-label={`View credential for ${cert.title}`}
+                    >
+                      <HiExternalLink className="text-base" />
+                      <span className="hidden sm:block">View Credential</span>
+                    </a>
+                  )}
+                </div>
+              </motion.div>
+            ))}
           </motion.div>
         )}
       </div>
 
-      {/* Styles for neobrutalism */}
+      {/* Minimal Custom Styles */}
       <style jsx global>{`
-        .text-shadow-neo {
-          text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-        }
-        .text-shadow-small {
-          text-shadow: 3px 3px 0px rgba(0,0,0,0.8);
-        }
-        .border-3 {
-          border-width: 3px;
-        }
-        
-        /* Swiper Custom Styles */
-        .cert-swiper {
-          padding-top: 10px;
-          padding-bottom: 40px;
+        .certificates-swiper {
+          padding-bottom: 60px;
           overflow: visible;
         }
-        
-        .cert-bullet {
-          width: 12px;
-          height: 12px;
-          display: inline-block;
-          border-radius: 0;
-          background: #404040;
-          border: 2px solid black;
+
+        .certificates-swiper .swiper-slide {
+          height: auto;
+        }
+
+        .custom-pagination .swiper-pagination-bullet {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #d1d5db;
+          opacity: 0.5;
           margin: 0 4px;
-          cursor: pointer;
-          opacity: 0.7;
-          transition: all 0.3s;
-          transform: rotate(45deg);
+          transition: all 0.3s ease;
         }
-        
-        .cert-bullet-active {
+
+        .custom-pagination .swiper-pagination-bullet-active {
           opacity: 1;
-          background: #737373;
-          transform: rotate(45deg) scale(1.2);
-          border: 2px solid black;
-          box-shadow: 2px 2px 0px rgba(0,0,0,0.8);
-        }
-        
-        /* Certificate List Scrollbar */
-        .cert-list-scrollbar::-webkit-scrollbar {
-          width: 10px;
-        }
-        
-        .cert-list-scrollbar::-webkit-scrollbar-track {
-          background: #262626;
-          border-left: 2px solid black;
-        }
-        
-        .cert-list-scrollbar::-webkit-scrollbar-thumb {
-          background: #404040;
-          border: 2px solid black;
-          box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-        }
-        
-        .cert-list-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #525252;
-        }
-        
-        /* For webkit browsers like Chrome/Safari */
-        .swiper-wrapper {
-          transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+          background: #6b7280;
+          transform: scale(1.2);
         }
       `}</style>
     </section>
