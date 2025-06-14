@@ -8,13 +8,17 @@ import ProjectSection from "../../portofolio/projects";
 import TechStack from "../../portofolio/tech_stacks";
 import Footer from "../../portofolio/footer";
 import TableOfContents from "../../portofolio/TableOfContents";
+import IntroToExperience from "../../portofolio/introToExperience";
 import MBTI from "../../portofolio/mbti";
 
 const Portfolio = () => {
   return (
     <div className="select-none">
-      <TableOfContents />
+      {/* <TableOfContents /> */}
       <Header />
+      <div id="introToExperience m-2">
+        <IntroToExperience />
+      </div>
       <div id="experience">
         <Experience />
       </div>

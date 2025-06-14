@@ -18,7 +18,7 @@ function App() {
       <Router>
         <AuthProvider>
           <div className="select-none scrollbar-hide h-screen overflow-auto">
-            <Nav />
+            {/* <Nav /> */}
             <Routes>
               <Route path="/" element={<Portfolio />} />
               <Route path="/writes" element={<BlogList />} />
@@ -33,7 +33,7 @@ function App() {
                 }
               />
             </Routes>
-            <ChatBot />
+            {/* <ChatBot /> */}
           </div>
         </AuthProvider>
       </Router>

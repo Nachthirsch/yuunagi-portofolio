@@ -9,21 +9,147 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #e74c3c;
+  background: #888;
   border-radius: 2px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #c0392b;
+  background: #aaa;
 }
 
 /* For Firefox */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #e74c3c #262626;
+  scrollbar-color: #888 #262626;
 }
 
 /* Hide scrollbar when not hovering for a cleaner look */
 .custom-scrollbar:not(:hover)::-webkit-scrollbar-thumb {
-  background: rgba(231, 76, 60, 0.5);
-} 
+  background: rgba(136, 136, 136, 0.5);
+}
+
+/* Modern minimalist header styles */
+.immeasurable-header {
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+  padding: 2rem 0;
+  position: relative;
+}
+
+.header-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  width: 100%;
+}
+
+.header-top-nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 2rem;
+  margin-bottom: 4rem;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.header-letter {
+  font-size: 1.2rem;
+  color: #1d1d1f;
+  opacity: 0.7;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  transition: opacity 0.3s ease;
+}
+
+.header-letter:hover {
+  opacity: 1;
+}
+
+.header-main-content {
+  grid-column: 2 / 8;
+  padding-left: 2rem;
+}
+
+.header-tagline {
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #1d1d1f;
+  margin-bottom: 2rem;
+}
+
+.header-sidebar {
+  grid-column: 9 / 12;
+  padding-right: 2rem;
+}
+
+.header-description {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #555;
+  padding-bottom: 1.5rem;
+}
+
+.header-nav-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 3rem;
+}
+
+.header-nav-link {
+  color: #1d1d1f;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .header-grid {
+    display: block;
+  }
+
+  .header-main-content,
+  .header-sidebar {
+    padding: 0 2rem;
+  }
+
+  .header-tagline {
+    font-size: 2.5rem;
+  }
+
+  .header-top-nav {
+    margin-bottom: 2rem;
+  }
+}
+
+/* Styling for Last.fm container in the new design */
+.lastfm-container {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-top: 1.5rem;
+}
+
+.lastfm-container h3 {
+  font-size: 0.9rem;
+  color: #1d1d1f;
+  margin-bottom: 0.75rem;
+}
+
+.social-container {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.social-icon-greyscale {
+  color: #555;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-icon-greyscale:hover {
+  color: #222;
+  transform: translateY(-2px);
+}
