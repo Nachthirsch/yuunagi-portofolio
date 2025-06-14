@@ -44,192 +44,124 @@ const Experience = () => {
     },
   ];
 
-  // Simplified animation variants
+  // Minimalist animation variants
   const fadeIn = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 }
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 },
   };
 
-  // Neobrutalism hover animation
+  // Subtle hover animation for minimalist design
   const hoverAnimation = {
-    rest: { scale: 1, rotate: 0 },
-    hover: { scale: 1.02, rotate: 1, transition: { duration: 0.2 } }
+    rest: { scale: 1, y: 0 },
+    hover: { scale: 1.01, y: -2, transition: { duration: 0.3, ease: "easeOut" } },
   };
+
+  // Random animation directions
+  const getRandomDirection = () => (Math.random() > 0.5 ? 30 : -30);
 
   return (
-    <section className="py-16 px-4 sm:px-8 md:px-16 bg-neutral-900 font-Hanken tracking-wider">
-      <div className="max-w-6xl mx-auto">
-        {/* Experience Header - Neobrutalism Style */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          variants={fadeIn}
-          className="mb-16 relative"
-        >
-          <div className="absolute -left-3 -top-3 w-16 h-16 bg-blue-400 opacity-20 rotate-12 z-0"></div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-300 tracking-wider flex items-center gap-3 relative z-10">
-            <div className="p-3 bg-neutral-800 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]">
-              <HiOutlineBriefcase className="text-neutral-300 text-lg sm:text-xl" />
-            </div>
-            <span className="uppercase font-extrabold text-shadow-neo">EXPERIENCE</span>
-          </h2>
-          <div className="w-32 h-2 bg-neutral-300 mt-4 rotate-1 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]" />
+    <section className="py-32 px-4 sm:px-8 md:px-16 bg-gray-50 font-light">
+      <div className="max-w-4xl mx-auto">
+        {/* Experience Header - Ultra Minimalist */}
+        <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8, delay: 0.2 }} className="mb-32">
+          <div className="flex items-baseline gap-8 mb-8">
+            <HiOutlineBriefcase className="text-gray-400 text-lg mt-1 flex-shrink-0" />
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900 tracking-wide">Experience</h2>
+          </div>
+          <div className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent" />
         </motion.div>
 
-        <div className="relative">
-          {/* Vertical Line - Neobrutalism Style */}
-          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-2 bg-neutral-700 border-x-2 border-black" />
+        {/* Experience Items - Floating Layout */}
+        <div className="space-y-24 relative">
+          {/* Subtle vertical line */}
+          <div className="absolute left-8 top-0 bottom-0 w-px bg-gray-200 hidden md:block" />
 
-          <div className="space-y-12 md:space-y-24">
-            {experiences.map((exp, index) => (
-              <motion.div 
-                key={index} 
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                variants={fadeIn}
-                className="relative"
-              >
-                {/* Timeline marker - Neobrutalism Style */}
-                <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                  <div className="w-12 h-12 bg-neutral-700 rotate-12 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:rotate-45">
-                    <div className="absolute inset-0 flex items-center justify-center -rotate-12">
-                      <HiOutlineBriefcase className="text-neutral-300 text-xl" />
+          {experiences.map((exp, index) => (
+            <motion.div key={index} initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8, delay: index * 0.1 }} className="relative group">
+              {/* Timeline dot */}
+              <motion.div className="absolute left-7 md:left-7 w-2 h-2 bg-gray-300 rounded-full transition-all duration-300 group-hover:bg-gray-500 group-hover:scale-125" whileHover={{ scale: 1.5, backgroundColor: "#6b7280" }} />
+
+              {/* Content Area */}
+              <div className="ml-16 md:ml-20 space-y-4">
+                {/* Header Row */}
+                <div className="flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-2 lg:gap-8">
+                  <div className="space-y-1">
+                    <h3 className="text-lg sm:text-xl font-normal text-gray-900 tracking-wide">{exp.title}</h3>
+                    <div className="flex items-center gap-3">
+                      <p className="text-sm text-gray-600 font-light">{exp.company}</p>
+                      <span className="w-1 h-1 bg-gray-400 rounded-full" />
+                      <span className="text-xs text-gray-500 uppercase tracking-wider font-medium">{exp.label}</span>
                     </div>
                   </div>
+                  <p className="text-xs text-gray-400 font-light tracking-wider lg:text-right whitespace-nowrap">{exp.date}</p>
                 </div>
 
-                {/* Content Box - Neobrutalism Style */}
-                <motion.div
-                  initial="rest"
-                  whileHover="hover"
-                  variants={hoverAnimation}
-                  className={`
-                  w-full md:w-5/12 
-                  ${index % 2 === 0 ? "md:ml-auto md:pl-8" : "md:mr-auto md:pr-8"}
-                  p-6 
-                  bg-neutral-800
-                  rotate-${index % 2 === 0 ? '1' : '-1'}
-                  border-4 border-black
-                  shadow-[8px_8px_0px_rgba(0,0,0,0.8)]
-                  transition-all duration-300
-                `}
-                >
-                  <div className={`-rotate-${index % 2 === 0 ? '1' : '-1'}`}>
-                    <h3 className="text-lg sm:text-xl font-extrabold text-neutral-300 tracking-widest uppercase">{exp.title}</h3>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-sm sm:text-base text-neutral-400 tracking-wider font-bold">{exp.company}</p>
-                        <span className="px-2.5 py-1 text-xs font-extrabold bg-neutral-700 text-neutral-300 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">{exp.label}</span>
+                {/* Description with Custom Bullets */}
+                <div className="space-y-3 max-w-3xl">
+                  {exp.description.map((item, idx) => (
+                    <motion.div key={idx} className="flex items-start gap-4 group/item" initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }} viewport={{ once: true }}>
+                      <div className="flex-shrink-0 mt-2">
+                        <div className="w-1 h-1 bg-gray-400 rounded-full transition-all duration-300 group-hover/item:bg-gray-600 group-hover/item:scale-150" />
                       </div>
-                      <p className="text-xs sm:text-sm text-neutral-400 tracking-wider mt-2 sm:mt-0 font-bold">{exp.date}</p>
-                    </div>
-                    <ul className="mt-5 space-y-3">
-                      {exp.description.map((item, idx) => (
-                        <li key={idx} className="text-sm sm:text-base text-neutral-400 tracking-wide pl-5 relative before:absolute before:content-['▶'] before:text-neutral-600 before:left-0 before:top-0 before:text-xs">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
+                      <p className="text-sm text-gray-600 leading-relaxed font-light">{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Education Header - Neobrutalism Style */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          variants={fadeIn}
-          className="mb-16 mt-24 relative"
-        >
-          <div className="absolute -left-3 -top-3 w-16 h-16 bg-pink-400 opacity-20 rotate-12 z-0"></div>
-          <h2 className="text-2xl sm:text-3xl font-bold text-neutral-300 tracking-wider flex items-center gap-3 relative z-10">
-            <div className="p-3 bg-neutral-800 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]">
-              <IoSchoolOutline className="text-neutral-300 text-lg sm:text-xl" />
-            </div>
-            <span className="uppercase font-extrabold text-shadow-neo">EDUCATION</span>
-          </h2>
-          <div className="w-32 h-2 bg-neutral-300 mt-4 rotate-1 border-2 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)]" />
+        {/* Education Header - Ultra Minimalist */}
+        <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8, delay: 0.2 }} className="mb-32 mt-48">
+          <div className="flex items-baseline gap-8 mb-8">
+            <IoSchoolOutline className="text-gray-400 text-lg mt-1 flex-shrink-0" />
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-900 tracking-wide">Education</h2>
+          </div>
+          <div className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent" />
         </motion.div>
 
-        <div className="relative">
-          {/* Vertical Line - Neobrutalism Style */}
-          <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 h-full w-2 bg-neutral-700 border-x-2 border-black" />
+        {/* Education Items - Same Style */}
+        <div className="space-y-24 relative">
+          {/* Subtle vertical line */}
+          <div className="absolute left-8 top-0 bottom-0 w-px bg-gray-200 hidden md:block" />
 
-          <div className="space-y-12 md:space-y-16">
-            {education.map((edu, index) => (
-              <motion.div 
-                key={index} 
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                variants={fadeIn}
-                className="relative"
-              >
-                {/* Timeline marker - Neobrutalism Style */}
-                <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
-                  <div className="w-12 h-12 bg-neutral-700 rotate-12 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] transition-transform duration-300 hover:rotate-45">
-                    <div className="absolute inset-0 flex items-center justify-center -rotate-12">
-                      <IoSchoolOutline className="text-neutral-300 text-xl" />
+          {education.map((edu, index) => (
+            <motion.div key={index} initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.8, delay: index * 0.1 }} className="relative group">
+              {/* Timeline dot */}
+              <motion.div className="absolute left-7 md:left-7 w-2 h-2 bg-gray-300 rounded-full transition-all duration-300 group-hover:bg-gray-500 group-hover:scale-125" whileHover={{ scale: 1.5, backgroundColor: "#6b7280" }} />
+
+              {/* Content Area */}
+              <div className="ml-16 md:ml-20 space-y-4">
+                {/* Header Row */}
+                <div className="flex flex-col lg:flex-row lg:items-baseline lg:justify-between gap-2 lg:gap-8">
+                  <div className="space-y-1">
+                    <h3 className="text-lg sm:text-xl font-normal text-gray-900 tracking-wide">{edu.title}</h3>
+                    <div className="flex items-center gap-3">
+                      <p className="text-sm text-gray-600 font-light">{edu.company}</p>
+                      <span className="w-1 h-1 bg-gray-400 rounded-full" />
+                      <span className="text-xs text-gray-500 uppercase tracking-wider font-medium">{edu.label}</span>
                     </div>
                   </div>
+                  <p className="text-xs text-gray-400 font-light tracking-wider lg:text-right whitespace-nowrap">{edu.date}</p>
                 </div>
 
-                {/* Content Box - Neobrutalism Style */}
-                <motion.div
-                  initial="rest"
-                  whileHover="hover"
-                  variants={hoverAnimation}
-                  className={`
-                  w-full md:w-5/12 
-                  ${index % 2 === 0 ? "md:ml-auto md:pl-8" : "md:mr-auto md:pr-8"}
-                  p-6 
-                  bg-neutral-800
-                  rotate-${index % 2 === 0 ? '1' : '-1'}
-                  border-4 border-black
-                  shadow-[8px_8px_0px_rgba(0,0,0,0.8)]
-                  transition-all duration-300
-                `}
-                >
-                  <div className={`-rotate-${index % 2 === 0 ? '1' : '-1'}`}>
-                    <h3 className="text-lg sm:text-xl font-extrabold text-neutral-300 tracking-widest uppercase">{edu.title}</h3>
-                    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mt-3">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <p className="text-sm sm:text-base text-neutral-400 tracking-wider font-bold">{edu.company}</p>
-                        <span className="px-2.5 py-1 text-xs font-extrabold bg-neutral-700 text-neutral-300 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]">{edu.label}</span>
+                {/* Description with Custom Bullets */}
+                <div className="space-y-3 max-w-3xl">
+                  {edu.description.map((item, idx) => (
+                    <motion.div key={idx} className="flex items-start gap-4 group/item" initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }} viewport={{ once: true }}>
+                      <div className="flex-shrink-0 mt-2">
+                        <div className="w-1 h-1 bg-gray-400 rounded-full transition-all duration-300 group-hover/item:bg-gray-600 group-hover/item:scale-150" />
                       </div>
-                      <p className="text-xs sm:text-sm text-neutral-400 tracking-wider mt-2 sm:mt-0 font-bold">{edu.date}</p>
-                    </div>
-                    <ul className="mt-5 space-y-3">
-                      {edu.description.map((item, idx) => (
-                        <li key={idx} className="text-sm sm:text-base text-neutral-400 tracking-wide pl-5 relative before:absolute before:content-['▶'] before:text-neutral-600 before:left-0 before:top-0 before:text-xs">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
+                      <p className="text-sm text-gray-600 leading-relaxed font-light">{item}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </div>
-
-      {/* Untuk mendapatkan text-shadow-neo style, perlu menambahkan ke CSS global */}
-      <style jsx global>{`
-        .text-shadow-neo {
-          text-shadow: 4px 4px 0px rgba(0,0,0,0.8);
-        }
-      `}</style>
     </section>
   );
 };

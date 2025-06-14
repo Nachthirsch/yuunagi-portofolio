@@ -16,7 +16,7 @@ const Portfolio = () => {
     <div className="select-none">
       {/* <TableOfContents /> */}
       <Header />
-      <div id="introToExperience m-2">
+      <div id="introToExperience">
         <IntroToExperience />
       </div>
       <div id="experience">

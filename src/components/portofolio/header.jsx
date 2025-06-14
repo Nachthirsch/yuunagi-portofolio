@@ -74,19 +74,19 @@ const Header = () => {
   return (
     <header className="bg-gray-50 text-gray-900 min-h-screen flex flex-col relative">
       {/* Top Navigation */}
-      <div className="flex justify-between px-4 sm:px-8 py-6 sm:py-8 tracking-widest font-medium">
+      <div className="flex justify-between px-6 sm:px-12 py-8 sm:py-12 tracking-widest font-medium">
         {["P", "O", "R", "T", "F", "O", "L", "I", "O"].map((letter, index) => (
-          <motion.span key={index} className="text-base sm:text-xl text-gray-900 opacity-70 font-medium tracking-wider transition-opacity duration-300 hover:opacity-100" initial={{ opacity: 0, x: animationDirections.letters[index] }} animate={{ opacity: 0.7, x: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} whileHover={{ opacity: 1 }}>
+          <motion.span key={index} className="text-sm sm:text-base text-gray-900 opacity-60 font-light tracking-wider transition-opacity duration-300 hover:opacity-100" initial={{ opacity: 0, x: animationDirections.letters[index] }} animate={{ opacity: 0.6, x: 0 }} transition={{ duration: 0.6, delay: index * 0.1 }} whileHover={{ opacity: 1 }}>
             {letter}
           </motion.span>
         ))}
       </div>
 
       {/* Main Content Grid - Takes remaining height */}
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 lg:gap-8 px-4 sm:px-8 pb-8">
+      <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 px-6 sm:px-12 pb-12">
         {/* Left Side - Main Content */}
-        <div className="lg:col-span-8 xl:col-span-7 flex flex-col justify-center">
-          <motion.h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light leading-tight text-gray-900 mb-6 sm:mb-8 lg:mb-12" initial={{ opacity: 0, x: animationDirections.title }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
+        <div className="lg:col-span-10 xl:col-span-9 flex flex-col justify-center">
+          <motion.h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 mb-8 sm:mb-12 lg:mb-16" initial={{ opacity: 0, x: animationDirections.title }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
             We believe in the
             <br />
             value of what
@@ -95,15 +95,15 @@ const Header = () => {
           </motion.h1>
 
           {/* About section from original header */}
-          <motion.div initial={{ opacity: 0, x: animationDirections.about }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="mb-6 sm:mb-8">
-            <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-600 max-w-2xl">
-              My name is <span className="font-bold">Handra Putratama Tanjung</span>.<br />
+          <motion.div initial={{ opacity: 0, x: animationDirections.about }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.4 }} className="mb-8 sm:mb-10">
+            <p className="text-xs sm:text-sm lg:text-base leading-relaxed text-gray-600 max-w-xl font-light">
+              My name is <span className="font-medium">Handra Putratama Tanjung</span>.<br />
               I'm a final-year student majoring in Information Technology, having an interest in Web Development, Photography, Music and Art.
             </p>
           </motion.div>
 
           {/* Social Links */}
-          <motion.div initial={{ opacity: 0, x: animationDirections.social }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="flex gap-4 sm:gap-6 mb-8 lg:mb-0">
+          <motion.div initial={{ opacity: 0, x: animationDirections.social }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="flex gap-3 sm:gap-4 mb-8 lg:mb-0">
             {[
               { href: "mailto:handraputratama@gmail.com", icon: AiOutlineMail, label: "Email" },
               { href: "https://www.instagram.com/nachthirsch/", icon: FaInstagram, label: "Instagram" },
@@ -115,111 +115,25 @@ const Header = () => {
               const IconComponent = social.icon;
               return (
                 <motion.a key={index} href={social.href} aria-label={social.label} initial={{ opacity: 0, x: animationDirections.socialIcons[index] }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.8 + index * 0.1 }}>
-                  <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-gray-600 transition-all duration-300 hover:text-gray-800 hover:-translate-y-1" />
+                  <IconComponent className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 transition-all duration-300 hover:text-gray-800 hover:-translate-y-0.5" />
                 </motion.a>
               );
             })}
           </motion.div>
         </div>
-
-        {/* Right Side - LastFM Section - Hidden on mobile (shown in absolute positioning) */}
-        <div className="hidden lg:flex lg:col-span-4 xl:col-span-3 xl:col-start-10 flex-col justify-center lg:justify-end">
-          <motion.div initial={{ opacity: 0, x: animationDirections.lastfm }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 1.0 }} className="self-center lg:self-end">
-            <div className="p-6 sm:p-4 border w-full max-w-xs">
-              {isLoading ? (
-                <div className="py-2 text-gray-500 text-xs flex items-center justify-center">
-                  <div className="w-3 h-3 border-t-2 border-r-2 border-gray-500 rounded-full animate-spin mr-2"></div>
-                  Loading...
-                </div>
-              ) : userInfo && lastTrack ? (
-                <div className="flex flex-col">
-                  {/* User info - minimalist version */}
-                  <motion.div className="flex items-center mb-3" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.2 }}>
-                    {userInfo.image && userInfo.image.length > 0 ? (
-                      <div className="mr-2 sm:mr-3 flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 overflow-hidden rounded-sm bg-gray-100">
-                        <img
-                          src={userInfo.image[1]?.["#text"] || userInfo.image[0]?.["#text"]}
-                          alt="Last.fm profile"
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.style.display = "none";
-                            e.target.parentNode.innerHTML = '<span class="text-gray-500 text-sm flex items-center justify-center h-full">♪</span>';
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <div className="mr-2 sm:mr-3 flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-gray-100 flex items-center justify-center rounded-sm">
-                        <span className="text-gray-500 text-sm">♪</span>
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-gray-800 font-medium text-xs truncate">YUUNAAGI</p>
-                      <div className="flex items-center text-[10px] text-gray-500">
-                        <span className="truncate">{parseInt(userInfo.playcount).toLocaleString()} scrobbles</span>
-                      </div>
-                    </div>
-                    <a href={userInfo.url} target="_blank" rel="noopener noreferrer" className="text-[10px] px-4 py-1 rounded-sm hover:bg-gray-200 text-gray-700 flex-shrink-0">
-                      <FaLastfm />
-                    </a>
-                  </motion.div>
-
-                  {/* Now playing status */}
-                  <motion.div className="flex items-center mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.4 }}>
-                    <div className="flex items-center">
-                      <span className="text-gray-600 text-[10px] font-medium mr-1">{lastTrack["@attr"]?.nowplaying ? "Now Playing" : "Last Track"}</span>
-                      {lastTrack["@attr"]?.nowplaying && <span className="text-[8px] bg-red-100 text-red-700 px-1 py-0.5 rounded-sm">LIVE</span>}
-                    </div>
-                  </motion.div>
-
-                  {/* Track info - minimalist version */}
-                  <motion.div className="flex items-start" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.6 }}>
-                    {lastTrack.image && lastTrack.image.length > 0 ? (
-                      <div className="mr-2 flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 bg-gray-100 overflow-hidden rounded-sm">
-                        <img
-                          src={lastTrack.image[1]?.["#text"] || lastTrack.image[0]?.["#text"]}
-                          alt={`${lastTrack.name} cover`}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.onerror = null;
-                            e.target.style.display = "none";
-                            e.target.parentNode.innerHTML = '<span class="text-gray-500 text-lg flex items-center justify-center h-full">♪</span>';
-                          }}
-                        />
-                      </div>
-                    ) : (
-                      <div className="mr-2 flex-shrink-0 w-9 h-9 sm:w-10 sm:h-10 bg-gray-100 flex items-center justify-center rounded-sm">
-                        <span className="text-gray-500 text-lg">♪</span>
-                      </div>
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-gray-800 font-medium text-xs leading-tight truncate">{lastTrack.name}</p>
-                      <p className="text-gray-600 text-[10px] truncate">by {lastTrack.artist["#text"]}</p>
-                    </div>
-                  </motion.div>
-                </div>
-              ) : (
-                <p className="text-gray-500 text-xs py-2 flex items-center justify-center">
-                  <span className="w-3 h-3 text-gray-600 mr-2">⚠</span>
-                  No data available
-                </p>
-              )}
-            </div>
-          </motion.div>
-        </div>
       </div>
 
-      {/* Mobile LastFM Section - Positioned at bottom right */}
-      <motion.div initial={{ opacity: 0, x: animationDirections.lastfm }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 1.0 }} className="lg:hidden absolute bottom-4 right-4 z-10">
-        <div className="bg-white/90 backdrop-blur-sm p-3 border border-gray-200 rounded-lg shadow-lg max-w-[280px]">
+      {/* Desktop LastFM Section - Positioned at bottom right */}
+      <motion.div initial={{ opacity: 0, x: animationDirections.lastfm }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 1.0 }} className="hidden lg:block absolute bottom-12 right-12 z-10">
+        <div className="p-3 border max-w-xs">
           {isLoading ? (
             <div className="py-2 text-gray-500 text-xs flex items-center justify-center">
-              <div className="w-3 h-3 border-t-2 border-r-2 border-gray-500 rounded-full animate-spin mr-2"></div>
+              <div className="w-2 h-2 border-t border-r border-gray-500 rounded-full animate-spin mr-2"></div>
               Loading...
             </div>
           ) : userInfo && lastTrack ? (
             <div className="flex flex-col">
-              {/* User info - mobile version */}
+              {/* User info - minimalist version */}
               <motion.div className="flex items-center mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.2 }}>
                 {userInfo.image && userInfo.image.length > 0 ? (
                   <div className="mr-2 flex-shrink-0 w-6 h-6 overflow-hidden rounded-sm bg-gray-100">
@@ -246,11 +160,11 @@ const Header = () => {
                   </div>
                 </div>
                 <a href={userInfo.url} target="_blank" rel="noopener noreferrer" className="text-[8px] px-2 py-1 rounded-sm hover:bg-gray-200 text-gray-700 flex-shrink-0">
-                  <FaLastfm className="w-3 h-3" />
+                  <FaLastfm className="w-2.5 h-2.5" />
                 </a>
               </motion.div>
 
-              {/* Now playing status - mobile */}
+              {/* Now playing status */}
               <motion.div className="flex items-center mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.4 }}>
                 <div className="flex items-center">
                   <span className="text-gray-600 text-[8px] font-medium mr-1">{lastTrack["@attr"]?.nowplaying ? "Now Playing" : "Last Track"}</span>
@@ -258,7 +172,7 @@ const Header = () => {
                 </div>
               </motion.div>
 
-              {/* Track info - mobile version */}
+              {/* Track info - minimalist version */}
               <motion.div className="flex items-start" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.6 }}>
                 {lastTrack.image && lastTrack.image.length > 0 ? (
                   <div className="mr-2 flex-shrink-0 w-8 h-8 bg-gray-100 overflow-hidden rounded-sm">
@@ -287,6 +201,90 @@ const Header = () => {
           ) : (
             <p className="text-gray-500 text-[10px] py-2 flex items-center justify-center">
               <span className="w-2 h-2 text-gray-600 mr-1">⚠</span>
+              No data available
+            </p>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Mobile LastFM Section - Positioned at bottom right */}
+      <motion.div initial={{ opacity: 0, x: animationDirections.lastfm }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 1.0 }} className="lg:hidden absolute bottom-6 right-6 z-10">
+        <div className="bg-white/80 backdrop-blur-sm p-2.5 border border-gray-200 rounded-md shadow-sm max-w-[240px]">
+          {isLoading ? (
+            <div className="py-1.5 text-gray-500 text-[10px] flex items-center justify-center">
+              <div className="w-2 h-2 border-t border-r border-gray-500 rounded-full animate-spin mr-1.5"></div>
+              Loading...
+            </div>
+          ) : userInfo && lastTrack ? (
+            <div className="flex flex-col">
+              {/* User info - mobile version */}
+              <motion.div className="flex items-center mb-1.5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.2 }}>
+                {userInfo.image && userInfo.image.length > 0 ? (
+                  <div className="mr-2 flex-shrink-0 w-6 h-6 overflow-hidden rounded-sm bg-gray-100">
+                    <img
+                      src={userInfo.image[1]?.["#text"] || userInfo.image[0]?.["#text"]}
+                      alt="Last.fm profile"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.style.display = "none";
+                        e.target.parentNode.innerHTML = '<span class="text-gray-500 text-xs flex items-center justify-center h-full">♪</span>';
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="mr-2 flex-shrink-0 w-6 h-6 bg-gray-100 flex items-center justify-center rounded-sm">
+                    <span className="text-gray-500 text-xs">♪</span>
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-800 font-medium text-[9px] truncate">YUUNAAGI</p>
+                  <div className="flex items-center text-[7px] text-gray-500">
+                    <span className="truncate">{parseInt(userInfo.playcount).toLocaleString()} scrobbles</span>
+                  </div>
+                </div>
+                <a href={userInfo.url} target="_blank" rel="noopener noreferrer" className="text-[7px] px-1.5 py-0.5 rounded-sm hover:bg-gray-200 text-gray-700 flex-shrink-0">
+                  <FaLastfm className="w-2 h-2" />
+                </a>
+              </motion.div>
+
+              {/* Now playing status - mobile */}
+              <motion.div className="flex items-center mb-1.5" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.4 }}>
+                <div className="flex items-center">
+                  <span className="text-gray-600 text-[7px] font-medium mr-1">{lastTrack["@attr"]?.nowplaying ? "Now Playing" : "Last Track"}</span>
+                  {lastTrack["@attr"]?.nowplaying && <span className="text-[6px] bg-red-100 text-red-700 px-1 py-0.5 rounded-sm">LIVE</span>}
+                </div>
+              </motion.div>
+
+              {/* Track info - mobile version */}
+              <motion.div className="flex items-start" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.6 }}>
+                {lastTrack.image && lastTrack.image.length > 0 ? (
+                  <div className="mr-2 flex-shrink-0 w-8 h-8 bg-gray-100 overflow-hidden rounded-sm">
+                    <img
+                      src={lastTrack.image[1]?.["#text"] || lastTrack.image[0]?.["#text"]}
+                      alt={`${lastTrack.name} cover`}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.onerror = null;
+                        e.target.style.display = "none";
+                        e.target.parentNode.innerHTML = '<span class="text-gray-500 text-sm flex items-center justify-center h-full">♪</span>';
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="mr-2 flex-shrink-0 w-8 h-8 bg-gray-100 flex items-center justify-center rounded-sm">
+                    <span className="text-gray-500 text-sm">♪</span>
+                  </div>
+                )}
+                <div className="flex-1 min-w-0">
+                  <p className="text-gray-800 font-medium text-[9px] leading-tight truncate">{lastTrack.name}</p>
+                  <p className="text-gray-600 text-[7px] truncate">by {lastTrack.artist["#text"]}</p>
+                </div>
+              </motion.div>
+            </div>
+          ) : (
+            <p className="text-gray-500 text-[9px] py-1.5 flex items-center justify-center">
+              <span className="w-1.5 h-1.5 text-gray-600 mr-1">⚠</span>
               No data available
             </p>
           )}
