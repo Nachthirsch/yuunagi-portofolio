@@ -8,6 +8,8 @@ const IntroToActivities = ({ onAnimationStart, onAnimationComplete }) => {
   const [showParagraph, setShowParagraph] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [shouldLockScroll, setShouldLockScroll] = useState(false);
+  const [firstAnimationComplete, setFirstAnimationComplete] = useState(false);
+  const [secondAnimationComplete, setSecondAnimationComplete] = useState(false);
 
   // Generate random animation directions
   const getRandomDirection = () => (Math.random() > 0.5 ? 50 : -50);
@@ -18,29 +20,11 @@ const IntroToActivities = ({ onAnimationStart, onAnimationComplete }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Only lock scroll when component is significantly visible
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
           setShouldLockScroll(true);
           if (!hasEntered) {
             setHasEntered(true);
             onAnimationStart?.();
-
-            // Show second title after first typewriter completes
-            setTimeout(() => {
-              setShowSecondTitle(true);
-
-              // Show paragraph after second typewriter completes
-              setTimeout(() => {
-                setShowParagraph(true);
-
-                // Complete animation after paragraph appears
-                setTimeout(() => {
-                  setAnimationComplete(true);
-                  onAnimationComplete?.();
-                  setShouldLockScroll(false);
-                }, 3000);
-              }, 4500);
-            }, 9000); // Increased to give first animation enough time
           }
         }
       },
@@ -64,14 +48,35 @@ const IntroToActivities = ({ onAnimationStart, onAnimationComplete }) => {
     };
   }, [hasEntered, onAnimationStart, onAnimationComplete, shouldLockScroll]);
 
+  // Handle first animation completion
+  useEffect(() => {
+    if (firstAnimationComplete && hasEntered) {
+      // First animation is complete, now show second title
+      setShowSecondTitle(true);
+    }
+  }, [firstAnimationComplete, hasEntered]);
+
+  // Handle second animation completion
+  useEffect(() => {
+    if (secondAnimationComplete && showSecondTitle) {
+      // Second animation is complete, now show paragraph
+      setShowParagraph(true);
+
+      // Complete all animations after paragraph appears
+      setTimeout(() => {
+        setAnimationComplete(true);
+        onAnimationComplete?.();
+        setShouldLockScroll(false);
+      }, 3000);
+    }
+  }, [secondAnimationComplete, showSecondTitle, onAnimationComplete]);
+
   return (
     <section className="bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-center items-center relative px-4 sm:px-8">
-      {/* Overlay to prevent interaction during animation - lower z-index to not block header */}
+      {/* Overlay to prevent interaction during animation */}
       {!animationComplete && shouldLockScroll && <div className="fixed inset-0 z-40 bg-transparent pointer-events-auto" style={{ touchAction: "none" }} />}
 
-      {/* Container for centered title and repositioned content */}
       <div className="w-full max-w-3xl flex flex-col items-center">
-        {/* Main Title with Typewriter Effect - Always stays centered */}
         <motion.div
           className="w-full relative"
           initial={{ opacity: 0, x: titleDirection }}
@@ -88,9 +93,9 @@ const IntroToActivities = ({ onAnimationStart, onAnimationComplete }) => {
           }}
         >
           <motion.div
-            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center min-h-[200px] sm:min-h-[250px] lg:min-h-[300px]"
+            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center"
             animate={{
-              y: showParagraph ? -10 : 0,
+              y: showParagraph ? -60 : 0, // Move up significantly when paragraph appears (same as introToExperience)
             }}
             transition={{
               y: { duration: 1.5, ease: [0.25, 0.1, 0.25, 1] },
@@ -98,7 +103,17 @@ const IntroToActivities = ({ onAnimationStart, onAnimationComplete }) => {
           >
             {hasEntered && !showSecondTitle && (
               <TypeAnimation
-                sequence={["Hey!", 1000, "Hey! You see me again!", 1000, "Hey! You see me again!\nI truly appreciate", 1500, "Hey! You see me again!\nI truly appreciate\nyour effort to make it this far!", 2000]}
+                sequence={[
+                  "Hey!",
+                  1000,
+                  "Hey! You see me again!",
+                  1000,
+                  "Hey! You see me again!\nI truly appreciate",
+                  1500,
+                  "Hey! You see me again!\nI truly appreciate\nyour effort to make it this far!",
+                  2000,
+                  () => setFirstAnimationComplete(true), // Call when animation completes
+                ]}
                 wrapper="h1"
                 speed={50}
                 style={{
@@ -112,7 +127,17 @@ const IntroToActivities = ({ onAnimationStart, onAnimationComplete }) => {
 
             {showSecondTitle && (
               <TypeAnimation
-                sequence={["", 500, "You're almost there!", 1000, "You're almost there!\nJust two more sections", 1000, "You're almost there!\nJust two more sections\nto complete the journey", 1500]}
+                sequence={[
+                  "",
+                  500,
+                  "You're almost there!",
+                  1000,
+                  "You're almost there!\nJust two more sections",
+                  1000,
+                  "You're almost there!\nJust two more sections\nto complete the journey",
+                  1500,
+                  () => setSecondAnimationComplete(true), // Call when second animation completes
+                ]}
                 wrapper="h1"
                 speed={50}
                 style={{

@@ -2,12 +2,14 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 
-const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
+const OutroPortfolio = ({ onAnimationStart, onAnimationComplete }) => {
   const [hasEntered, setHasEntered] = useState(false);
+  const [showSecondTitle, setShowSecondTitle] = useState(false);
   const [showParagraph, setShowParagraph] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [shouldLockScroll, setShouldLockScroll] = useState(false);
   const [firstAnimationComplete, setFirstAnimationComplete] = useState(false);
+  const [secondAnimationComplete, setSecondAnimationComplete] = useState(false);
 
   // Generate random animation directions
   const getRandomDirection = () => (Math.random() > 0.5 ? 50 : -50);
@@ -18,7 +20,6 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Only lock scroll when component is significantly visible
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
           setShouldLockScroll(true);
           if (!hasEntered) {
@@ -30,7 +31,7 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
       { threshold: 0.5 }
     );
 
-    const section = document.getElementById("introToExperience");
+    const section = document.getElementById("outroPortfolio");
     if (section) {
       observer.observe(section);
     }
@@ -47,26 +48,32 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
     };
   }, [hasEntered, onAnimationStart, onAnimationComplete, shouldLockScroll]);
 
-  // Handle first animation completion separately
+  // Handle first animation completion
   useEffect(() => {
     if (firstAnimationComplete && hasEntered) {
-      // First animation is complete, now show paragraph
-      setTimeout(() => {
-        setShowParagraph(true);
-
-        // Complete all animations after paragraph appears
-        setTimeout(() => {
-          setAnimationComplete(true);
-          onAnimationComplete?.();
-          setShouldLockScroll(false);
-        }, 3000);
-      }, 1000); // Short delay after first animation completes
+      // First animation is complete, now show second title
+      setShowSecondTitle(true);
     }
-  }, [firstAnimationComplete, hasEntered, onAnimationComplete]);
+  }, [firstAnimationComplete, hasEntered]);
+
+  // Handle second animation completion
+  useEffect(() => {
+    if (secondAnimationComplete && showSecondTitle) {
+      // Second animation is complete, now show paragraph
+      setShowParagraph(true);
+
+      // Complete all animations after paragraph appears
+      setTimeout(() => {
+        setAnimationComplete(true);
+        onAnimationComplete?.();
+        setShouldLockScroll(false);
+      }, 3000);
+    }
+  }, [secondAnimationComplete, showSecondTitle, onAnimationComplete]);
 
   return (
     <section className="bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-center items-center relative px-4 sm:px-8">
-      {/* Overlay to prevent interaction during animation - lower z-index to not block header */}
+      {/* Overlay to prevent interaction during animation */}
       {!animationComplete && shouldLockScroll && <div className="fixed inset-0 z-40 bg-transparent pointer-events-auto" style={{ touchAction: "none" }} />}
 
       {/* Container for centered title and repositioned content */}
@@ -84,31 +91,57 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center", // Always keep centered
+            alignItems: "center",
           }}
         >
           <motion.div
             className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center"
             animate={{
-              y: showParagraph ? -60 : 0, // Move up slightly when paragraph appears
+              y: showParagraph ? -60 : 0, // Move up significantly when paragraph appears (same as introToExperience)
             }}
             transition={{
               y: { duration: 1.5, ease: [0.25, 0.1, 0.25, 1] },
             }}
           >
-            {hasEntered && (
+            {hasEntered && !showSecondTitle && (
               <TypeAnimation
                 sequence={[
-                  "You're about to enter",
-                  500, // Reduced from 1000
-                  "You're about to enter\nmy working",
-                  500, // Reduced from 1000
-                  "You're about to enter\nmy working\njourney",
-                  1000, // Longer pause at the end
-                  () => setFirstAnimationComplete(true), // Call this function when animation completes
+                  "Congratulations!",
+                  1000,
+                  "Congratulations!\nYou've reached",
+                  1000,
+                  "Congratulations!\nYou've reached\nthe end of my portfolio!",
+                  1500,
+                  "Congratulations!\nYou've reached\nthe end of my portfolio!\nThank you for your time!",
+                  2000,
+                  () => setFirstAnimationComplete(true), // Call when animation completes
                 ]}
                 wrapper="h1"
-                speed={70} // Increased from 50
+                speed={50}
+                style={{
+                  whiteSpace: "pre-line",
+                  display: "block",
+                }}
+                cursor={true}
+                repeat={0}
+              />
+            )}
+
+            {showSecondTitle && (
+              <TypeAnimation
+                sequence={[
+                  "",
+                  500,
+                  "I hope",
+                  1000,
+                  "I hope\nyou enjoyed",
+                  1000,
+                  "I hope\nyou enjoyed\nmy showcase",
+                  1500,
+                  () => setSecondAnimationComplete(true), // Call when second animation completes
+                ]}
+                wrapper="h1"
+                speed={50}
                 style={{
                   whiteSpace: "pre-line",
                   display: "block",
@@ -122,11 +155,11 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
 
         {/* Paragraph - Appears centered below the title */}
         <motion.div
-          initial={{ opacity: 0, x: paragraphDirection, y: 50 }}
+          initial={{ opacity: 0, x: paragraphDirection, y: 10 }}
           animate={{
             opacity: hasEntered && showParagraph ? 1 : 0,
             x: hasEntered && showParagraph ? 0 : paragraphDirection,
-            y: hasEntered && showParagraph ? -40 : 50,
+            y: hasEntered && showParagraph ? -20 : 30,
           }}
           transition={{
             duration: 1.2,
@@ -135,7 +168,7 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
           }}
           className="w-full flex justify-center"
         >
-          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-600 max-w-2xl font-light text-center">I might don't have a lot of experiences but I'm a hardworking person who's passionate about learning and growing. Each opportunity has taught me valuable lessons that shaped my approach to work and collaboration. I believe that dedication, curiosity, and the willingness to adapt are more important than just having years of experience.</p>
+          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-600 max-w-2xl font-light text-center">Thank you for taking the time to explore my portfolio. I'm passionate about creating meaningful digital experiences and constantly learning new technologies. If you're interested in collaborating or have any questions about my work, please don't hesitate to reach out. I'm always open to new opportunities and connections. You can contact me through the links provided in my profile or directly via email. I look forward to potentially working together in the future!</p>
         </motion.div>
 
         {/* Simple decorative element - centered */}
@@ -144,7 +177,7 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
           animate={{
             opacity: hasEntered && showParagraph ? 1 : 0,
             scale: hasEntered && showParagraph ? 1 : 0,
-            y: hasEntered && showParagraph ? -20 : 0,
+            y: hasEntered && showParagraph ? -10 : 0,
           }}
           transition={{
             duration: 0.8,
@@ -160,4 +193,4 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
   );
 };
 
-export default IntroToExperience;
+export default OutroPortfolio;

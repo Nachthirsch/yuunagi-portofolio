@@ -8,6 +8,8 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
   const [showParagraph, setShowParagraph] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [shouldLockScroll, setShouldLockScroll] = useState(false);
+  const [firstAnimationComplete, setFirstAnimationComplete] = useState(false);
+  const [secondAnimationComplete, setSecondAnimationComplete] = useState(false);
 
   // Generate random animation directions
   const getRandomDirection = () => (Math.random() > 0.5 ? 50 : -50);
@@ -18,29 +20,11 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Only lock scroll when component is significantly visible
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
           setShouldLockScroll(true);
           if (!hasEntered) {
             setHasEntered(true);
             onAnimationStart?.();
-
-            // Show second title after first typewriter completes
-            setTimeout(() => {
-              setShowSecondTitle(true);
-
-              // Show paragraph after second typewriter completes
-              setTimeout(() => {
-                setShowParagraph(true);
-
-                // Complete animation after paragraph appears
-                setTimeout(() => {
-                  setAnimationComplete(true);
-                  onAnimationComplete?.();
-                  setShouldLockScroll(false);
-                }, 3000);
-              }, 4500);
-            }, 6000);
           }
         }
       },
@@ -56,13 +40,31 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
       if (section) {
         observer.unobserve(section);
       }
-
-      // Ensure scroll is unlocked when component unmounts
-      if (shouldLockScroll) {
-        onAnimationComplete?.();
-      }
     };
   }, [hasEntered, onAnimationStart, onAnimationComplete, shouldLockScroll]);
+
+  // Handle first animation completion
+  useEffect(() => {
+    if (firstAnimationComplete && hasEntered) {
+      // First animation is complete, now show second title
+      setShowSecondTitle(true);
+    }
+  }, [firstAnimationComplete, hasEntered]);
+
+  // Handle second animation completion
+  useEffect(() => {
+    if (secondAnimationComplete && showSecondTitle) {
+      // Second animation is complete, now show paragraph
+      setShowParagraph(true);
+
+      // Complete all animations after paragraph appears
+      setTimeout(() => {
+        setAnimationComplete(true);
+        onAnimationComplete?.();
+        setShouldLockScroll(false);
+      }, 3000);
+    }
+  }, [secondAnimationComplete, showSecondTitle, onAnimationComplete]);
 
   return (
     <section className="bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-center items-center relative px-4 sm:px-8">
@@ -88,9 +90,9 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
           }}
         >
           <motion.div
-            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center min-h-[200px] sm:min-h-[250px] lg:min-h-[300px]"
+            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center"
             animate={{
-              y: showParagraph ? -10 : 0,
+              y: showParagraph ? -60 : 0, // Move up significantly when paragraph appears (same as introToExperience)
             }}
             transition={{
               y: { duration: 1.5, ease: [0.25, 0.1, 0.25, 1] },
@@ -98,7 +100,17 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
           >
             {hasEntered && !showSecondTitle && (
               <TypeAnimation
-                sequence={["If you see this,", 1000, "If you see this,\nthat means you've read", 1000, "If you see this,\nthat means you've read\nall of my experiences!", 1500, "If you see this,\nthat means you've read\nall of my experiences!\nI really appreciate it!", 2000]}
+                sequence={[
+                  "If you see this,",
+                  1000,
+                  "If you see this,\nthat means you've read",
+                  1000,
+                  "If you see this,\nthat means you've read\nall of my experiences!",
+                  1500,
+                  "If you see this,\nthat means you've read\nall of my experiences!\nI really appreciate it!",
+                  2000,
+                  () => setFirstAnimationComplete(true), // Call when animation completes
+                ]}
                 wrapper="h1"
                 speed={50}
                 style={{
@@ -112,7 +124,17 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
 
             {showSecondTitle && (
               <TypeAnimation
-                sequence={["", 500, "Now, you're going", 1000, "Now, you're going\nto see my projects", 1000, "Now, you're going\nto see my projects\nthat I have developed", 1500]}
+                sequence={[
+                  "",
+                  500,
+                  "Now, you're going",
+                  1000,
+                  "Now, you're going\nto see my projects",
+                  1000,
+                  "Now, you're going\nto see my projects\nthat I have developed",
+                  1500,
+                  () => setSecondAnimationComplete(true), // Call when second animation completes
+                ]}
                 wrapper="h1"
                 speed={50}
                 style={{

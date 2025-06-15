@@ -13,6 +13,7 @@ import IntroToExperience from "../../portofolio/introToExperience";
 import IntroToProjects from "../../portofolio/introToProjects";
 import IntroToActivities from "../../portofolio/introToActivities";
 import MBTI from "../../portofolio/mbti";
+import OutroPortfolio from "../../portofolio/outroPortfolio";
 
 const Portfolio = () => {
   const [isScrollLocked, setIsScrollLocked] = useState(false);
@@ -115,6 +116,9 @@ const Portfolio = () => {
       </div>
       <div id="techStacks">
         <TechStack />
+      </div>
+      <div id="outroPortfolio">
+        <OutroPortfolio onAnimationStart={() => handleAnimationStart("outroPortfolio")} onAnimationComplete={() => handleAnimationComplete("outroPortfolio")} />
       </div>
     </div>
   );
