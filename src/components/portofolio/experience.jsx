@@ -1,80 +1,127 @@
 import { motion } from "framer-motion";
-import { HiOutlineBriefcase } from "react-icons/hi";
-import { IoSchoolOutline } from "react-icons/io5";
+import { useState, useEffect, useRef } from "react";
+import { IoClose } from "react-icons/io5";
 
-const ExperienceCard = ({ title, company, date, label, description, index, type = "experience" }) => {
-  // Generate random animation direction
-  const getRandomDirection = () => (Math.random() > 0.5 ? 30 : -30);
-
+// Modal Component - Works for both Experience and Education
+const DetailModal = ({ item, closeModal }) => {
   return (
-    <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: index * 0.2 }} className="group relative">
-      {/* Experience/Education Number - Niche Touch */}
-      <div className="absolute -left-16 top-0 hidden lg:block">
-        <motion.span initial={{ opacity: 0, scale: 0 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }} className="text-6xl font-extralight text-gray-200 select-none">
-          {String(index + 1).padStart(2, "0")}
-        </motion.span>
-      </div>
-
-      {/* Main Content */}
-      <div className="relative">
-        {/* Header Section - Editorial Style */}
-        <div className="mb-8">
-          <div className="flex items-start justify-between mb-4">
-            <div className="flex-1">
-              <motion.h3
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 + 0.1 }}
-                className="text-xl sm:text-2xl font-light text-gray-900 leading-tight mb-3
-                  hover:text-gray-600 transition-colors duration-500"
-              >
-                {title}
-              </motion.h3>
-
-              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: index * 0.2 + 0.2 }} className="flex items-center gap-4 text-sm mb-2">
-                <span className="text-gray-600 font-medium">{company}</span>
-                <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
-                <span className="text-xs text-gray-500 px-2 py-1 bg-gray-100 rounded-sm uppercase tracking-wider">{label}</span>
-              </motion.div>
-
-              <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: index * 0.2 + 0.25 }} className="text-xs text-gray-500 tracking-wider uppercase">
-                {date}
-              </motion.div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={closeModal}>
+      <motion.div initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }} className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[80vh] overflow-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="flex justify-between items-start mb-6">
+          <div>
+            <h3 className="text-xl font-medium text-gray-900 mb-2">{item.title}</h3>
+            <p className="text-sm text-gray-600 mb-1">{item.company}</p>
+            <div className="flex items-center gap-3 mt-2">
+              <p className="text-xs text-gray-500">{item.date}</p>
+              <span className="w-1 h-1 bg-gray-300 rounded-full"></span>
+              <span className="text-xs font-medium text-gray-500">{item.label}</span>
             </div>
           </div>
 
-          {/* Subtle divider */}
-          <motion.div initial={{ scaleX: 0 }} whileInView={{ scaleX: 1 }} transition={{ duration: 0.8, delay: index * 0.2 + 0.4 }} className="w-full h-px bg-gradient-to-r from-gray-300 via-gray-200 to-transparent origin-left" />
+          <button onClick={closeModal} className="text-gray-400 hover:text-gray-900 transition-colors">
+            <IoClose size={20} />
+          </button>
         </div>
 
-        {/* Details - Niche Typography */}
-        <div className="space-y-6 pl-8 border-l border-gray-200">
-          {description.map((detail, idx) => (
-            <motion.div key={idx} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: index * 0.2 + 0.5 + idx * 0.1 }} className="relative group/detail">
-              {/* Custom bullet */}
-              <div className="absolute -left-10 top-2">
-                <div
-                  className="w-2 h-2 border border-gray-300 rotate-45 
-                  group-hover/detail:border-gray-500 group-hover/detail:bg-gray-100 
-                  transition-all duration-300"
-                ></div>
-              </div>
+        <div className="w-full h-px bg-gray-100 my-5"></div>
 
-              <p
-                className="text-gray-600 leading-relaxed font-light text-sm sm:text-base
-                group-hover/detail:text-gray-800 transition-colors duration-300"
-              >
-                {detail}
-              </p>
-            </motion.div>
+        <div className="space-y-4">
+          {item.description.map((detail, idx) => (
+            <div key={idx} className="flex items-start gap-3">
+              <span className="text-gray-400 text-xs mt-1.5">•</span>
+              <p className="text-sm text-gray-600">{detail}</p>
+            </div>
           ))}
         </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Timeline Dot Component
+const TimelineDot = ({ index, openModal, experience, position, type }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.5, delay: index * 0.3 }} // Increased delay for better timing
+      className="group absolute cursor-pointer z-10"
+      onClick={() => openModal(experience)}
+      style={{
+        left: `${position.x}%`,
+        top: `${position.y}%`,
+        transform: "translate(-50%, -50%)",
+      }}
+    >
+      {/* Index number always visible */}
+      <div className="absolute -top-6 left-1/2 -translate-x-1/2 px-1.5 py-0.5 rounded-full">
+        <span className="text-gray-800 font-medium text-xs">{index + 1}</span>
+      </div>
+
+      {/* Dot */}
+      <div className={`w-3 h-3 ${type === "experience" ? "bg-gray-800" : "bg-gray-500"} rounded-full group-hover:scale-150 transition-all duration-300`}></div>
+
+      {/* Tooltip on hover */}
+      <div className="absolute top-5 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-white p-2 rounded shadow-md w-48 z-20">
+        <p className="text-xs font-medium text-gray-900">{experience.title}</p>
+        <p className="text-xs text-gray-600">{experience.company}</p>
+        <p className="text-xs text-gray-500">{experience.date}</p>
       </div>
     </motion.div>
   );
 };
 
+// Improved Connection Line Component with dashed lines for animation
+const ConnectionLine = ({ start, end, index }) => {
+  const pathVariants = {
+    hidden: {
+      pathLength: 0,
+      opacity: 0,
+    },
+    visible: {
+      pathLength: 1,
+      opacity: 1,
+      transition: {
+        pathLength: { duration: 0.8, delay: index * 0.3 + 0.3 },
+        opacity: { duration: 0.01, delay: index * 0.3 + 0.3 },
+      },
+    },
+  };
+
+  return <motion.path d={`M${start.x},${start.y} L${end.x},${end.y}`} stroke="#1e2b3b" strokeWidth="0.05" fill="none" variants={pathVariants} initial="hidden" animate="visible" />;
+};
+
+// SVG Path Component - completely revised for better animations
+const ConnectionLines = ({ positions }) => {
+  // Calculate viewport coordinates from percentages for SVG drawing
+  const svgPoints = positions.map((pos) => ({
+    x: pos.x, // These are percentage values we'll use as SVG viewBox coordinates
+    y: pos.y,
+  }));
+
+  return (
+    <svg className="absolute inset-0 w-full h-full z-0" viewBox="0 0 100 100" preserveAspectRatio="none">
+      {svgPoints.map((point, index) => {
+        if (index < svgPoints.length - 1) {
+          const nextPoint = svgPoints[index + 1];
+          return <ConnectionLine key={`line-${index}`} start={point} end={nextPoint} index={index} />;
+        }
+        return null;
+      })}
+    </svg>
+  );
+};
+
+// Skills Item Component
+const SkillItem = ({ skill }) => <span className="text-xs py-1 px-3 bg-gray-50 text-gray-600 rounded-full">{skill}</span>;
+
 const Experience = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [experiencePositions, setExperiencePositions] = useState([]);
+  const [educationPositions, setEducationPositions] = useState([]);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef(null);
+
   const experiences = [
     {
       title: "Data and Map Processing Operator",
@@ -116,137 +163,141 @@ const Experience = () => {
     },
   ];
 
-  // Generate random animation direction for header
-  const getRandomDirection = () => (Math.random() > 0.5 ? 40 : -40);
+  const skills = ["React", "JavaScript", "HTML/CSS", "Tailwind CSS", "Python", "QGIS", "Data Processing", "Responsive Design", "UI/UX"];
+
+  const openModal = (item) => {
+    setSelectedItem(item);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setSelectedItem(null);
+    document.body.style.overflow = "auto";
+  };
+
+  // Generate random positions for dots
+  useEffect(() => {
+    const generateRandomPositions = (count, existingPositions = [], margin = 10) => {
+      const positions = [];
+
+      for (let i = 0; i < count; i++) {
+        let isOverlapping = true;
+        let attempts = 0;
+        let newPosition;
+
+        // Try to place dots without overlap, but prevent infinite loop
+        while (isOverlapping && attempts < 100) {
+          attempts++;
+
+          // Create more visual spacing across the container
+          newPosition = {
+            x: Math.random() * 60 + 20, // 20-80% of width for better spacing
+            y: Math.random() * 60 + 20, // 20-80% of height for better spacing
+          };
+
+          isOverlapping = [...existingPositions, ...positions].some((pos) => Math.sqrt(Math.pow(pos.x - newPosition.x, 2) + Math.pow(pos.y - newPosition.y, 2)) < margin);
+        }
+
+        positions.push(newPosition);
+      }
+
+      return positions;
+    };
+
+    // Generate positions for experience dots
+    const expPositions = generateRandomPositions(experiences.length);
+    setExperiencePositions(expPositions);
+
+    // Generate positions for education dots, avoiding overlap with experience dots
+    const eduPositions = generateRandomPositions(education.length, expPositions, 15);
+    setEducationPositions(eduPositions);
+  }, [experiences.length, education.length]);
+
+  // Add intersection observer to trigger animations when the component is in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        observer.unobserve(containerRef.current);
+      }
+    };
+  }, [containerRef]);
+
+  // Animation sequence for the entire component entry
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
   return (
-    <section className="py-32 px-4 sm:px-8 md:px-16 bg-gray-50 font-light relative overflow-hidden">
-      {/* Subtle background texture */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-1/4 right-1/6 w-96 h-96 bg-gray-100 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/3 left-1/6 w-80 h-80 bg-gray-100 rounded-full blur-3xl" />
+    <motion.section className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16 sm:px-6 lg:px-8" initial="hidden" animate="visible" variants={containerVariants}>
+      <div className="w-full max-w-6xl" ref={containerRef}>
+        {/* Timeline visualization - Only render animations when in view */}
+        {isInView && (
+          <div className="relative h-[70vh] mb-16">
+            {/* SVG Lines with animated drawing effect */}
+            <ConnectionLines positions={experiencePositions} />
+
+            {/* Experience Timeline Dots */}
+            {experiencePositions.map((position, index) => (
+              <TimelineDot key={`exp-${index}`} index={index} openModal={openModal} experience={experiences[index]} position={position} type="experience" />
+            ))}
+
+            {/* Education Dots */}
+            {educationPositions.map((position, index) => (
+              <TimelineDot
+                key={`edu-${index}`}
+                index={experiencePositions.length + index} // Continue numbering from experiences
+                openModal={openModal}
+                experience={education[index]}
+                position={position}
+                type="education"
+              />
+            ))}
+
+            {/* Legend */}
+            <motion.div className="absolute bottom-4 right-4 flex items-center gap-5 px-3 py-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: experiencePositions.length * 0.3 + 0.5 }}>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-gray-800 rounded-full"></div>
+                <span className="text-xs text-gray-600">Experience</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+                <span className="text-xs text-gray-600">Education</span>
+              </div>
+            </motion.div>
+          </div>
+        )}
+
+        {/* If not yet in view, show placeholder */}
+        {!isInView && (
+          <div className="h-[70vh] mb-16 flex items-center justify-center">
+            <div className="animate-pulse w-12 h-12 rounded-full bg-gray-200"></div>
+          </div>
+        )}
       </div>
 
-      <div className="max-w-5xl mx-auto relative z-10">
-        {/* Experience Header - Niche Editorial Style */}
-        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }} className="mb-40">
-          {/* Overline */}
-          <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex items-center gap-6 mb-8">
-            <div className="flex items-center gap-4">
-              <HiOutlineBriefcase className="text-gray-400 text-lg" />
-              <span className="text-xs tracking-[0.3em] text-gray-400 font-medium uppercase">Professional Journey</span>
-            </div>
-            <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent" />
-          </motion.div>
-
-          {/* Main Title */}
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}>
-            <h2
-              className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-gray-900 
-              tracking-tight leading-[1.1] mb-8"
-            >
-              Work &<br />
-              <span className="text-gray-600">Experience</span>
-            </h2>
-          </motion.div>
-
-          {/* Subtitle */}
-          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="text-gray-600 max-w-2xl text-base leading-relaxed font-light">
-            My professional journey through data processing, mapping, and web development. Each role has contributed to my understanding of technology, precision, and the importance of delivering quality work that makes a difference.
-          </motion.p>
-        </motion.div>
-
-        {/* Experience Grid - Niche Layout */}
-        <div className="relative">
-          {/* Background grid pattern - subtle */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="grid grid-cols-12 gap-4 h-full">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="border-r border-gray-300 last:border-r-0" />
-              ))}
-            </div>
-          </div>
-
-          {/* Experience List */}
-          <div className="space-y-32 relative pl-16">
-            {experiences.map((experience, index) => (
-              <div key={index} className="relative">
-                <ExperienceCard {...experience} index={index} type="experience" />
-
-                {/* Connecting line between experiences */}
-                {index < experiences.length - 1 && (
-                  <motion.div
-                    initial={{ scaleY: 0 }}
-                    whileInView={{ scaleY: 1 }}
-                    transition={{ duration: 1, delay: index * 0.2 + 1 }}
-                    className="absolute left-0 bottom-[-16rem] w-px h-32 bg-gradient-to-b 
-                      from-gray-300 to-transparent origin-top hidden lg:block"
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Education Header - Niche Editorial Style */}
-        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 1, ease: [0.25, 0.1, 0.25, 1] }} className="mb-40 mt-48">
-          {/* Overline */}
-          <motion.div initial={{ opacity: 0, x: getRandomDirection() }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="flex items-center gap-6 mb-8">
-            <div className="flex items-center gap-4">
-              <IoSchoolOutline className="text-gray-400 text-lg" />
-              <span className="text-xs tracking-[0.3em] text-gray-400 font-medium uppercase">Learning & Development</span>
-            </div>
-            <div className="flex-1 h-px bg-gradient-to-r from-gray-300 to-transparent" />
-          </motion.div>
-
-          {/* Main Title */}
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}>
-            <h2
-              className="text-3xl sm:text-4xl lg:text-5xl font-extralight text-gray-900 
-              tracking-tight leading-[1.1] mb-8"
-            >
-              Education &<br />
-              <span className="text-gray-600">Training</span>
-            </h2>
-          </motion.div>
-
-          {/* Subtitle */}
-          <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="text-gray-600 max-w-2xl text-base leading-relaxed font-light">
-            Formal education and specialized training that have shaped my technical skills and understanding of modern web development practices.
-          </motion.p>
-        </motion.div>
-
-        {/* Education Grid - Same Niche Layout */}
-        <div className="relative">
-          {/* Background grid pattern - subtle */}
-          <div className="absolute inset-0 opacity-5">
-            <div className="grid grid-cols-12 gap-4 h-full">
-              {Array.from({ length: 12 }).map((_, i) => (
-                <div key={i} className="border-r border-gray-300 last:border-r-0" />
-              ))}
-            </div>
-          </div>
-
-          {/* Education List */}
-          <div className="space-y-32 relative pl-16">
-            {education.map((edu, index) => (
-              <div key={index} className="relative">
-                <ExperienceCard {...edu} index={index} type="education" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Footer Element - Niche Touch */}
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="mt-40 text-center">
-          <div className="flex items-center justify-center gap-8">
-            <div className="w-16 h-px bg-gray-300" />
-            <span className="text-xs tracking-[0.2em] text-gray-400 font-light uppercase">End of Experience</span>
-            <div className="w-16 h-px bg-gray-300" />
-          </div>
-        </motion.div>
-      </div>
-    </section>
+      {/* Modal for both experience and education */}
+      {selectedItem && <DetailModal item={selectedItem} closeModal={closeModal} />}
+    </motion.section>
   );
 };
 

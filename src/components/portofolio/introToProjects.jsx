@@ -1,36 +1,74 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 
-const IntroToProjects = () => {
+const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
   const [hasEntered, setHasEntered] = useState(false);
   const [showSecondTitle, setShowSecondTitle] = useState(false);
   const [showParagraph, setShowParagraph] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [shouldLockScroll, setShouldLockScroll] = useState(false);
 
   // Generate random animation directions
   const getRandomDirection = () => (Math.random() > 0.5 ? 50 : -50);
   const titleDirection = getRandomDirection();
   const paragraphDirection = getRandomDirection();
 
-  // Start animation sequence when component enters viewport
-  const startAnimationSequence = () => {
-    if (!hasEntered) {
-      setHasEntered(true);
+  // Track component visibility
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Only lock scroll when component is significantly visible
+        if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+          setShouldLockScroll(true);
+          if (!hasEntered) {
+            setHasEntered(true);
+            onAnimationStart?.();
 
-      // Show second title after first typewriter completes (approximately 6 seconds)
-      setTimeout(() => {
-        setShowSecondTitle(true);
+            // Show second title after first typewriter completes
+            setTimeout(() => {
+              setShowSecondTitle(true);
 
-        // Show paragraph after second typewriter completes (approximately 4 more seconds)
-        setTimeout(() => {
-          setShowParagraph(true);
-        }, 4500);
-      }, 6000);
+              // Show paragraph after second typewriter completes
+              setTimeout(() => {
+                setShowParagraph(true);
+
+                // Complete animation after paragraph appears
+                setTimeout(() => {
+                  setAnimationComplete(true);
+                  onAnimationComplete?.();
+                  setShouldLockScroll(false);
+                }, 3000);
+              }, 4500);
+            }, 6000);
+          }
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    const section = document.getElementById("introToProjects");
+    if (section) {
+      observer.observe(section);
     }
-  };
+
+    return () => {
+      if (section) {
+        observer.unobserve(section);
+      }
+
+      // Ensure scroll is unlocked when component unmounts
+      if (shouldLockScroll) {
+        onAnimationComplete?.();
+      }
+    };
+  }, [hasEntered, onAnimationStart, onAnimationComplete, shouldLockScroll]);
 
   return (
     <section className="bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-center items-center relative px-4 sm:px-8">
+      {/* Overlay to prevent interaction during animation - lower z-index to not block header */}
+      {!animationComplete && shouldLockScroll && <div className="fixed inset-0 z-40 bg-transparent pointer-events-auto" style={{ touchAction: "none" }} />}
+
       {/* Container for centered title and repositioned content */}
       <div className="w-full max-w-3xl flex flex-col items-center">
         {/* Main Title with Typewriter Effect - Always stays centered */}
@@ -39,7 +77,6 @@ const IntroToProjects = () => {
           initial={{ opacity: 0, x: titleDirection }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, amount: 0.3 }}
-          onAnimationComplete={() => startAnimationSequence()}
           transition={{
             opacity: { duration: 0.8, delay: 0.2 },
             x: { duration: 0.8, delay: 0.2 },
@@ -53,7 +90,7 @@ const IntroToProjects = () => {
           <motion.div
             className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center min-h-[200px] sm:min-h-[250px] lg:min-h-[300px]"
             animate={{
-              y: showParagraph ? -60 : 0,
+              y: showParagraph ? -10 : 0,
             }}
             transition={{
               y: { duration: 1.5, ease: [0.25, 0.1, 0.25, 1] },
@@ -61,7 +98,7 @@ const IntroToProjects = () => {
           >
             {hasEntered && !showSecondTitle && (
               <TypeAnimation
-                sequence={["If you see this,", 1000, "If you see this,\nthat means you read", 1000, "If you see this,\nthat means you read\nall of my experiences!", 1500, "If you see this,\nthat means you've read\nall of my experiences!\nI really appreciate it!", 2000]}
+                sequence={["If you see this,", 1000, "If you see this,\nthat means you've read", 1000, "If you see this,\nthat means you've read\nall of my experiences!", 1500, "If you see this,\nthat means you've read\nall of my experiences!\nI really appreciate it!", 2000]}
                 wrapper="h1"
                 speed={50}
                 style={{
@@ -91,11 +128,11 @@ const IntroToProjects = () => {
 
         {/* Paragraph - Appears centered below the title */}
         <motion.div
-          initial={{ opacity: 0, x: paragraphDirection, y: 50 }}
+          initial={{ opacity: 0, x: paragraphDirection, y: 10 }}
           animate={{
             opacity: hasEntered && showParagraph ? 1 : 0,
             x: hasEntered && showParagraph ? 0 : paragraphDirection,
-            y: hasEntered && showParagraph ? -40 : 50,
+            y: hasEntered && showParagraph ? -20 : 30,
           }}
           transition={{
             duration: 1.2,
@@ -113,7 +150,7 @@ const IntroToProjects = () => {
           animate={{
             opacity: hasEntered && showParagraph ? 1 : 0,
             scale: hasEntered && showParagraph ? 1 : 0,
-            y: hasEntered && showParagraph ? -20 : 0,
+            y: hasEntered && showParagraph ? -10 : 0,
           }}
           transition={{
             duration: 0.8,

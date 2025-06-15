@@ -234,6 +234,14 @@ const CertificatesSection = () => {
           background: #6b7280;
           transform: scale(1.2);
         }
+
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
       `}</style>
     </section>
   );

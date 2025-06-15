@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Briefcase, Code, Award, User } from "lucide-react";
@@ -48,99 +46,76 @@ const TableOfContents = () => {
     }
   };
 
+  // Subtler animation variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.05, delayChildren: 0.1 },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 5 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   return (
     <>
-      {/* Desktop version - Neobrutalism style */}
-      <motion.nav 
-        initial={{ opacity: 0, x: 20 }} 
-        animate={{ opacity: 1, x: 0 }} 
-        transition={{ duration: 0.5 }} 
-        className="fixed right-6 top-1/3 z-50 hidden lg:block"
-      >
-        <div className="border-3 border-black bg-neutral-800/80 backdrop-blur-sm rounded-lg p-2.5 shadow-[5px_5px_0px_rgba(0,0,0,0.8)] rotate-1">
-          <ul className="space-y-3">
+      {/* Desktop version - Minimalist style */}
+      <motion.nav initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }} className="fixed right-6 top-1/3 z-50 hidden lg:block">
+        <motion.div className="bg-white/80 backdrop-blur-sm rounded-md p-2 shadow-sm" variants={containerVariants} initial="hidden" animate="visible">
+          <ul className="space-y-2">
             {sections.map(({ id, label, icon: Icon }, index) => (
-              <motion.li 
-                key={id}
-                initial={{ opacity: 0, x: 20 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-              >
+              <motion.li key={id} variants={itemVariants}>
                 <button
                   onClick={() => handleClick(id)}
-                  className={`relative w-11 h-11 flex items-center justify-center
-                            group transition-all duration-300
-                            ${activeSection === id 
-                              ? "bg-neutral-700 text-white border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] -rotate-2" 
-                              : "text-neutral-400 hover:text-neutral-200 hover:-translate-y-0.5"}`}
+                  className={`relative w-9 h-9 flex items-center justify-center rounded-full
+                            transition-all duration-200 group
+                            ${activeSection === id ? "bg-gray-100 text-gray-900" : "text-gray-400 hover:text-gray-900 hover:bg-gray-50"}`}
                 >
-                  <Icon size={18} className="flex-shrink-0" />
+                  <Icon size={16} className="flex-shrink-0" />
 
-                  {/* Tooltip - Neobrutalism style */}
+                  {/* Minimalist tooltip */}
                   <motion.span
-                    initial={{ opacity: 0, x: -10, scale: 0.9 }}
-                    whileHover={{ opacity: 1, x: 0, scale: 1 }}
-                    className="absolute right-full mr-3 px-3 py-1.5 bg-neutral-800 text-white
-                              text-xs whitespace-nowrap pointer-events-none border-2 border-black
-                              shadow-[3px_3px_0px_rgba(0,0,0,0.8)] font-bold rotate-1"
+                    initial={{ opacity: 0, x: -5 }}
+                    whileHover={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-full mr-2 px-2 py-1 bg-white text-gray-800
+                              text-xs whitespace-nowrap pointer-events-none rounded-md shadow-sm"
                   >
                     {label}
                   </motion.span>
-
-                  {/* Decorative elements for active item */}
-                  {activeSection === id && (
-                    <>
-                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-neutral-700 border-1 border-black rotate-12"></div>
-                      <div className="absolute -bottom-1 -left-1 w-3 h-3 bg-neutral-700 border-1 border-black -rotate-12"></div>
-                    </>
-                  )}
                 </button>
               </motion.li>
             ))}
           </ul>
-          
-          {/* Decorative element */}
-          <div className="w-full h-1 bg-neutral-700 mt-3 border-t-1 border-black"></div>
-        </div>
+        </motion.div>
       </motion.nav>
 
-      {/* Mobile version - Improved responsiveness */}
-      <motion.nav 
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        transition={{ duration: 0.5 }} 
-        className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90%] lg:hidden"
-      >
-        <div className="bg-neutral-900/90 backdrop-blur-md rounded-full border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] 
-                      px-2 py-1.5 flex justify-center w-full overflow-x-auto scrollbar-none">
-          <ul className="flex items-center space-x-1">
+      {/* Mobile version - Minimalist style */}
+      <motion.nav initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-auto max-w-[90%] lg:hidden">
+        <motion.div className="bg-white/85 backdrop-blur-sm rounded-full px-3 py-1.5 shadow-sm flex justify-center" variants={containerVariants} initial="hidden" animate="visible">
+          <ul className="flex items-center space-x-3">
             {sections.map(({ id, label, icon: Icon }, index) => (
-              <motion.li 
-                key={id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: index * 0.05 }}
-                className="flex-shrink-0"
-              >
+              <motion.li key={id} variants={itemVariants} className="flex-shrink-0">
                 <button
                   onClick={() => handleClick(id)}
                   aria-label={label}
-                  className={`relative p-1.5 transition-all duration-300
-                            ${activeSection === id 
-                              ? "text-white bg-neutral-700 border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] rounded-md -rotate-2" 
-                              : "text-neutral-400 hover:text-white"}`}
+                  className={`relative p-1.5 rounded-full transition-all duration-200
+                            ${activeSection === id ? "text-gray-900 bg-gray-100" : "text-gray-400 hover:text-gray-900"}`}
                 >
-                  <Icon size={16} className="flex-shrink-0" />
+                  <Icon size={15} className="flex-shrink-0" />
                 </button>
-                
-                {/* Mobile tooltip - appears on active */}
+
+                {/* Minimalist mobile tooltip - appears on active */}
                 {activeSection === id && (
                   <motion.div
-                    initial={{ opacity: 0, y: 5 }}
+                    initial={{ opacity: 0, y: 3 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="absolute -top-6 left-1/2 -translate-x-1/2 bg-neutral-800 text-white text-[10px] 
-                              px-1.5 py-0.5 rounded border-1 border-black shadow-[1px_1px_0px_rgba(0,0,0,0.8)]
-                              whitespace-nowrap max-w-[80px] truncate"
+                    transition={{ duration: 0.2 }}
+                    className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-gray-800 text-xs 
+                              px-2 py-0.5 rounded-md shadow-sm whitespace-nowrap"
                   >
                     {label}
                   </motion.div>
@@ -148,32 +123,18 @@ const TableOfContents = () => {
               </motion.li>
             ))}
           </ul>
-        </div>
+        </motion.div>
       </motion.nav>
-      
-      {/* Styles for neobrutalism and responsiveness */}
+
+      {/* Removing previous neobrutalist styles */}
       <style>
         {`
-          .border-3 {
-            border-width: 3px;
-          }
-          .border-1 {
-            border-width: 1px;
-          }
           .scrollbar-none {
             -ms-overflow-style: none;
             scrollbar-width: none;
           }
           .scrollbar-none::-webkit-scrollbar {
             display: none;
-          }
-          @media (max-width: 360px) {
-            .mobile-nav-container {
-              padding: 0.25rem 0.5rem;
-            }
-            .mobile-icon {
-              font-size: 14px;
-            }
           }
         `}
       </style>

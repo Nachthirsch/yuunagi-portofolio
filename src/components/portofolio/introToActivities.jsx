@@ -2,8 +2,9 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
 
-const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
+const IntroToActivities = ({ onAnimationStart, onAnimationComplete }) => {
   const [hasEntered, setHasEntered] = useState(false);
+  const [showSecondTitle, setShowSecondTitle] = useState(false);
   const [showParagraph, setShowParagraph] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
   const [shouldLockScroll, setShouldLockScroll] = useState(false);
@@ -24,24 +25,29 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
             setHasEntered(true);
             onAnimationStart?.();
 
-            // Show paragraph after typewriter completes
+            // Show second title after first typewriter completes
             setTimeout(() => {
-              setShowParagraph(true);
+              setShowSecondTitle(true);
 
-              // Complete animation after all elements appear
+              // Show paragraph after second typewriter completes
               setTimeout(() => {
-                setAnimationComplete(true);
-                onAnimationComplete?.();
-                setShouldLockScroll(false);
-              }, 3000);
-            }, 2500);
+                setShowParagraph(true);
+
+                // Complete animation after paragraph appears
+                setTimeout(() => {
+                  setAnimationComplete(true);
+                  onAnimationComplete?.();
+                  setShouldLockScroll(false);
+                }, 3000);
+              }, 4500);
+            }, 9000); // Increased to give first animation enough time
           }
         }
       },
       { threshold: 0.5 }
     );
 
-    const section = document.getElementById("introToExperience");
+    const section = document.getElementById("introToActivities");
     if (section) {
       observer.observe(section);
     }
@@ -78,30 +84,37 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
           style={{
             display: "flex",
             flexDirection: "column",
-            alignItems: "center", // Always keep centered
+            alignItems: "center",
           }}
         >
           <motion.div
-            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center"
+            className="text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-light leading-tight text-gray-900 pb-4 text-center min-h-[200px] sm:min-h-[250px] lg:min-h-[300px]"
             animate={{
-              y: showParagraph ? -60 : 0, // Move up slightly when paragraph appears
+              y: showParagraph ? -10 : 0,
             }}
             transition={{
               y: { duration: 1.5, ease: [0.25, 0.1, 0.25, 1] },
             }}
           >
-            {hasEntered && (
+            {hasEntered && !showSecondTitle && (
               <TypeAnimation
-                sequence={[
-                  "You're about to enter",
-                  500, // Reduced from 1000
-                  "You're about to enter\nmy working",
-                  500, // Reduced from 1000
-                  "You're about to enter\nmy working\njourney",
-                  500, // Reduced from 1000
-                ]}
+                sequence={["Hey!", 1000, "Hey! You see me again!", 1000, "Hey! You see me again!\nI truly appreciate", 1500, "Hey! You see me again!\nI truly appreciate\nyour effort to make it this far!", 2000]}
                 wrapper="h1"
-                speed={70} // Increased from 50
+                speed={50}
+                style={{
+                  whiteSpace: "pre-line",
+                  display: "block",
+                }}
+                cursor={true}
+                repeat={0}
+              />
+            )}
+
+            {showSecondTitle && (
+              <TypeAnimation
+                sequence={["", 500, "You're almost there!", 1000, "You're almost there!\nJust two more sections", 1000, "You're almost there!\nJust two more sections\nto complete the journey", 1500]}
+                wrapper="h1"
+                speed={50}
                 style={{
                   whiteSpace: "pre-line",
                   display: "block",
@@ -115,11 +128,11 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
 
         {/* Paragraph - Appears centered below the title */}
         <motion.div
-          initial={{ opacity: 0, x: paragraphDirection, y: 50 }}
+          initial={{ opacity: 0, x: paragraphDirection, y: 10 }}
           animate={{
             opacity: hasEntered && showParagraph ? 1 : 0,
             x: hasEntered && showParagraph ? 0 : paragraphDirection,
-            y: hasEntered && showParagraph ? -40 : 50,
+            y: hasEntered && showParagraph ? -20 : 30,
           }}
           transition={{
             duration: 1.2,
@@ -128,7 +141,7 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
           }}
           className="w-full flex justify-center"
         >
-          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-600 max-w-2xl font-light text-center">I might don't have a lot of experiences but I'm a hardworking person who's passionate about learning and growing. Each opportunity has taught me valuable lessons that shaped my approach to work and collaboration. I believe that dedication, curiosity, and the willingness to adapt are more important than just having years of experience.</p>
+          <p className="text-sm sm:text-base lg:text-lg leading-relaxed text-gray-600 max-w-2xl font-light text-center">If you're reading this, you've made it to the final stretch with only two sections remaining! While these sections might not be essential to understanding my professional profile, they offer additional insights into who I am beyond my work. Should you choose to continue, you'll discover more about my personal interests and activities that have shaped my perspective. I appreciate your interest and dedication in exploring my portfolio this far!</p>
         </motion.div>
 
         {/* Simple decorative element - centered */}
@@ -137,7 +150,7 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
           animate={{
             opacity: hasEntered && showParagraph ? 1 : 0,
             scale: hasEntered && showParagraph ? 1 : 0,
-            y: hasEntered && showParagraph ? -20 : 0,
+            y: hasEntered && showParagraph ? -10 : 0,
           }}
           transition={{
             duration: 0.8,
@@ -153,4 +166,4 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
   );
 };
 
-export default IntroToExperience;
+export default IntroToActivities;

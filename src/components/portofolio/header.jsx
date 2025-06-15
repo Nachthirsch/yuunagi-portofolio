@@ -1,13 +1,51 @@
 import { motion } from "framer-motion";
 import { FaInstagram, FaGithub, FaLinkedin, FaSoundcloud, FaDiscord, FaLastfm } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
+import { Maximize2, Minimize2 } from "lucide-react";
 import { TypeAnimation } from "react-type-animation";
 import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [lastTrack, setLastTrack] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null); // New state for user info
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const location = useLocation();
+
+  // Navigation items
+  const menuItems = [
+    {
+      to: "/",
+      label: "Portfolio",
+    },
+    {
+      to: "/writes",
+      label: "Blog",
+    },
+  ];
+
+  // Fullscreen toggle function
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().then(() => {
+        setIsFullscreen(true);
+      });
+    } else {
+      document.exitFullscreen().then(() => {
+        setIsFullscreen(false);
+      });
+    }
+  };
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   // Fetch last.fm recent tracks and user info
   useEffect(() => {
@@ -123,6 +161,25 @@ const Header = () => {
         </div>
       </div>
 
+      {/* Navigation positioned at right center */}
+      <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6, delay: 0.8 }} className="absolute right-6 md:right-12 top-1/2 -translate-y-1/2 z-10">
+        <div className=" px-4 py-3 hidden md:block">
+          <div className="flex flex-col items-end space-y-4">
+            {menuItems.map((item, index) => (
+              <Link
+                key={item.label}
+                to={item.to}
+                className={`text-sm transition-all duration-200 relative
+                          ${location.pathname === item.to ? "text-gray-900 font-medium" : "text-gray-500 hover:text-gray-900"}`}
+              >
+                {item.label}
+                {location.pathname === item.to && <motion.div layoutId="headerNavIndicator" className="absolute -right-2 top-1/2 -translate-y-1/2 w-1 h-1 bg-gray-800 rounded-full" transition={{ duration: 0.3 }} />}
+              </Link>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
       {/* Desktop LastFM Section - Positioned at bottom right */}
       <motion.div initial={{ opacity: 0, x: animationDirections.lastfm }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 1.0 }} className="hidden lg:block absolute bottom-12 right-12 z-10">
         <div className="p-3 border max-w-xs">
@@ -136,7 +193,7 @@ const Header = () => {
               {/* User info - minimalist version */}
               <motion.div className="flex items-center mb-2" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.2 }}>
                 {userInfo.image && userInfo.image.length > 0 ? (
-                  <div className="mr-2 flex-shrink-0 w-6 h-6 overflow-hidden rounded-sm bg-gray-100">
+                  <div className="mr-2 flex-shrink-0 w-10 h-10 overflow-hidden rounded-sm bg-gray-100">
                     <img
                       src={userInfo.image[1]?.["#text"] || userInfo.image[0]?.["#text"]}
                       alt="Last.fm profile"
