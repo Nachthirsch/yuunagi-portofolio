@@ -1,8 +1,7 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaGithub, FaLinkedin, FaSoundcloud, FaDiscord, FaLastfm } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
-import { Maximize2, Minimize2 } from "lucide-react";
-import { TypeAnimation } from "react-type-animation";
+import { Maximize2, Minimize2, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -11,6 +10,7 @@ const Header = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [userInfo, setUserInfo] = useState(null); // New state for user info
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
   // Navigation items
@@ -119,6 +119,52 @@ const Header = () => {
           </motion.span>
         ))}
       </div>
+
+      {/* Mobile menu button - only on home page */}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 1.0 }} className="md:hidden absolute top-6 right-6" style={{ zIndex: 60 }}>
+        <motion.button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-500 hover:text-gray-900 p-1.5 rounded-full hover:bg-gray-100 transition-all duration-200 relative" whileTap={{ scale: 0.95 }}>
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </motion.button>
+      </motion.div>
+
+      {/* Mobile menu overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="md:hidden fixed inset-0 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center" style={{ zIndex: 55 }}>
+            <div className="w-full max-w-xs">
+              {menuItems.map((item, index) => (
+                <motion.div key={index} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: index * 0.1 }} className="mb-4">
+                  <Link
+                    to={item.to}
+                    onClick={() => setIsMenuOpen(false)}
+                    className={`block px-4 py-2 text-lg text-center transition-colors
+                              ${location.pathname === item.to ? "text-gray-900 font-medium" : "text-gray-600 hover:text-gray-900"}`}
+                  >
+                    {item.label}
+                    {location.pathname === item.to && <motion.div layoutId="mobileHeaderNavIndicator" className="mx-auto mt-1 h-px w-8 bg-gray-800" transition={{ type: "spring", duration: 0.5, bounce: 0.25 }} />}
+                  </Link>
+                </motion.div>
+              ))}
+
+              {/* Fullscreen toggle in mobile menu */}
+              <motion.button
+                onClick={() => {
+                  toggleFullscreen();
+                  setIsMenuOpen(false);
+                }}
+                className="flex items-center justify-center mx-auto mt-6 text-gray-500 hover:text-gray-900 p-2 rounded-full hover:bg-gray-100 transition-all duration-200"
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+              >
+                {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+                <span className="ml-2 text-sm">{isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}</span>
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Main Content Grid - Takes remaining height */}
       <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 px-6 sm:px-12 pb-12">
@@ -266,7 +312,7 @@ const Header = () => {
 
       {/* Mobile LastFM Section - Positioned at bottom right */}
       <motion.div initial={{ opacity: 0, x: animationDirections.lastfm }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 1.0 }} className="lg:hidden absolute bottom-6 right-6 z-10">
-        <div className="bg-white/80 backdrop-blur-sm p-2.5 border border-gray-200 rounded-md shadow-sm max-w-[240px]">
+        <div className="p-2.5  max-w-[240px]">
           {isLoading ? (
             <div className="py-1.5 text-gray-500 text-[10px] flex items-center justify-center">
               <div className="w-2 h-2 border-t border-r border-gray-500 rounded-full animate-spin mr-1.5"></div>
