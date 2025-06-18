@@ -1,14 +1,14 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaInstagram, FaGithub, FaLinkedin, FaSoundcloud, FaDiscord, FaLastfm } from "react-icons/fa";
 import { AiOutlineMail } from "react-icons/ai";
-import { Maximize2, Minimize2, Menu, X } from "lucide-react";
+import { Maximize2, Minimize2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [lastTrack, setLastTrack] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [userInfo, setUserInfo] = useState(null); // New state for user info
+  const [userInfo, setUserInfo] = useState(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
@@ -120,17 +120,46 @@ const Header = () => {
         ))}
       </div>
 
-      {/* Mobile menu button - only on home page */}
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 1.0 }} className="md:hidden absolute top-6 right-6" style={{ zIndex: 60 }}>
-        <motion.button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-500 hover:text-gray-900 p-1.5 rounded-full hover:bg-gray-100 transition-all duration-200 relative" whileTap={{ scale: 0.95 }}>
-          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </motion.button>
-      </motion.div>
+      {/* Repositioned menu button to top-right corner */}
+      <AnimatePresence>
+        {!isMenuOpen && (
+          <motion.button
+            onClick={() => setIsMenuOpen(true)}
+            className="md:hidden fixed top-6 right-6 z-50 w-4 h-4 rounded-full bg-gray-700/50 backdrop-blur-sm flex items-center justify-center ring-4 ring-gray-200/30 ring-offset-1 ring-offset-transparent"
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: [0.6, 0.8, 0.6],
+              scale: [1, 1.1, 1],
+            }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{
+              repeat: Infinity,
+              duration: 4,
+              repeatType: "reverse",
+            }}
+            whileHover={{
+              opacity: 1,
+              scale: 1.15,
+              backgroundColor: "rgba(55, 65, 81, 0.7)",
+            }}
+            whileTap={{ scale: 0.9 }}
+          />
+        )}
+      </AnimatePresence>
 
-      {/* Mobile menu overlay */}
+      {/* Close button only appears when menu is open */}
       <AnimatePresence>
         {isMenuOpen && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} className="md:hidden fixed inset-0 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center" style={{ zIndex: 55 }}>
+          <motion.button initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} onClick={() => setIsMenuOpen(false)} className="md:hidden fixed top-4 right-4 z-60 text-gray-500 hover:text-gray-900 p-2 rounded-full bg-white/80 backdrop-blur-sm shadow-sm hover:bg-gray-100 transition-all duration-200" whileTap={{ scale: 0.95 }}>
+            <X size={20} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile menu overlay - unchanged */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div initial={{ opacity: 0, y: "-100%" }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: "-100%" }} transition={{ duration: 0.3, type: "spring", damping: 30 }} className="md:hidden fixed inset-0 bg-white/95 backdrop-blur-sm flex flex-col items-center justify-center" style={{ zIndex: 55 }}>
             <div className="w-full max-w-xs">
               {menuItems.map((item, index) => (
                 <motion.div key={index} initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3, delay: index * 0.1 }} className="mb-4">
@@ -161,6 +190,11 @@ const Header = () => {
                 {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
                 <span className="ml-2 text-sm">{isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}</span>
               </motion.button>
+
+              {/* Remove swipe hint, replace with cleaner close instruction */}
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.6 }} className="absolute bottom-8 left-1/2 -translate-x-1/2 text-sm text-gray-400 flex items-center">
+                <span className="text-[10px]">tap outside or X to close</span>
+              </motion.div>
             </div>
           </motion.div>
         )}

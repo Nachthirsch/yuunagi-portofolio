@@ -6,7 +6,6 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
   const [hasEntered, setHasEntered] = useState(false);
   const [showParagraph, setShowParagraph] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
-  const [shouldLockScroll, setShouldLockScroll] = useState(false);
   const [firstAnimationComplete, setFirstAnimationComplete] = useState(false);
 
   // Generate random animation directions
@@ -18,9 +17,7 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Only lock scroll when component is significantly visible
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          setShouldLockScroll(true);
           if (!hasEntered) {
             setHasEntered(true);
             onAnimationStart?.();
@@ -39,13 +36,8 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
       if (section) {
         observer.unobserve(section);
       }
-
-      // Ensure scroll is unlocked when component unmounts
-      if (shouldLockScroll) {
-        onAnimationComplete?.();
-      }
     };
-  }, [hasEntered, onAnimationStart, onAnimationComplete, shouldLockScroll]);
+  }, [hasEntered, onAnimationStart]);
 
   // Handle first animation completion separately
   useEffect(() => {
@@ -58,7 +50,6 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
         setTimeout(() => {
           setAnimationComplete(true);
           onAnimationComplete?.();
-          setShouldLockScroll(false);
         }, 3000);
       }, 1000); // Short delay after first animation completes
     }
@@ -66,9 +57,6 @@ const IntroToExperience = ({ onAnimationStart, onAnimationComplete }) => {
 
   return (
     <section className="bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-center items-center relative px-4 sm:px-8">
-      {/* Overlay to prevent interaction during animation - lower z-index to not block header */}
-      {!animationComplete && shouldLockScroll && <div className="fixed inset-0 z-40 bg-transparent pointer-events-auto" style={{ touchAction: "none" }} />}
-
       {/* Container for centered title and repositioned content */}
       <div className="w-full max-w-3xl flex flex-col items-center">
         {/* Main Title with Typewriter Effect - Always stays centered */}

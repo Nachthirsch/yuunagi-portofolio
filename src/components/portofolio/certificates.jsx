@@ -10,12 +10,63 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { MdOutlineViewCarousel } from "react-icons/md";
 
 const CertificatesSection = () => {
   const swiperRef = useRef(null);
   const [viewMode, setViewMode] = useState("slider");
+
+  // Add custom styles with useEffect instead of using style jsx
+  useEffect(() => {
+    // Create a style element
+    const styleElement = document.createElement("style");
+
+    // Add the CSS content
+    styleElement.textContent = `
+      .certificates-swiper {
+        padding-bottom: 60px;
+        /* Change from overflow: visible to hidden to prevent content from extending beyond container */
+        overflow: hidden;
+      }
+
+      .certificates-swiper .swiper-slide {
+        height: auto;
+      }
+
+      .custom-pagination .swiper-pagination-bullet {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #d1d5db;
+        opacity: 0.5;
+        margin: 0 4px;
+        transition: all 0.3s ease;
+      }
+
+      .custom-pagination .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: #6b7280;
+        transform: scale(1.2);
+      }
+
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+      }
+      .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+    `;
+
+    // Append the style element to the head
+    document.head.appendChild(styleElement);
+
+    // Cleanup function to remove the style element when the component unmounts
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, []);
 
   const toggleViewMode = () => {
     setViewMode(viewMode === "slider" ? "list" : "slider");
@@ -56,27 +107,27 @@ const CertificatesSection = () => {
         </motion.div>
 
         {viewMode === "slider" ? (
-          // Certificate Slider - Clean Implementation
-          <div className="relative">
-            {/* Custom Navigation Buttons */}
-            <div className="absolute top-1/2 -translate-y-1/2 -left-4 z-20">
+          // Certificate Slider - Clean Implementation with fixed overflow
+          <div className="relative px-8 sm:px-10 md:px-12">
+            {/* Custom Navigation Buttons - Repositioned to stay within container */}
+            <div className="absolute top-1/2 -translate-y-1/2 left-0 z-20">
               <button
                 onClick={() => swiperRef.current?.slidePrev()}
-                className="p-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-sm shadow-sm
+                className="p-2 md:p-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-sm shadow-sm
                   hover:bg-white hover:shadow-md transition-all duration-200"
                 aria-label="Previous slide"
               >
-                <IoIosArrowBack className="text-lg" />
+                <IoIosArrowBack className="text-base md:text-lg" />
               </button>
             </div>
-            <div className="absolute top-1/2 -translate-y-1/2 -right-4 z-20">
+            <div className="absolute top-1/2 -translate-y-1/2 right-0 z-20">
               <button
                 onClick={() => swiperRef.current?.slideNext()}
-                className="p-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-sm shadow-sm
+                className="p-2 md:p-3 bg-white/80 backdrop-blur-sm text-gray-700 rounded-sm shadow-sm
                   hover:bg-white hover:shadow-md transition-all duration-200"
                 aria-label="Next slide"
               >
-                <IoIosArrowForward className="text-lg" />
+                <IoIosArrowForward className="text-base md:text-lg" />
               </button>
             </div>
 
@@ -86,7 +137,7 @@ const CertificatesSection = () => {
                 swiperRef.current = swiper;
               }}
               modules={[Navigation, Pagination, Autoplay]}
-              spaceBetween={40}
+              spaceBetween={20}
               slidesPerView={1}
               loop={false}
               autoplay={{
@@ -101,11 +152,11 @@ const CertificatesSection = () => {
               breakpoints={{
                 640: {
                   slidesPerView: 2,
-                  spaceBetween: 32,
+                  spaceBetween: 24,
                 },
                 1024: {
                   slidesPerView: 3,
-                  spaceBetween: 40,
+                  spaceBetween: 32,
                 },
               }}
               className="certificates-swiper"
@@ -207,42 +258,6 @@ const CertificatesSection = () => {
           </motion.div>
         )}
       </div>
-
-      {/* Minimal Custom Styles */}
-      <style jsx global>{`
-        .certificates-swiper {
-          padding-bottom: 60px;
-          overflow: visible;
-        }
-
-        .certificates-swiper .swiper-slide {
-          height: auto;
-        }
-
-        .custom-pagination .swiper-pagination-bullet {
-          width: 8px;
-          height: 8px;
-          border-radius: 50%;
-          background: #d1d5db;
-          opacity: 0.5;
-          margin: 0 4px;
-          transition: all 0.3s ease;
-        }
-
-        .custom-pagination .swiper-pagination-bullet-active {
-          opacity: 1;
-          background: #6b7280;
-          transform: scale(1.2);
-        }
-
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-      `}</style>
     </section>
   );
 };

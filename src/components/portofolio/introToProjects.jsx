@@ -7,7 +7,6 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
   const [showSecondTitle, setShowSecondTitle] = useState(false);
   const [showParagraph, setShowParagraph] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
-  const [shouldLockScroll, setShouldLockScroll] = useState(false);
   const [firstAnimationComplete, setFirstAnimationComplete] = useState(false);
   const [secondAnimationComplete, setSecondAnimationComplete] = useState(false);
 
@@ -21,7 +20,6 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
-          setShouldLockScroll(true);
           if (!hasEntered) {
             setHasEntered(true);
             onAnimationStart?.();
@@ -41,7 +39,7 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
         observer.unobserve(section);
       }
     };
-  }, [hasEntered, onAnimationStart, onAnimationComplete, shouldLockScroll]);
+  }, [hasEntered, onAnimationStart]);
 
   // Handle first animation completion
   useEffect(() => {
@@ -61,16 +59,12 @@ const IntroToProjects = ({ onAnimationStart, onAnimationComplete }) => {
       setTimeout(() => {
         setAnimationComplete(true);
         onAnimationComplete?.();
-        setShouldLockScroll(false);
       }, 3000);
     }
   }, [secondAnimationComplete, showSecondTitle, onAnimationComplete]);
 
   return (
     <section className="bg-gray-50 text-gray-900 min-h-screen flex flex-col justify-center items-center relative px-4 sm:px-8">
-      {/* Overlay to prevent interaction during animation - lower z-index to not block header */}
-      {!animationComplete && shouldLockScroll && <div className="fixed inset-0 z-40 bg-transparent pointer-events-auto" style={{ touchAction: "none" }} />}
-
       {/* Container for centered title and repositioned content */}
       <div className="w-full max-w-3xl flex flex-col items-center">
         {/* Main Title with Typewriter Effect - Always stays centered */}

@@ -33,7 +33,7 @@ function App() {
                 }
               />
             </Routes>
-            {/* <ChatBot /> */}
+            <ChatBot />
           </div>
         </AuthProvider>
       </Router>

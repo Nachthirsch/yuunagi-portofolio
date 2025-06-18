@@ -62,7 +62,7 @@ const formatMessage = (content) => {
 const WelcomeMessage = () => {
   return (
     <div className="space-y-3">
-      <TypeAnimation sequence={["Hello! I'm Handra's AI Assistant, I can help you learn more about Handra!", 1000]} wrapper="p" speed={50} className="text-sm text-neutral-300" repeat={0} cursor={true} />
+      <TypeAnimation sequence={["Hello! I'm Handra's AI Assistant, I can help you learn more about Handra!", 1000]} wrapper="p" speed={50} className="text-sm text-gray-700" repeat={0} cursor={true} />
     </div>
   );
 };
@@ -186,104 +186,66 @@ export default function ChatBot() {
     <div className="fixed bottom-4 left-4 md:left-8 z-20">
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
-            ref={chatRef} 
-            initial={{ opacity: 0, scale: 0.8, y: 20 }} 
-            animate={{ opacity: 1, scale: 1, y: 0 }} 
-            exit={{ opacity: 0, scale: 0.8, y: 20 }} 
-            transition={{ type: "spring", stiffness: 300, damping: 30 }} 
-            className="mb-4 w-[300px] md:w-[380px] rounded-2xl bg-neutral-900/90 shadow-[6px_6px_0px_rgba(0,0,0,0.8)] border-4 border-black backdrop-blur-xl rotate-[0.5deg] overflow-hidden"
-          >
-            {/* Chat Header - Neobrutalism Style */}
-            <div className="flex items-center justify-between p-3 border-b-3 border-black bg-neutral-800">
-              <motion.div 
-                initial={{ opacity: 0, x: -20 }} 
-                animate={{ opacity: 1, x: 0 }} 
-                transition={{ delay: 0.2 }} 
-                className="flex items-center space-x-3"
-              >
-                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse border-1 border-black" />
-                <h3 className="text-sm font-extrabold text-neutral-300 text-shadow-small">AI Assistant</h3>
+          <motion.div ref={chatRef} initial={{ opacity: 0, scale: 0.95, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 10 }} transition={{ type: "spring", stiffness: 300, damping: 30 }} className="mb-4 w-[300px] md:w-[380px] rounded-md bg-gray-50/95 shadow-md backdrop-blur-sm overflow-hidden">
+            {/* Chat Header - Minimalist Style */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200/50">
+              <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="flex items-center space-x-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-gray-400 animate-pulse" />
+                <h3 className="text-xs font-light text-gray-700">AI Assistant</h3>
                 <div className="flex items-center space-x-1">
-                  <h3 className="text-xs font-medium text-neutral-400 flex items-center gap-1">
-                    Powered by
-                    <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="Gemini AI" className="w-4 h-4 ml-1 object-contain" />
+                  <h3 className="text-[10px] font-light text-gray-500 flex items-center gap-1">
+                    Gemini
+                    <img src="https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg" alt="Gemini AI" className="w-3 h-3 ml-1 object-contain" />
                   </h3>
                 </div>
               </motion.div>
-              
-              <motion.button 
-                whileHover={{ rotate: 90, scale: 1.1 }} 
-                whileTap={{ scale: 0.9 }}
-                transition={{ type: "spring", stiffness: 300, damping: 20 }} 
-                onClick={() => setIsOpen(false)} 
-                className="rounded-full p-2 text-neutral-400 hover:bg-neutral-700 border-1 border-black"
-              >
+
+              <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} onClick={() => setIsOpen(false)} className="rounded-full p-1 text-gray-400 hover:bg-gray-100">
                 <X size={14} />
               </motion.button>
             </div>
-            
+
             {/* Chat Body */}
             <div className="flex h-[340px] md:h-[382px] flex-col">
               <style jsx>{`
                 .hide-scrollbar {
-                  -ms-overflow-style: none; /* IE and Edge */
-                  scrollbar-width: none; /* Firefox */
+                  -ms-overflow-style: none;
+                  scrollbar-width: none;
                 }
                 .hide-scrollbar::-webkit-scrollbar {
-                  display: none; /* Chrome, Safari and Opera */
+                  display: none;
                 }
               `}</style>
-              
+
               {/* Messages Container */}
-              <div className="flex-1 overflow-y-scroll overflow-x-hidden p-4 hide-scrollbar bg-neutral-900">
+              <div className="flex-1 overflow-y-scroll overflow-x-hidden p-4 hide-scrollbar bg-gray-50">
                 <div className="space-y-4">
                   {/* Welcome Message */}
                   {chatHistory.length === 0 && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 20 }} 
-                      animate={{ opacity: 1, y: 0 }} 
-                      transition={{ delay: 0.3 }} 
-                      className="p-4 rounded-lg bg-neutral-800/40 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] -rotate-1"
-                    >
+                    <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="p-3 rounded-md bg-gray-100/80">
                       <WelcomeMessage />
                     </motion.div>
                   )}
-                  
+
                   {/* Chat Messages */}
                   {chatHistory.map((message, index) => (
-                    <motion.div 
-                      key={index} 
-                      initial={{ opacity: 0, y: 10 }} 
-                      animate={{ opacity: 1, y: 0 }} 
-                      className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}
-                    >
-                      <div className={`max-w-[85%] rounded-lg border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] px-4 py-3 text-sm 
-                                      ${message.type === "user" 
-                                        ? "bg-neutral-700 text-white rotate-1" 
-                                        : "bg-neutral-800/60 text-neutral-300 -rotate-1"}`}
+                    <motion.div key={index} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} className={`flex ${message.type === "user" ? "justify-end" : "justify-start"}`}>
+                      <div
+                        className={`max-w-[85%] rounded-md px-3 py-2 text-sm 
+                                      ${message.type === "user" ? "bg-gray-200 text-gray-800" : "bg-gray-100 text-gray-700"}`}
                       >
-                        {message.type === "user" 
-                          ? message.content 
-                          : <div className="prose prose-sm prose-invert">
-                              {formatMessage(message.content)}
-                            </div>
-                        }
+                        {message.type === "user" ? message.content : <div className="prose prose-sm prose-gray">{formatMessage(message.content)}</div>}
                       </div>
                     </motion.div>
                   ))}
-                  
+
                   {/* Loading Animation */}
                   {isLoading && (
-                    <motion.div 
-                      initial={{ opacity: 0 }} 
-                      animate={{ opacity: 1 }} 
-                      className="flex space-x-2 justify-start"
-                    >
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex space-x-1.5 justify-start">
                       {[1, 2, 3].map((i) => (
                         <div
                           key={i}
-                          className="w-2 h-2 rounded-full bg-neutral-500 border-1 border-black"
+                          className="w-1.5 h-1.5 rounded-full bg-gray-400"
                           style={{
                             animation: `bounce 0.8s ease-in-out ${i * 0.2}s infinite`,
                           }}
@@ -292,47 +254,26 @@ export default function ChatBot() {
                     </motion.div>
                   )}
                 </div>
-                
+
                 {/* Suggested Questions */}
                 {chatHistory.length === 0 && (
                   <div className="mt-5 space-y-2">
-                    <p className="text-xs font-extrabold text-neutral-400 ml-2 text-shadow-small">Suggested questions:</p>
+                    <p className="text-xs text-gray-500 ml-1">Suggested questions:</p>
                     {suggestedQuestions.map((question, index) => (
-                      <motion.button 
-                        key={index} 
-                        onClick={() => handleQuestionClick(question)} 
-                        initial={{ opacity: 0, x: -10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3 + (index * 0.1) }}
-                        whileHover={{ x: 3 }}
-                        className="w-full rounded-lg bg-neutral-800/30 border-2 border-black shadow-[3px_3px_0px_rgba(0,0,0,0.8)] p-3 text-left text-sm text-neutral-300 hover:bg-neutral-700/50 transition-colors"
-                      >
+                      <motion.button key={index} onClick={() => handleQuestionClick(question)} initial={{ opacity: 0, x: -5 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + index * 0.1 }} whileHover={{ x: 2 }} className="w-full rounded-md bg-gray-100/80 p-2.5 text-left text-xs text-gray-700 hover:bg-gray-200/50 transition-colors">
                         {question}
                       </motion.button>
                     ))}
                   </div>
                 )}
               </div>
-              
-              {/* Input Form - Neobrutalism Style */}
-              <form onSubmit={handleUserInput} className="p-3 border-t-3 border-black bg-neutral-800">
+
+              {/* Input Form - Minimalist Style */}
+              <form onSubmit={handleUserInput} className="p-3 border-t border-gray-200/50 bg-gray-50">
                 <div className="flex space-x-2">
-                  <input 
-                    type="text" 
-                    value={userInput} 
-                    onChange={(e) => setUserInput(e.target.value)} 
-                    placeholder="Ask anything about Handra..." 
-                    disabled={isLoading} 
-                    className="flex-1 rounded-lg bg-neutral-900 px-4 py-2.5 text-sm text-neutral-300 placeholder-neutral-500 focus:outline-none border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)] disabled:opacity-50" 
-                  />
-                  <motion.button 
-                    whileHover={{ scale: 1.05, rotate: 3 }} 
-                    whileTap={{ scale: 0.95 }} 
-                    type="submit" 
-                    disabled={isLoading} 
-                    className="flex items-center justify-center rounded-lg bg-neutral-700 px-4 py-2.5 text-white hover:bg-neutral-600 disabled:opacity-50 transition-colors border-2 border-black shadow-[2px_2px_0px_rgba(0,0,0,0.8)]"
-                  >
-                    <Send size={16} />
+                  <input type="text" value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder="Ask anything about Handra..." disabled={isLoading} className="flex-1 rounded-md bg-gray-100 px-3 py-2 text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 disabled:opacity-50" />
+                  <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} type="submit" disabled={isLoading} className="flex items-center justify-center rounded-md bg-gray-200 px-3 py-2 text-gray-700 hover:bg-gray-300 disabled:opacity-50 transition-colors">
+                    <Send size={14} />
                   </motion.button>
                 </div>
               </form>
@@ -340,43 +281,20 @@ export default function ChatBot() {
           </motion.div>
         )}
       </AnimatePresence>
-      
-      {/* Chat Button - Neobrutalism Style */}
-      <motion.button 
-        whileHover={{ scale: 1.1, rotate: 5 }} 
-        whileTap={{ scale: 0.9 }} 
-        onClick={handleToggleChat} 
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-neutral-800 border-3 border-black shadow-[4px_4px_0px_rgba(0,0,0,0.8)] hover:shadow-[5px_5px_0px_rgba(0,0,0,0.8)] transition-all duration-300"
-      >
-        {/* Button pulse effect */}
-        <motion.div 
-          className="absolute -inset-1 rounded-full border-2 border-black opacity-0 group-hover:opacity-100" 
-          animate={{ scale: [1, 1.1, 1], opacity: [0, 0.5, 0] }} 
-          transition={{ duration: 2, repeat: Infinity }} 
-        />
-        
-        {/* Decorative corner */}
-        <div className="absolute top-0 right-0 w-5 h-5 bg-neutral-700 opacity-20"
-             style={{ clipPath: "polygon(100% 0, 0 0, 100% 100%)" }}></div>
-             
-        <MessageCircle size={22} className="text-white" />
+
+      {/* Chat Button - Minimalist Style */}
+      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={handleToggleChat} className="group relative flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 shadow-sm hover:bg-gray-200 transition-all duration-200">
+        <MessageCircle size={18} className="text-gray-700" />
+
+        {/* Simple pulse effect */}
+        <span className="absolute inset-0 rounded-full bg-gray-200 animate-ping opacity-25" style={{ animationDuration: "3s" }}></span>
       </motion.button>
-      
-      {/* Styles for neobrutalism */}
+
       <style>
         {`
-          .border-3 {
-            border-width: 3px;
-          }
-          .border-1 {
-            border-width: 1px;
-          }
-          .text-shadow-small {
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.8);
-          }
           @keyframes bounce {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-5px); }
+            50% { transform: translateY(-3px); }
           }
         `}
       </style>
