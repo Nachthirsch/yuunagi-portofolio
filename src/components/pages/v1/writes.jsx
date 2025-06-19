@@ -2,9 +2,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-no-undef */
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Book, Calendar, User, Tag, Globe, Sun, Moon } from "lucide-react";
+import { Book, Calendar, User, Tag, Globe, Sun, Moon, ArrowLeft } from "lucide-react";
 import { getBlogPostBySlug } from "../../../utils/blogUtils";
 import { useState, useEffect } from "react";
 import TableOfContents from "../../common/TableOfContents";
@@ -183,6 +183,27 @@ const WritesPage = () => {
   return (
     <>
       <SEO title={post.title} description={getMetaDescription(post)} image={post.sections?.find((s) => s.type === "image")?.images?.[0]?.src} />
+
+      {/* Refined Navigation Buttons */}
+      <div className="fixed top-8 left-8 z-50 flex flex-col gap-2">
+        {/* Blog Navigation */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+          <Link to="/writes" className={`group flex items-center gap-2 ${isDark ? "text-neutral-600 hover:text-neutral-400" : "text-gray-400 hover:text-gray-600"} transition-colors`}>
+            <div className="relative h-px w-5 bg-current group-hover:w-6 transition-all duration-300">
+              <div className="absolute -left-px -top-px w-1.5 h-1.5 rounded-full bg-current transition-colors"></div>
+            </div>
+            <span className="text-[10px] font-mono tracking-wide uppercase">Blog</span>
+          </Link>
+        </motion.div>
+
+        {/* Portfolio Navigation */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6, delay: 0.1 }}>
+          <Link to="/" className={`group flex items-center gap-2 ${isDark ? "text-neutral-700 hover:text-neutral-500" : "text-gray-300 hover:text-gray-500"} transition-colors`}>
+            <span className="text-[10px] font-mono tracking-wide uppercase">Portfolio</span>
+          </Link>
+        </motion.div>
+      </div>
+
       <section className={`min-h-screen ${themeStyles.background} pt-16 sm:pt-20 pb-16 px-3 sm:px-8 md:px-16 font-merriweather transition-colors duration-300 isolation`}>
         <div className={`max-w-4xl mx-auto relative ${themeStyles.paper} p-4 sm:p-8 rounded-lg shadow-lg border ${themeStyles.border} z-[1]`}>
           {/* Header Section */}
